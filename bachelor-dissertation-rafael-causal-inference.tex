@@ -1,0 +1,2375 @@
+
+%%%
+% TIPO DE DOCUMENTO E PACOTES ----
+%%%%
+\documentclass[12pt, a4paper, twoside]{article}
+\usepackage[left = 3cm, top = 3cm, right = 2cm, bottom = 2cm]{geometry}
+
+
+
+%%%\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\numberwithin{equation}{subsection} %subsection
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{titletoc,titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+%\usepackage{natbib}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+%\usepackage[brazilian,hyperpageref]{backref}
+%\usepackage[alf]{abntex2cite}
+\usepackage{multirow} % https://www.ctan.org/pkg/multirow
+\usepackage{float} % https://www.ctan.org/pkg/float
+\usepackage{booktabs} % https://www.ctan.org/pkg/booktabs
+\usepackage{enumitem} % https://www.ctan.org/pkg/enumitem
+\usepackage{quoting} % https://www.ctan.org/pkg/quoting
+\usepackage{epigraph}
+\usepackage{subfigure}
+\usepackage{anyfontsize}
+\usepackage{caption}
+\usepackage{adjustbox}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{dsfont}
+\usepackage{longtable}
+
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+\raggedbottom % https://latexref.xyz/_005craggedbottom.html
+
+
+% COMANDOS -----
+%%%%
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lema}[teo]{Lema}
+\newtheorem{cor}[teo]{Corolário}
+\newtheorem{prop}[teo]{Proposição}
+\newtheorem{defi}{Definição}
+\newtheorem{exem}{Exemplo}
+
+\newcommand{\titulo}{Impact Analysis of Fare-Free Public Transit
+Programs \\ on Service Tax Collection}
+\newcommand{\autor}{Rafael de Acypreste Monteiro Rocha}
+\newcommand{\orientador}{ Professor Thais Carvalho Valadares Rodrigues }
+\newcommand{\coorientador}{ Prof(a).  }
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+%\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%C - Centro, L - Esquerda, R - Direita, O - impar, E - par
+\fancyhead[RO, LE]{\thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\titlecontents{section}[0cm]{}{\bf\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+\titlecontents{subsection}[0.75cm]{}{\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+
+\setcounter{secnumdepth}{4}
+%\setcounter{tocdepth}{3}
+
+\DeclareCaptionFormat{myformat}{ \centering \fontsize{10}{12}\selectfont#1#2#3}
+\captionsetup{format=myformat}
+
+%%%
+%% INÍCIO DO DOCUMENTO 
+%%%%%%
+
+%% CAPA ----
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale = 0.6]{img/as_vert_cor.jpg}
+	\label{fig:unb}
+\end{figure}
+{\bf University of Brasília \\
+\bf Departament of Statistics}
+\vspace{5cm}
+
+\setcounter{page}{0}
+\null
+\textbf{\titulo}
+\vspace{2.5cm}
+
+
+\vspace{0.2cm}
+\textbf{\autor}
+\end{center}
+\vspace{1.5cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+\parbox[t]{7.5cm}{Bachelor dissertation submitted to the Department of
+Statistics at the University of Brasília, as part of the requirements to
+obtain the Bachelor's Degree in Statistics.}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{2024}
+\end{center}
+\end{titlepage}
+
+
+%%% FOLHA DE ROSTO -----
+
+\thispagestyle{empty}
+
+\begin{center}
+\textbf{\autor} \\
+\vspace{5cm}
+\textbf{\titulo} \\
+\vspace{3cm}
+\small
+Advisor: \orientador \\
+%Coorientador(a): \coorientador
+\end{center}
+
+
+\vspace*{3cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+ \parbox[t]{7.5cm}{Bachelor dissertation submitted to the Department of
+Statistics at the University of Brasília, as part of the requirements to
+obtain the Bachelor's Degree in Statistics.}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{2024}
+\end{center}
+
+
+
+
+\newpage % Start the dedicatory on a new page
+\thispagestyle{empty} % Optional: Removes the page number
+
+\vspace*{\stretch{1}} % Add vertical space
+
+\begin{flushright} % Align the text to the right
+\textit{Às pequenas cidadãs comuns tais como \\
+        ``a merendeira [que] desce, o ônibus sai \\
+        Dona Maria já se foi, só depois é que o sol nasce."}\\
+\vspace{1cm}        
+Adaptado de ``A ordem natural das coisas", de Damien Seth / Emicida.
+\end{flushright}
+
+\vspace*{\stretch{2}} % Balance the page layout
+
+\pagenumbering{roman}
+\setcounter{page}{3} 
+
+
+\newpage % Start on a new page (optional)
+
+\doublespacing
+
+\section*{Acknowledgements}
+
+I would like to express my gratitude to Renata Florentino, Daniel Santini, and Diego Maggi, who have an incredible research agenda in Tarifa Zero and have contributed to and encouraged my research on this topic.
+
+I am thankful to Professor Thaís Carvalho, my advisor, for accepting the invitation to supervise, collaborating on the execution of this work, and especially for her dedication throughout the guidance, accepting the challenge of a theme that is not her central research agenda.
+
+I also extend my thanks to Professor Alan Ricardo for his excellent suggestions on the design of this research, to Professor Guilherme Rodrigues for his support and guidance on my previous research topic and encouragement in adopting the current theme, to Professor Mauro Patrão for introducing me to studies in causal inference, and to Mateus Umberto for his assistance on how to construct the database.
+
+Finally, I am grateful to the informal study group on causal inference for the fruitful debates on the subject and, in particular, to Carol Musso, Érica, and Halian for their comments and discussions on the early versions of the research.
+
+
+[\textit{Portuguese version}]
+
+Agradeço a Renata Florentino, Daniel Santini e Diego Maggi, que têm na Tarifa Zero uma agenda incrível de pesquisa e que contribuíram e me incentivaram a pesquisar tal tema.
+
+Agradeço à professora Thaís Carvalho, minha orientadora, pelo aceite do convite de supervisão, colaboração na execução deste trabalho e, em especial, pela dedicação ao longo de toda orientação, aceitando o desafio de um tema que não é sua agenda central de pesquisa.
+
+Agradeço também ao professor Alan Ricardo pelas excelentes sugestões sobre o projeto desta pesquisa, ao professor Guilherme Rodrigues pelo apoio e orientação no meu tema anterior de pesquisa e encorajamento na adoção do tema atual, ao professor Mauro Patrão por ter me apresentado os estudos em inferência causal e ao Mateus Umberto pelo auxílio sobre como construir a base de dados.
+
+Agradeço, por fim, ao grupo informal de estudos em inferência causal pelos fecundos debates sobre o tema e, em espcial, a Carol Musso, Érica e Halian pelos comentários e debates das primeiras versões da pesquisa.
+
+
+\newpage
+
+
+
+\begin{abstract}
+Fare-Free Public Transportation (FFTP) means that passengers do not pay for the service directly.
+This policy increases the utilization of public transportation, serves as an instrument of social inclusion, and helps to reduce traffic congestion, pollution, and greenhouse gas emissions.
+This research aims is to evaluate the impact of the Fare-free policy on the municipality's service tax collection.
+To accomplish such main objective, a causal inference framework is used, with the Differences-in-Differences (DiD) technique serving as the method of analysis.
+The municipalities which adopted the FFPT policy between 2003 and 2019 were evaluated in Brazil.
+The principal finding of this investigation revealed an influence attributable to the Fare-Free Public Transportation policy, manifesting as an average 10.1\% (95\% confidence interval: [3.6\%, 16.6\%]) augmentation in ISS (tax on servies) tax revenue, which constitutes the overall average treatment effect on the treated (ATT). 
+Subsequent metrics corroborate this positive trend, albeit with marginally varying magnitudes.
+Further research incorporating a larger time span --- consequently, amplified sample size --- is advisable when additional data becomes available. Also, elucidating the determinants of policy adoption can strengthen the validity of the estimated causal effects.
+\end{abstract}
+
+% Adding keywords
+\vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Keywords:} Differences-in-Differences, Fare-Free Public Transportation, Causal Inference.
+
+
+\newpage
+
+
+\renewcommand{\abstractname}{Resumo}
+
+
+\begin{abstract}
+Tarifa-Zero no Transporte Público (TZ) significa que os passageiros não pagam diretamente pelo serviço.
+Essa política aumenta a utilização do transporte público, serve como instrumento de inclusão social e ajuda a reduzir o congestionamento do trânsito, a poluição e a emissão de gases de efeito estufa.
+O objetivo desta pesquisa é avaliar o impacto da política de gratuidade na arrecadação do imposto sobre serviços do município.
+Para atingir esse objetivo principal, utiliza-se uma estrutura de inferência causal, com a técnica de Diferenças-em-Diferenças (DiD) servindo como método de análise.
+Foram avaliados os municípios que adotaram a política de TZ entre 2003 e 2019 no Brasil.
+O principal resultado desta investigação revelou uma influência atribuível à política de Transporte Público Gratuito, manifestando-se como um aumento médio de 10,1\% (intervalo de confiança de 95\%: [3,6\%, 16,6\%]) na receita tributária do Imposto sobre Serviços (ISS), que constitui o efeito médio geral do tratamento sobre os tratados. 
+As métricas subsequentes corroboram essa tendência positiva, embora com magnitudes marginalmente variáveis.
+É aconselhável efetuar mais investigação do efeito da TZ, incorporando um período de tempo mais alargado --- consequentemente, uma amostra de maior dimensão --- quando estiverem disponíveis dados adicionais. Além disso, a elucidação dos factores determinantes da adoção de políticas pode reforçar a validade dos efeitos causais estimados.        
+\end{abstract}
+        
+        % Adding keywords
+        \vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Palavras-chave:} Diferenças-em-Diferenças, Tarifa-Zero no Transporte Público, Inferência Causal.
+        
+
+\newpage
+
+
+\listoftables
+
+
+
+\newpage
+
+\listoffigures
+
+\newpage
+
+%\pagenumbering{arabic}
+%\setcounter{page}{10}
+%\onehalfspacing
+%\doublespacing
+
+
+
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0.2cm}
+\setlength{\intextsep}{0.5cm}
+
+\titlespacing*{\section}{0cm}{0cm}{0.5cm}
+\titlespacing*{\subsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\subsubsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\paragraph}{0cm}{0.5cm}{0.5cm}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+
+%\pagenumbering{arabic}
+%\setcounter{page}{3}
+
+\fancyhead[RE, LO]{\nouppercase{\emph\leftmark}}
+%\fancyfoot[C]{Departamento de Estatística}
+
+% SUMÁRIO
+%%%
+
+\tableofcontents
+
+
+
+\newpage
+
+\pagenumbering{arabic} % Switch to Arabic numerals for the main content
+\setcounter{page}{12} % Optionally reset the page counter for the main content
+
+
+% CONTEÚDO (AS SEÇÕES SAO SEPARADAS NO RMARKDOWN) ---
+%%%
+
+
+
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+``Fare-Free Public Transportion'' (FFPT) is a funding model in which the
+cost of public transit (PT) is covered by taxes or other sources, rather
+than being collected from passengers through fares. Several cities and
+models of total or partial subsidized public transit are present in the
+United States, Europe, Australia, and China
+(\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020}). As of
+April 2024, 106 out of 5,570 municipalities in Brazil\footnote{The
+  Federative Republic of Brazil is structured as a union of 26 distinct
+  subnational entities and their respective subdivisions into
+  municipalities, alongside a singular Federal District that uniquely
+  encompasses the roles of both a federative unit and a municipality.
+  This complex political organization ensures that each component ---
+  whether it be the Union, the federative units (States), the
+  subnational entities (municipalities), or the Federal
+  District---exercises both executive and legislative authority.
+  However, the judicial branch is exclusively reserved for the Federal
+  Union, the individual federative units, and the Federal District,
+  delineating a clear separation of powers within the nation's
+  governance framework.} had already adopted such a model
+(\protect\hyperlink{ref-Santini-FFPT-2024}{Santini, 2024}). Therefore,
+an impact analysis of the FFPT on public transit helps to understand the
+policy's effects on the municipality's fiscal health.
+
+In general, the primary objective of this policy is to increase the
+utilization of public transit, which benefits the economically
+disadvantaged, specifically those who have limited mobility
+(\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017, p. 1095}). This policy may also reduce the use of private cars
+(\protect\hyperlink{ref-Brown_2003}{Brown, Hess and Shoup, 2003});
+consequently, traffic congestion, pollution, and greenhouse gas
+emissions would be cut, even though, some argue that the largest share
+of new users will be pedestrians and cyclists, rather than drivers
+(\protect\hyperlink{ref-BULL-RCT-2021}{Bull, Muñoz and Silva, 2021};
+\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017, p. 1095}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}). If
+this is the case, traffic safety would be the main positive externality
+(\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, p. 2816}).
+
+Once PT users do not use cars daily, they offer a service for drivers
+--- like less traffic congestion --- and should spend less or nothing on
+this transportation
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a, p. 113};
+\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, p. 2816}).
+Furthermore, public transit serves as an instrument of social inclusion,
+as it allows individuals to access jobs, education, and health services
+that would otherwise be inaccessible. The recent reduction in public
+transit use comes with lower transportation policy funding through fare
+collection --- a phenomenon occurring not only in Brazil
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}),
+which urges policy alternatives.
+
+The costs associated with the policy raise doubts and fears among
+policymakers, who worry about its financial sustainability and the
+increased demand for public transit. Fare-Free means that public transit
+can be used without a ticket because the system is fully subsidized.
+Some transportation engineers and economists are concerned about the
+risk of crowding externalities
+(\protect\hyperlink{ref-BULL-RCT-2021}{Bull, Muñoz and Silva, 2021}),
+and of ``useless'' trips
+(\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, pp.
+2807--14}) made solely because they are free, despite the distinct
+Fare-Free designs. In a contrary line of reasoning, some researchers
+suggest that FFPT frees up the portion of the family budget allocated
+for transportation, allowing it to be used for other local economic
+activities. This, in turn, boosts the municipality's economy and tax
+collection.
+
+Against this backdrop, the study examines the variability of Service Tax
+--- known as ``Imposto Sobre Serviços de Qualquer Natureza'' (ISS or
+ISSQN) in Portuguese --- as the response variable influenced by the
+adoption of the FFTP policy. The ISS was instituted by the Complementary
+Federal Law No.~116, dated July 31, 2003, with its taxable event being
+the provision of services delineated in the law's appendices\footnote{The
+  appendices list 40 activities subject to ISS, including health,
+  education, and information technology services.}. In Brazil,
+municipalities have the jurisdiction to levy this tax, which forms a
+significant portion of their fiscal revenues.
+
+Therefore, the primary goal of this research is to evaluate the impact
+of the Fare-Free policy on the municipality's fiscal circumstances.
+Specifically, the study aims to assess the medium- and long-term fiscal
+sustainability, as well as civil rights considerations, of implementing
+such a policy. The present inquiry pertains to the determination of
+causal effects, wherein traditional statistical and economic
+methodologies as cost-benefit analysis, conventional time-series,
+econometric models, and case studies prove insufficient. While the
+former trio may facilitate the identification of correlations and
+potential predictions of future trends, they fall short in establishing
+causality due to potential biases and inaccuracies introduced during
+variable selection (\protect\hyperlink{ref-Cinelli-2024}{Cinelli, Forney
+and Pearl, 2024}). Conversely, case studies offer valuable insights into
+the contextual underpinnings and motivations behind policy
+implementation, yet they do not provide a robust mechanism for assessing
+the economic consequences of said policies. Consequently, to accomplish
+such objective, a causal inference framework is used. The municipalities
+that adopted the FFPT policy between 2003 and 2019 were
+evaluated\footnote{The number of cities included in the case study may
+  increase depending on the policy adoption and availability of data.
+  Notably, the political profile of the government at the time of
+  adoption appears to have no bearing on the decision to implement a
+  Fare-Free system
+  (\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020}).}.
+
+Thence, the impact of FFTP on tax revenues is estimated using the
+Differences-in-Differences (DiD) method as a bridge to causal inference
+assertions. This is a quasi-experimental approach that mitigates the
+constraints in observational studies when a randomized controlled trial
+(RCT) is not feasible. It facilitates the estimation of a policy's
+causal effect by contrasting the experiences of the treatment group with
+a control group, both pre- and post-policy implementation. Provided the
+model's assumptions hold true (see Chapter~\ref{sec-literature-review}
+and Section~\ref{sec-po}), selection biases are absent, allowing for an
+accurate estimation of the causal effect. The DiD technique operates by
+calculating the within-group differences pre- and post-intervention and
+then determining the difference between these two figures, hence the
+term `differences-in-differences'.
+
+With its assumptions upheld, the DiD model becomes identifiable,
+allowing for the estimation of the average treatment effect on the
+treated, even in scenarios where RCTs are impractical. The findings of
+this evaluation could inform the discourse on public policy,
+particularly within the framework of local transit systems plagued by
+substandard conditions and high costs. To accomplish such goal, the
+following tasks are necessary: i) organize the database of variables
+related to transportation policies; ii) identify the most suitable DiD
+causal model to assess the implications of the Zero-Fare policy on
+municipal tax revenue; iii) compare the municipalities that have adopted
+the Zero-Fare policy, establishing municipalities that can serve as a
+counterfactual; and iv) investigate the indirect economic benefits, such
+as increased economic activity, which may positively impact the
+municipality's overall fiscal health.
+
+In Chapter~\ref{sec-literature-review}, a literature review on FFTP
+worldwide experiences and DiD methods as a source of causal
+interpretation is employed. In Section~\ref{sec-po}, the
+Difference-in-Difference method (assumptions and structures) is detailed
+and the data collection is explained. Materials and Methods are
+presented in Chapter~\ref{sec-materials-methods}.
+Chapter~\ref{sec-results} presents the main findings, tests the model's
+assumptions, and implements some sensitivity analysis. Some discussions
+and conclusions lay in the Chapter~\ref{sec-disc-conclusions}.
+
+\newpage
+
+\hypertarget{sec-literature-review}{%
+\section{Literature Review}\label{sec-literature-review}}
+
+To the best of our knowledge, the intersection of Fare-Free Public
+Transit initiatives and state revenue generation remains underexplored.
+A causal inquiry is of particular interest in this context. Existing
+literature provides a foundation of theoretical and methodological
+frameworks that could facilitate such an analysis.
+
+\hypertarget{sec-fftp-policy}{%
+\subsection{Fare-Free Policy}\label{sec-fftp-policy}}
+
+The evolution of urban transportation systems towards a model centered
+on private vehicle usage incurs significant land use and necessitates
+substantial public investment in infrastructure maintenance.
+Transitioning to a more sustainable, rational, and low-carbon model
+presents challenges, as it requires altering entrenched user behaviors
+and regulatory frameworks
+(\protect\hyperlink{ref-Gonuxe7alves_Santini_2023}{Costa Gonçalves and
+Santini, 2023b}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}). The
+current infrastructure is ill-equipped to support such a shift
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}).
+
+Notably, Fare-Free Public Transit for specific demographic groups, such
+as seniors or students, generally garners public approval
+(\protect\hyperlink{ref-Brown_2003}{Brown, Hess and Shoup, 2003}). In
+this sense, any general policy aimed at enhancing public transit
+utilization must account for the potential escalation in operational
+costs, including labor, vehicle capacity, and energy expenditures
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). These issues tend to be exacerbated during peak travel
+times\footnote{Even though it is not always the case, as affirmed by
+  Bull, Muñoz and Silva (\protect\hyperlink{ref-BULL-RCT-2021}{2021}).}.
+Consequently, the implementation of such policies should be synchronized
+with infrastructural enhancements to support increased demand
+(\protect\hyperlink{ref-straub_2020}{Štraub, 2020}).
+
+In contrast, the implementation of FFPT may streamline social
+interactions and invigorate economic activities
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Such a policy could counteract the trend of diminishing
+public transit patronage, as evidenced by multiple studies
+Gabaldón-Estevan \emph{et al.}
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{2019}), Costa Gonçalves and
+Santini (\protect\hyperlink{ref-Gonuxe7alves_Santini_2023}{2023b}),
+Brown, Hess and Shoup (\protect\hyperlink{ref-Brown_2003}{2003}), and
+Štraub (\protect\hyperlink{ref-straub_2020}{2020}). Moreover,
+transportation barriers disproportionately exacerbate employment
+conditions for economically marginalized groups. Notably, subsidies in
+public transit have been shown to facilitate job-seeking behaviors,
+thereby potentially enhancing labor market engagement, although the
+evidence supporting this last affirmation is not robust\footnote{Evidence
+  on labor market outcomes remains inconclusive, as demonstrated by the
+  case study of Tallinn, Estonia, reported by Cats, Susilo and Reimal
+  (\protect\hyperlink{ref-cats_prospects_2017}{2017}).}, as indicated by
+Phillips (\protect\hyperlink{ref-PHILLIPS2014}{2014}). This effect is
+particularly pronounced in areas with limited local employment
+opportunities, necessitating extensive commutes to employment centers.
+
+The prevailing theory posits that public transit fares impose a
+significant financial burden on the incomes of the working class
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Consequently, the abolition of such fees is anticipated to
+enable these individuals to reallocate their expenditures towards a
+broader array of services and goods. Additionally, the attractiveness of
+FFPT may catalyze an influx of new residents, potentially augmenting
+local tax revenues. For the economically disadvantaged, the
+subsidization of public transit may inadvertently function as a
+redistributive mechanism, disproportionately benefiting those with
+limited mobility
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a};
+\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020}).
+
+The efficacy of these benefits is more pronounced among users sensitive
+to high transportation costs, who regularly utilize public services.
+Conversely, users with lower cost sensitivity may perceive a diminution
+in transportation barriers
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). This dynamic is instrumental in the modal transition from
+private vehicles (\protect\hyperlink{ref-Brown_2003}{Brown, Hess and
+Shoup, 2003}; \protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo
+and Reimal, 2017}) to public transit, a pivotal conduit for achieving
+environmental sustainability. Prolonged investigations into the shift
+from automotive to public transit usage could shed light on this
+phenomenon\footnote{As indicated by Bull, Muñoz and Silva
+  (\protect\hyperlink{ref-BULL-RCT-2021}{2021}), initial findings likely
+  represent a conservative estimate of modal transition, with public
+  transit adoption expected to escalate progressively.}.
+
+Moreover, Fare-Free systems typically operate within urban boundaries,
+exerting a pull on migration patterns
+(\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017}). A recent empirical analysis by Bull, Muñoz and Silva
+(\protect\hyperlink{ref-BULL-RCT-2021}{2021}) noted a marked increase in
+off-peak travel post-FFPT implementation, predominantly for leisure
+activities. This suggests that FFPT policies may be more efficacious in
+creating new journeys rather than altering the travel modes of current
+commuters. Nonetheless, should significant inter-city integration be
+present, the potential exclusionary effects of such segregation must be
+addressed. These considerations are also imperative when the intended
+outcome is the reduction of fossil fuel emissions. Therefore, it is
+important to measure the impact of an FFTP policy adoption on the fiscal
+health of the local government.
+
+\hypertarget{causal-inference-through-observational-studies}{%
+\subsection{Causal Inference through Observational
+Studies}\label{causal-inference-through-observational-studies}}
+
+Causal effects are fundamental to the impact evaluation of any public
+policy (\protect\hyperlink{ref-batista_domingos_2017}{Batista and
+Domingos, 2017}). A policy is developed and applied to attain specific
+objectives. Then, policymakers should review it after implementation to
+confirm its effects, particularly if the original goals were met or if
+any unexpected externalities were developed. Thus, the key causal
+question is the counterfactual: what would have happened if the policy
+had not been implemented? The answer to this issue is the policy's
+causal effect, which cannot be directly observed, however. As a result,
+the approaches used to assess causal effects seek to recover this
+unobservable variable.
+
+The gold standard for measuring the causal effect of a policy is the
+randomized controlled trial. When applied, an RCT ensures that the
+treatment is randomly assigned to the units. Therefore, the treated and
+untreated (control) groups differ only by the treatment, and its effect
+can be assessed. In this manner, the control group acts as a
+counterfactual. However, randomization is rare in public policies, even
+if it is feasible. Sometimes, the policy has already been implemented,
+and only observational data is accessible. In most cases, RCT is not
+possible because of political, ethical, or cost questions. Fare-Free is
+such a case: once there is no national transportation plan, policy
+adoption is a local administration option, where several unknown factors
+matter.
+
+To tackle these causal issues, quasi-experimental designs such as
+differences-in-differences, matching, or synthetic control have been
+used (\protect\hyperlink{ref-mostly_harmless_econometrics}{Angrist and
+Pischke, 2009}; \protect\hyperlink{ref-batista_domingos_2017}{Batista
+and Domingos, 2017}). Quasi-experimental designs aim to ``isolate'' the
+causal effect from confounders and selection bias \textit{strictu sensu}
+(\protect\hyperlink{ref-batista_domingos_2017}{Batista and Domingos,
+2017}). Confounders are variables that affect both the treatment and
+outcome variables (\protect\hyperlink{ref-pearl2018}{Pearl, 2018}).
+Without simultaneously accounting for confounding factors, it is
+impossible to determine a causal relationship between variables, as the
+measure may also be influenced by these variables. Confounding is widely
+regarded as the primary challenge in causal inference and is the
+inspiration behind the adage ``correlation does not imply causation''
+(\protect\hyperlink{ref-Hernan2020}{Hernan and Robins, 2020, p. 83}).
+The increase in a municipality's positive GDP growth has a significant
+impact on tax collection and promotes the construction of FFPT, for
+example. The estimation of causal effects is subject to bias if it is
+not mathematically adjusted. Randomized controlled trials can mitigate
+confounding effects by design, while observational studies typically
+estimate causal effects by controlling for confounding variables.
+
+In that regard, the issue of why a municipality has adopted Fare-Free
+Public Transit is of concern, as the selection process is not random.
+For example, during the COVID-19 pandemic, several municipalities
+witnessed private companies abandoning their public transit concessions.
+To fill the void, some municipalities assumed the service and provided
+it Fare-Free. This has led to a bias in the selection of subjects under
+analysis, as private companies' bankruptcy influenced the FFPT adoption.
+Consequently, the treated group may not be representative of the
+population, and some statistical control must be employed before
+generalizing the conclusions
+(\protect\hyperlink{ref-PearlMackenzie18}{Pearl and Mackenzie, 2018},
+ch.~5).
+
+Selection bias \textit{strictu sensu} occurs when common effects of the
+treatment and outcome variable are taken into account
+(\protect\hyperlink{ref-Hernan2020}{Hernan and Robins, 2020, p. 99}).
+This type of bias can arise when individuals self-volunteer to
+participate in a non-randomized study. In the case of FFTP, selection
+bias may be introduced by conditioning on the level of employment or
+wages, as the Fare-Free policy tends to increase employment and wages
+(\protect\hyperlink{ref-piazza_avaliacao_2017}{Piazza, 2017}).
+Additionally, increased tax collection through FFTP may improve state
+service acquisitions, leading to higher levels of employment. It is also
+a crucial assumption that RCTs address, although selection bias may
+still occur in these studies when some units leave the study --- i.e.,
+when there is censoring in the study.
+
+Although there are distinctions between confounding and selection bias
+\textit{strictu sensu}, econometricians and statisticians often refer to
+them generically as ``selection bias''. This is because both types of
+bias are related to the selection process, whether it be the selection
+of individuals with observed data under analysis (selection bias
+\textit{strictu sensu}) or the selection of individuals subject to the
+treatment (confounding) as stated by Hernan and Robins
+(\protect\hyperlink{ref-Hernan2020}{2020, p. 103}). In the case of FFTP,
+where policy adoption is discretionary and data covers all
+municipalities, the primary concern is confounding. Consequently, in the
+Section~\ref{sec-po}, selection bias and confounding are used
+interchangeably when there is no risk of confusion.
+
+Along with these two warnings, the structure of the FFTP's possible
+effect on tax collection requires two comparisons. To start, it is
+important to consider how the policy affects the fiscal situation in
+municipalities with and without free public transit. Additionally, one
+might want to examine how the policy impacts the fiscal situation in
+municipalities pre- and post-adoption. The first analysis compares data
+across different sections, while the second one examines data over time.
+
+However, none of them automatically provides an exact counterfactual
+(\protect\hyperlink{ref-batista_domingos_2017}{Batista and Domingos,
+2017}). Counterfactual estimation is required when there is no selection
+bias. In cross-sectional analysis, selection bias may be caused by the
+influence of the reasons for a municipality's adoption of the FFPT on
+the outcome variable. Conversely, it also can impact time-series
+analysis as concurrent time-varying variables may also influence the
+outcome of interest.
+
+Difference-in-Differences approach effectively neutralizes constant
+differences between groups, including unobservable factors, by design.
+However, other sources of selection bias may arise depending on the case
+specifics. The model requires adherence to the parallel trends
+assumption, which posits that, absent treatment, the treated group's
+trajectory would mirror that of the untreated group. While this cannot
+be directly verified, indirect methods can offer reasonable estimates.
+Additionally, two further assumptions are critical: first, the absence
+of treatment anticipation, ensuring subjects do not alter their behavior
+prior to the actual intervention; and second, the Stable Unit Treatment
+Value Assumption (SUTVA), which assumes that one unit's treatment does
+not influence another's potential outcomes. These assumptions are
+elaborated upon subsequently in Section~\ref{sec-did}.
+
+\hypertarget{sec-po}{%
+\subsection{Potencial Outcome Framework}\label{sec-po}}
+
+The assessment of the causal impact of a treatment variable on an
+outcome variable involves comparing the observed effect when the
+treatment is administered against the hypothetical scenario where the
+treatment was not applied, known as the counterfactual. However, this
+counterfactual is inherently unobservable. For instance, it is not
+feasible for the FFTP to be both implemented and not implemented
+simultaneously within any given municipality.
+
+The crux of the debate, therefore, lies in identifying a comparable unit
+(or units) that can effectively represent the counterfactual. Within the
+framework of a randomized controlled trial, the counterfactual is
+embodied by the control group, which is selected through randomization
+(\protect\hyperlink{ref-mostly_harmless_econometrics}{Angrist and
+Pischke, 2009, p. 15}; \protect\hyperlink{ref-Hernan2020}{Hernan and
+Robins, 2020}). This method is considered the gold standard as it
+engenders a high level of confidence that any observed differences in
+outcomes between the treatment and control groups are attributable
+solely to the treatment. In cases where randomization is impracticable,
+alternative statistical methodologies must be employed for impact
+evaluation.
+
+Before exploring these alternative methodologies, it is essential to
+establish a mathematical framework for causal inference. Utilizing the
+notation for potential outcomes\footnote{Pearl
+  (\protect\hyperlink{ref-pearl2018}{2018}) applies some distinct
+  notations and causal inference architecture, even with a lot in common
+  with ``potential outcomes'', mostly used in Economics.}
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2221}), let us denote \(Y_{i,t}(0, 0)\) as the outcome of interest for a
+unit that has not received the treatment during two distinct periods,
+where \(i\) represents the unit under study and \(t \in \{1,2\}\)
+signifies the period. Conversely, \(Y_{i,t}(0, 1)\) represents the
+outcome for a unit that was untreated in the first period (\(t = 1\))
+but received treatment in the subsequent period. For the sake of
+brevity, the potential outcomes notation will be simplified to
+\(Y_{i,t}(0) \equiv Y_{i,t}(0, 0)\) and
+\(Y_{i,t}(1) \equiv Y_{i,t}(0, 1)\)\footnote{It is important to note
+  that in this initial framework, groups that have always received
+  treatment (\(Y_{i,t}(1, 1)\)) and those that were previously treated
+  but are no longer receiving treatment (\(Y_{i,t}(1, 0)\)) are not
+  considered. In practice, if the treatment's effects are consistent
+  over time, groups that are always treated can serve as a control.}. In
+instances where the treatment is dichotomous, the resultant outcome is
+delineated by the following equation:
+\begin{equation} \label{eq-outcome-variable}
+Y_{i,t} = D_{i,t} \cdot Y_{i,t}(1) + (1 - D_{i,t}) \cdot Y_{i,t}(0).
+\end{equation} Here, \(D_{i,t} = 1\) signifies the administered
+treatment during period \(t\), with the observation of only one
+potential outcome\footnote{It is imperative to note that the causative
+  variable is presumed to temporally precede the outcome, hence the
+  simultaneous period \(t\) for both treatment and outcome variables
+  suggests the treatment's initiation and the outcome's culmination
+  within the same period, a concept feasible due to the discrete
+  temporal sequence.}.
+
+The primary concern lies in calculating the average effect of the
+treatment on the subjects who received it. The fundamental equation for
+estimating the Average Treatment Effect on the Treated (\(\tau_2\) or
+ATT) for the period \(t=2\) is expressed as: \begin{equation} 
+\label{eq-counterfactual}
+   \tau_2 = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1].
+\end{equation} Within this context, \{\(Y_{i,2}(0) | D_{i,2} = 1\)\}
+epitomizes the counterfactual scenario for the treated cohort in the
+second period, assuming the absence of treatment, which remains
+inherently unobservable.
+
+Therefore, \eqref{eq-counterfactual} can be rewritten to find anything
+--- \(\{Y_{i,2}(0) | D_{i,2} = 0\}\) is the natural candidate --- to act
+as a counterfactual: \begin{equation*} 
+\tau_2 = \mathbb{E}[Y_{i,2}(1)| D_{i,2} = 1] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1] + \overbrace{\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0]}^{= 0},
+\end{equation*} which can be rearranged to: \begin{equation} 
+      \tau_2 = \mathbb{E}[Y_{i,2}(1)| D_{i,2} = 1] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0]  + \underbrace{\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1]}_{\text{selection bias}}.
+\end{equation} The last term on the right side represents the
+unquantifiable selection bias. Fundamentally, this implies that should
+the potential outcomes for both the treated and untreated cohorts be
+identical --- that is,
+\(\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0]\)
+--- then the untreated cohort, henceforth referred to as the control
+group, is postulated to adopt the counterfactual position. Consequently,
+the mean difference between the observed outcomes is indicative of the
+causal treatment effect on the treated, denoted as \(\tau_2\). The
+proposal here is to adopt the Difference-in-Differences methodology to
+calculate such value, provided its prerequisites are met.
+
+\hypertarget{sec-did}{%
+\subsection{Difference-in-Differences}\label{sec-did}}
+
+The Difference-in-Differences (DiD) methodology serves as a
+quasi-experimental design for estimating the treatment's average causal
+impact on a treated group relative to a control group. This design is
+applicable when the treatment is administered concurrently or at varying
+time intervals
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024},
+ch.~9; \protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.},
+2023}). Its principal aim is to ascertain the causal effect in the
+absence of a randomized controlled trial, particularly when treatment
+allocation is non-random or endogenous, according to the terminology
+used in Economics
+(\protect\hyperlink{ref-bladimir_carrillo_bermudez_o_2024}{Bermudez,
+Bladimir Carrillo and Branco, Danyelle Santos, 2024, p. 330}). Without
+randomization, there may be pre-existing differences between the treated
+and control groups that influence the outcome of interest, which DiD
+seeks to address.
+
+Concisely, this approach involves calculating the pre- and
+post-treatment differences within each group, followed by the intergroup
+differences. To mitigate omitted variable bias (OVB) arising from
+confounders or other forms of selection bias, multiple regression
+techniques are employed as outlined in the
+Section~\ref{sec-did-covariates}. When OVB is effectively controlled
+through a comprehensive set of covariates, the DiD estimator is rendered
+unbiased and consistent, thereby facilitating the accurate estimation of
+the causal effect.
+
+Additional prerequisites must be satisfied for the validity of the
+Difference-in-Difference approach, notably the ``parallel trends''
+assumption. This postulates that, in the absence of any intervention,
+the trajectories of both the treated and untreated groups would have
+evolved in tandem (\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et
+al.}, 2023, p. 2221}). This premise, however, is inherently unverifiable
+since it pertains to a hypothetical scenario concerning the potential
+outcomes of the treated cohort. In addition, observing parallel trends
+prior to the intervention does not establish them as either a necessary
+or sufficient condition for post-intervention parallelism. Formally, the
+population-level expression of the parallel trends assumption is
+encapsulated in Equation \eqref{eq-parallel-trend}: \begin{equation}
+\label{eq-parallel-trend}
+   \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0].
+\end{equation}
+
+The presumption of parallel trends is implicitly embedded within the
+framework of linear regression analysis, specifically the Ordinary Least
+Squares (OLS) estimator. This is because the OLS estimator intrinsically
+adopts the trajectory of the control group as a surrogate for the
+counterfactual scenario of the treated group
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024},
+ch.~9.2.3). Should this assumption prove untenable, the resultant model
+estimations would be deemed inaccurate. Essentially, this necessitates
+the presence of a control group that closely mirrors the trajectory that
+the treated group would have followed in the absence of any
+intervention\footnote{A less stringent variant of this assumption exists
+  for time-varying treatments, termed `variance weighted common trends',
+  which allows for the nullification of divergent trends through
+  weighting (\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham,
+  2024}, ch.~9.6.4).}. Nonetheless, this too cannot be empirically
+verified. An indirect method to gauge the plausibility of this
+assumption involves examining the pre-treatment trends within both
+cohorts
+(\protect\hyperlink{ref-bladimir_carrillo_bermudez_o_2024}{Bermudez,
+Bladimir Carrillo and Branco, Danyelle Santos, 2024, p. 336}).
+
+In the conventional Difference-in-Differences methodology, variables
+that could potentially introduce selection bias yet remain constant over
+time are naturally attenuated. This attenuation occurs as the
+methodology inherently controls for these fixed effects by computing the
+differential of the observed variable for the same unit across two
+distinct time periods. Consequently, the DiD approach effectively
+neutralizes the influence of time-invariant confounding variables
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024},
+ch.~9.2.2). For instance, in the FFTP scenario, any geographical or
+legislative factors that remain constant over time and could affect the
+adoption of a policy are effectively controlled for in the estimation
+process, irrespective of their direct measurement.
+
+However, this equilibrium can be disrupted by certain elements, as noted
+by Roth \textit{et al}. (\protect\hyperlink{ref-roth_whats_2023}{2023,
+p. 2229}). Specifically, confounders that fluctuate over time pose a
+significant challenge if they are correlated with regional economic
+conditions that may affect the implementation of Fare-Free policies.
+Moreover, the functional form used in the application of OLS can alter
+the assumed stability of trends. As an example, the method of
+quantifying tax revenue could infringe upon this assumption, whereas
+utilizing the logarithmic value of tax revenue might not, and the
+inverse may also be true. The prevalent strategy to address this concern
+involves adjusting for a vector of covariates, \(\boldsymbol{X_i}\), to
+simulate random assignment of the treatment
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2229}), that is detailed in Section~\ref{sec-did-covariates}.
+
+Given the pivotal nature of the parallel trend premise, Roth and
+colleagues (\protect\hyperlink{ref-roth_whats_2023}{2023, p. 2236})
+advocate for a sensitivity analysis to assess the impact of any
+deviations on the primary outcomes. They employ ``event-study'' diagrams
+to ascertain the integrity of this assumption, applying varied lagged
+values of treatment to circumvent the adverse implications of ``two-way
+fixed effects'' (TWFE) modeling
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2235}). This is done in Section~\ref{sec-event-study}. An exception
+arises when the intervention influences time-sensitive covariates,
+thereby rendering them ``bad'' controls
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2232}). Consequently, a sensitivity analysis is imperative to confirm
+the resilience of the DiD framework.
+
+Another assumption is the Stable Unit Treatment Value Assumption
+(SUTVA). This requisite posits that the potential outcomes for any given
+unit are unaffected by the particular treatments applied to other units.
+This implies an absence of interference or
+``externalities''(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham,
+2024}, ch.~4.1.5). This assumption is bifurcated into two components:
+firstly, the uniformity of treatments, which, in the context of a
+Fare-Free initiative, translates to a consistent policy application
+across all inhabitants of the municipality; secondly, the independence
+of policy effects, indicating that the adoption of a policy within one
+municipality does not directly influence the potential outcomes, such as
+the GDP of other municipalities.
+
+The SUTVA assumption is deemed viable within the context of the present
+analysis for two primary reasons. In the case of the first component,
+the feasibility of the Fare-Free program is considered in scenarios
+where it is universally applied across the entire populace. In the
+second component, the plausibility of the assumption is supported by the
+relatively dispersed arrangement of municipalities that have implemented
+the FFTP, coupled with the minimal economic interdependence observed
+amongst them.
+
+Furthermore, the identification of causal effects is contingent upon a
+third assumption termed ``no-anticipation''
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2222}). This presupposes the absence of behavioral modifications prior
+to the application of a treatment, formally expressed as
+\{\(Y_{i,1}(0) = Y_{i,1}(1)\)\} for all individuals \(i\) where
+\(D_{i,2} = 1\). Analyzing the specific scenario at hand, it is inferred
+that the prospective effects on outcomes, such as tax revenue, should
+remain uninfluenced by the populace before the enactment of a Fare-Free
+policy. Consequently, this appears to be a non-issue within the
+Fare-Free context. Additionally, akin to numerous statistical models,
+the estimation process is predicated on the sampling of independent
+clusters --- municipalities, in this instance --- from a larger
+super-population (\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et
+al.}, 2023, p. 2219}).
+
+Given the stipulated conditions and in the absence of omitted variable
+bias, the DiD model is ascertainable, as delineated by Roth
+(\protect\hyperlink{ref-roth_whats_2023}{2023, p. 2222}). The estimation
+proceeds from the foundational parallel trend assumption in the Equation
+\eqref{eq-parallel-trend}, articulated as follows: \begin{equation}
+\label{eq-counterfactual-assumptions}
+\begin{split}
+    \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1]  = & \quad \mathbb{E}[Y_{i,1}(0) | D_{i,2} = 1] + \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0] \\
+    \stackrel{\text{no-anticipation}}{=} & \quad \mathbb{E}[Y_{i,1}(1) | D_{i,2} = 1] + \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0] \\
+    \stackrel{\text{unconfoundness}}{=} & \quad \mathbb{E}[Y_{i,1} | D_{i,2} = 1] + \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0].
+\end{split}
+\end{equation} This equation is predicated on the average manifestation
+of the no-anticipation effect, where
+\(\mathbb{E}[Y_{i,1}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,1}(1) | D_{i,2} = 1]\).
+Under the unconfoundedness assumption, the DiD estimator encapsulates
+the differential of the observed mean --- see Equation
+\eqref{eq-outcome-variable} --- outcomes between the treated and control
+cohorts across both temporal phases --- represented by
+\(\mathbb{E}[Y_{i,1}|D]\) and \(\mathbb{E}[Y_{i,2}|D]\). Consequently,
+Equation \eqref{eq-counterfactual-assumptions} elucidates the
+methodology for estimating the counterfactual. By substituting this into
+Equation \eqref{eq-counterfactual}, one derives the DiD estimator as:
+\begin{equation} \label{eq-did-estimator}
+\begin{split}
+    \tau_2 & = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1] \\
+     & = \mathbb{E}[Y_{i,2} - Y_{i,1}| D_{i,2} = 1] - \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0].
+\end{split}
+\end{equation} This represents the aggregate of the effective
+Difference-in-Differences means for the population
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023}).
+However, this framework is designed to account for two periods, which
+may not be applicable in scenarios where the treatment is administered
+at varying intervals. This is addressed in the following Section.
+
+\hypertarget{sec-did-time-varying}{%
+\subsubsection{Difference-in-Differences and Time-varying
+Treatment}\label{sec-did-time-varying}}
+
+The adoption of treatments that vary over time can be addressed through
+Difference-in-Differences analysis. In the realm of social sciences,
+experimental designs are less prevalent compared to other fields,
+leading to treatments being implemented at disparate times.
+Consequently, for a unit receiving treatment at a particular time, there
+exist three potential control groups: a) units that have never been
+treated; b) units that have already been treated; and c) units that have
+not yet been treated. This scenario was observed in the implementation
+of Fare-Free Public Transit in Brazilian municipalities, a consequence
+of its federalist structure. Therefore, the implementation of the policy
+in each unit is contingent on its unique political and fiscal
+conditions.
+
+Nonetheless, the canonical DiD \(2 \times 2\) model (two periods
+\(\times\) two groups), as presented in Section~\ref{sec-did}, is not
+suitable for time-varying models
+(\protect\hyperlink{ref-Goodman-Bacon-2021-DiD}{Goodman-Bacon, 2021, pp.
+254--5}) when measuring the average treatment effect on the treated. The
+primary reason is that it considers all possible \(2 \times 2\)
+combinations, one of which involves comparing late-treated units with
+early-treated units acting as the control group, a scenario that is not
+plausible. Hence, the model must be adapted to accommodate time-varying
+treatments.
+
+The concept of time-varying is formalized by defining periods as
+\(t = 1, 2, \dots, T\), where the treatment can be implemented at any
+time \(t > 1\). The time of implementation is indexed by
+\(G_i = \min\{t: D_{i,t} = 1\}\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2223}). If the treatment is never implemented, then \(G_i = \infty\),
+which is denoted by a binary variable, defined as an indicator function
+\(C_i = \mathds{1}\{G_i = \infty\} = 1\). In the potential outcomes
+framework, the outcome variable is denoted by
+\(Y_{i, t}(\boldsymbol{0}_{g-1}, \mathds{1}_{T-g+1})\), or simply
+\(Y_{i, t}(g)\), when the treatment is implemented at time \(g\). For a
+unit that never receives treatment, the outcome variable is represented
+by \(Y_{i, t}(\boldsymbol{0}_{T})\), denoted by \(Y_{i, t}(\infty)\).
+
+The intervention being scrutinized is dichotomous, and we will consider
+only municipalities exhibiting an irreversible nature; that is,
+subsequent to its implementation, the policy remains in effect
+indefinitely. It fundamentally constructs a framework around the
+group-time average treatment effect on the treated (ATT), articulated as
+\(ATT(g, t) = \mathbb{E}[Y_{i,t}(g) - Y_{i,t}(\infty) | D_{i,t} = 1, G_i = g]\),
+wherein \(G_i\) denotes the cohort to which unit \(i\) belongs, having
+been administered the treatment commencing in period \(g\). This
+methodology was conceptualized in Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}). To illustrate,
+\(ATT(2014, 2016)\) signifies the impact of the FFTP in 2016 contingent
+upon its adoption by the municipality in 2014. Presuming the parallel
+trend assumption\footnote{Refer to Section~\ref{sec-did-covariates} for
+  the scenario where parallel trends are valid solely upon conditioning
+  on covariates.} and the absence of anticipatory behavior, the ATT is
+discerned through the disparity between the outcomes of the treated and
+those of the control group (those awaiting treatment or never treated)
+during periods \(t\) and \(g-1\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023}):
+\begin{equation*} 
+    ATT(g, t) = \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g] -  \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g'] \quad \text{for any} \quad g' > t.
+\end{equation*} This can be extended to encompass all
+\(\mathbb{G}_{comp} = \{g: g' > t\}\) as delineated by
+\begin{equation} \label{eq-att}
+    ATT(g, t) = \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g] -  \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i \in \mathbb{G}_{comp}].
+\end{equation} The empirical estimation of ATT is derived from its
+sample counterpart (\protect\hyperlink{ref-roth_whats_2023}{Roth
+\emph{et al.}, 2023, p. 2226}):
+\begin{equation} \label{eq-att-estimator}
+    \widehat{ATT}(g, t) = \frac{1}{N_g} \sum_{i:G_i=g} \left[ Y_{i,t} - Y_{i,g-1} \right] -  \frac{1}{N_{\mathbb{G}_{comp}}} \sum_{i:G_i \in \mathbb{G}_{comp}} \left[ Y_{i,t} - Y_{i,g-1} \right],
+\end{equation} where \(N\) represents the count of units within each
+respective sample.
+
+The heterogeneous effects of the FFTP policy are revealed through
+individual causal parameters. However, the numerous interactions between
+\(g\) and \(t\) may complicate the interpretation of the average
+treatment effect on the treated for each permutation. To simplify, the
+methodology computes a weighted average of these ATTs, following the
+guidelines of Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}) and Roth \emph{et al.}
+(\protect\hyperlink{ref-roth_whats_2023}{2023}). This approach estimates
+the mean effects for each interval (\(l\)) after treatment begins,
+highlighting the policy's varying impacts over time and offering an
+insight into its outcomes.
+
+Probably, the economic and political milieu surrounding the
+implementation of Fare-Free policies necessitates an averaging model for
+a specified duration post-intervention, articulated as:
+\begin{equation} 
+\label{eq-att-estimator-avg}
+    ATT_{l}^{w} = \sum_{g} w(g) \cdot ATT(g, g + l).
+\end{equation} Here, \(w(g)\) signifies the weight assigned to the ATT
+during the interval \(g\), which is uniformly defined across cohorts or
+in accordance with the prevalence of each time span \(l\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2227}). Alternatively, the policy's effect can be averaged over a
+specific year of implementation, revealing diverse effects across
+different cohorts and providing a comprehensive analysis. Other less
+common comparisons are also possible and may be applied in this context.
+The employed aggregations are presented in
+Section~\ref{sec-aggregating}. In the inference phase, bootstrapping
+techniques are employed to construct confidence intervals for the ATTs,
+as outlined in Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 216}). Finally, this
+foundational model is adaptable for the inclusion of covariates.
+
+\hypertarget{sec-did-covariates}{%
+\subsubsection{Difference-in-Differences and Parallel Trends Accounting
+for Covariates}\label{sec-did-covariates}}
+
+The pronounced variation among Brazilian municipalities in aspects such
+as area, gross product, and demography may impinge upon the assumption
+of parallel trends. This variance has the potential to introduce bias
+within the Difference-in-Differences model. To mitigate this risk, the
+model's extension to encompass covariates enhances its robustness
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2229}). To succinctly put it, we presume that parallel trends are
+exhibited solely by municipalities that share similar attributes. The
+assumption of parallel trends, conditional on covariates, is
+encapsulated by the following equation: \begin{equation}
+\label{eq-parallel-trend-cond}
+   \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 1, \boldsymbol{X_i}] = \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0, \boldsymbol{X_i}] \quad (\text{almost surely}),
+\end{equation} where \(\boldsymbol{X_i}\) represents a vector of
+covariates prior to treatment. This paradigm is further extrapolated to
+accommodate models with time-varying treatments as expounded by Callaway
+and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a}).
+
+A critical consideration when incorporating covariates is the
+prerequisite of having both treated and untreated municipalities within
+a particular covariate set,
+i.e.~\(\boldsymbol{X_i} = x, \text{ for some } i\) across both cohorts.
+This requirement is encapsulated in the ``strong overlap assumption''.
+In a formal sense, this postulates that for an infinitesimal
+\(\varepsilon > 0\), the probability
+\(\varepsilon < P(D_{i,t} = 1 | X_i) < 1 - \varepsilon\) must hold for
+every \(\boldsymbol{X}\) within the sample
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2230}). In Section~\ref{sec-data}, a partial analysis is shown.
+Furthermore, the Equation \eqref{eq-did-estimator} undergoes a
+reformulation with the integration of covariates, delineated as:
+\begin{equation} \label{eq-did-estimator-covariates}
+\begin{split}
+    \tau_2 & = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1, \boldsymbol{X_i}] \\
+     & = \mathbb{E}[Y_{i,2} - Y_{i,1}| D_{i,2} = 1, \boldsymbol{X_i}] - \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0, \boldsymbol{X_i}].
+\end{split}
+\end{equation}
+
+Upon delineating the theoretical framework and its foundational
+premises, the subsequent phase involves an empirical analysis for
+estimation and inference. Within the domain of empirical scrutiny for a
+nonparametric model, three methodologies stand out as underscored by
+Callaway and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a,
+pp. 205--6}): Outcome Regression (OR), Inverse Probability Weighting
+(IPW), and Doubly Robust (DR) estimators. The DR paradigm amalgamates
+IPW and OR, commencing with the computation of the generalized
+propensity score, succeeded by an outcome regression. A key requirement
+is the accurate specification of either the outcome evolution or the
+propensity score model for the never-treated --- or not-yet-treated, or
+both, depending on the assumptions --- units
+(\protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna and Zhao, 2020a, p.
+105}).
+
+Therefore, doubly robust has been selected for the present study owing
+to its resilience to errors in model specification
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 212}). The model for propensity scores characterizes the likelihood
+of a unit being administered treatment within a specific timeframe,
+given the covariates. By designating the never-treated and the
+not-yet-treated cohorts as the control group\footnote{In Callaway and
+  Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a}), scenarios
+  where units yet to be treated serve as the control group are also
+  elaborated.}, the model is operationalized through logistic regression
+(\protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna and Zhao, 2020a, pp.
+108--9}), and the probability of initial treatment adoption is
+articulated as
+\(p_{g,T}(\boldsymbol{X}) = P(G_g=1 | \boldsymbol{X}, G_g + C = 1)\), or
+in a more condensed form, \(p_{g}(\boldsymbol{X})\)\footnote{From now
+  on, it is assumed that the index \(i\) is implicit for the sake of
+  brevity.}.
+
+The theoretical approach of the Difference-in-Differences methodology is
+essential for the examination of the FFTP policy's causal impact on
+municipal tax revenues. From the empirical point of view, the
+integration of covariates is consistent under the doubly robust
+estimation methodology, which is explicated in Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}). The DR estimation is
+articulated as follows: \begin{equation}
+\label{eq-dr-identification}
+    ATT(g, t) = \mathbb{E} \left[ \left(\frac{G_g}{\mathbb{E}[G_g]} - \dfrac{ \dfrac{p_g(\boldsymbol{X}) C}{1 - p_g(\boldsymbol{X})}     }{\mathbb{E} \left[\dfrac{p_g(\boldsymbol{X}) C}{1 - p_g(\boldsymbol{X})} \right]} \right) (Y_t - Y_{g-1} - m_{g,t}(\boldsymbol{X}) ) \right].
+\end{equation} The term
+\(m_{g,t}(\boldsymbol{X}) = \mathbb{E}[Y_t - Y_{g-1}|\boldsymbol{X}, C = 1]\)
+denotes the expected outcome regression for the population that has
+never or not yet been treated
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 205}; \protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna and Zhao,
+2020a, p. 104}).
+
+For all these reasons, the DiD model's estimation can be executed by
+employing a two-step double robust estimator --- once more, contingent
+upon the validity of the parallel trends assumption --- as proposed by
+Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a})\footnote{In the
+  original model, the \(\delta\) parameter, indicates a less stringent
+  nonanticipation assumption. However, it is not considered herein. For
+  an in-depth discussion, refer to Callaway and Sant'Anna
+  (\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 204}).}. The
+initial step involves the estimation of the following weights for the
+treated and the control groups, respectively: \begin{equation*}
+\widehat{w}_g^{treat} = \frac{G_g}{\mathbb{E}_n[G_g]}, \quad
+\widehat{w}_g^{control} = \dfrac{ \dfrac{\widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g) C}{1 - \widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g)} }{\mathbb{E}_n \left[\dfrac{\widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g) C}{1 - \widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g)} \right]},
+\end{equation*} where the operator
+\(\mathbb{E}_n[Z] = n^{-1} \sum_{i=1}^n Z_i\) denotes the empirical mean
+of a variable \(Z\). Additionally, the term
+\(\widehat{p}_g(\cdot; \widehat{\pi}_g)\) represents the estimated
+propensity score that is derived using a logistic regression model
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 212}). The second step of the estimation process is encapsulated by:
+\begin{equation}
+\label{eq-dr-estimation}
+    \widehat{ATT}(g, t) = \mathbb{E}_n \left[ (\widehat{w}_g^{treat} - \widehat{w}_g^{control}) (Y_t - Y_{g-1} - \widehat{m}_{g,t}(\boldsymbol{X}; \widehat{\beta}_{g,t}) ) \right],
+\end{equation} where
+\(\widehat{m}_{g,t}(\boldsymbol{X}; \widehat{\beta}_{g,t})\) expresses
+the outcome regression, which is obtained through a linear regression
+model, as indicated by Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 212}). That is the
+empirical version of the Equation \eqref{eq-dr-identification}.
+
+In conclusion, the process of deducing the confidence interval relevant
+to asymptotic inference is effectively executed by employing a direct
+multiplier bootstrapping approach. This technique is comprehensively
+explicated in Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, pp. 212--215}).
+Collectively, these procedures facilitate the computation of the causal
+influence of the FFPT on tax revenues, thereby enabling the subsequent
+deduction concerning the policy's impact on the fiscal dynamics of
+Brazilian municipalities.
+
+\hypertarget{sec-aggregating}{%
+\subsubsection{Aggregating Average Treatment
+Effects}\label{sec-aggregating}}
+
+Various aggregative frameworks may be constructed based on the Equation
+\eqref{eq-att-estimator-avg}. The initial synthesis of average effects
+pertains to the calculation of treatment impacts within a particular
+cohort over time. This synthesis facilitates the comprehension of the
+heterogeneity effect among cohorts that commenced participation
+simultaneously. The parameter delineated by Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}) is articulated as
+follows: \begin{equation} \label{eq-group-aggte}
+\theta_{sel}(g) = \frac{1}{T - g + 1} \sum_{t=g}^{T} ATT(g, t).
+\end{equation} Here, \(\theta_{sel}(g)\) represents the mean effect
+throughout all subsequent periods post-treatment for group \(g\). It is
+imperative to acknowledge that each temporal instance is accorded
+equivalent significance. Additionally, a singular coefficient
+encapsulating comprehensive effects can be deduced as:
+\begin{equation} \label{eq-group-aggte-overall}
+\theta_{sel}^O = \sum_{g \; \in \; \mathbb{G}} \theta_{sel}(g) P(G = g|G \leq T).
+\end{equation} This cumulative parameter is the general-purpose
+parameter proposed by Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 211}) for those
+seeking a singular summarizing figure. It equates to the mean treatment
+effect experienced by all entities subjected to treatment at a unique
+temporal juncture and is the parameter most closely aligned with the
+traditional DiD estimate within a \(2 \times 2\) framework.
+
+The DiD model further provides a dynamic interpretation via an
+aggregation predicated on the duration of treatment exposure. Initially,
+let \(e = g - t\) denote the elapsed time since the initiation of
+treatment. Therefore, the aggregation is:
+\begin{equation} \label{eq-dyn-time-aggte}
+\theta_{es}(e) = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{G + e \leq T\} P(G = g|G + e \leq T) ATT(g, g + e).
+\end{equation} The comprehensive summation is given by:
+\begin{equation} \label{eq-dyn-overall}
+\theta_{es}^O = \frac{1}{T-1} \sum_{e = 0}^{T-2} \theta_{es}(e).
+\end{equation}
+
+The aggregation under discussion embodies complexities, as delineated by
+Callaway and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a,
+pp. 208--10}). Variability in treatment exposure duration across
+units---particularly, the longer exposure of initially treated
+units---complicates the cumulative effect analysis. The dynamic weights
+in Equation \eqref{eq-dyn-time-aggte}, which are dependent on the
+duration of treatment across units, necessitate careful adjustment.
+Comparisons across varying treatment durations not only reflect
+differences in treatment effects but also alterations in group
+composition, potentially leading to erroneous conclusions if the dynamic
+weights are not properly calibrated.
+
+Consequently, the authors define a temporal event
+\(e' \text{ such that } 0 \leq e \leq e' \leq T - 2\), and the structure
+of balanced aggregation for lucid interpretation is delineated
+thereafter: \begin{equation} \label{eq-bal-dyn-time-aggte}
+\theta_{es}^{bal}(e; e') = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{G + e' \leq T\}  ATT(g, g + e) P(G = g|G + e' \leq T).
+\end{equation} The specified equation represents the mean impact
+subsequent to \(e\) iterations, ensuring that each group-time entity is
+equal and has undergone treatment for a minimum of \(e'\) durations.
+Consequently, the aggregate effect can be deduced as follows:
+\begin{equation} \label{eq-dyn-bal-overall}
+\theta_{es}^{O, bal}(e') = \frac{1}{e' + 1} \sum_{e = 0}^{e'} \theta_{es}^{bal}(e, e').
+\end{equation}
+
+Finally, an alternative aggregation method computes the average
+treatment effect at a given calendar time \(t\) across all entities that
+have received treatment by that time, which is articulated as:
+\begin{equation} \label{eq-cal-time-aggte}
+\theta_{c}(t) = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{t > g\}  ATT(g, t) P(G = g| G \leq T).
+\end{equation} This equation yields the mean effect for all entities
+treated up to time \(t\). The comprehensive version of this aggregation
+is expressed by: \begin{equation} \label{eq-dyn-overall}
+\theta_{t}^O = \frac{1}{T-1} \sum_{t = 2}^{T} \theta_{c}(t).
+\end{equation}
+
+Each aggregation technique facilitates an interpretation of the joint
+impact, which must be approached with prudence, particularly in
+scenarios characterized by significant heterogeneity in treatment
+effects. The FFPT case exemplifies such a scenario, as evidenced in the
+Section~\ref{sec-iss-results}. Conversely, these diverse aggregation
+methods provide a nuanced analysis of effects, thereby enhancing the
+evaluation of policy implications.
+
+\newpage
+
+\hypertarget{sec-materials-methods}{%
+\section{Materials and Methods}\label{sec-materials-methods}}
+
+This section delineates the computational resources, datasets, and
+statistical procedures employed in the empirical investigation. The
+dataset is organized in a longitudinal panel structure, comprising
+variables pertinent to Brazilian municipalities spanning from 2003 to
+2019. This dataset serves as the foundation for evaluating the causal
+effects of the Fare-Free Public Transit initiative on the fiscal
+outcomes of municipalities, specifically tax revenue generation. The
+methodological framework adopted is the Difference-in-Differences (DiD)
+approach, which has been augmented to incorporate dynamic treatment
+effects and ensure the assumption of parallel trends is met, conditional
+on observed covariates. The inferential analysis is facilitated by the
+implementation of a doubly robust estimation technique, culminating in
+an aggregated assessment that elucidates the overall fiscal implications
+of the transportation policy.
+
+\hypertarget{sec-r-packages}{%
+\subsection{R packages}\label{sec-r-packages}}
+
+The main packages used in the analysis --- and its summary descriptions
+--- are the following:
+
+1- \textit{\underline{Difference-in-Differences (did)}}
+(\protect\hyperlink{ref-did_r}{Callaway and Sant'Anna, 2021b}): The
+\textbf{did} R package contains tools for computing average treatment
+effect parameters in a Difference-in-Differences setup allowing for: a)
+More than two time periods; b) Variation in treatment timing (i.e.,
+units can become treated at different points in time); c) Treatment
+effect heterogeneity (i.e, the effect of participating in the treatment
+can vary across units and exhibit potentially complex dynamics,
+selection into treatment, or time effects); d) The parallel trends
+assumption holds only after conditioning on covariates.
+
+2- \textit{\underline{Doubly Robust Difference-in-Differences}}
+(\protect\hyperlink{ref-DRDID_r}{Sant'Anna and Zhao, 2020b}): The
+\textbf{DRDID} R package implements different estimators for the Average
+Treatment Effect on the Treated (ATT) in Difference-in-Differences
+setups where the parallel trends assumption holds after conditioning on
+a vector of pre-treatment covariates. It is used through the DiD
+package.
+
+\hypertarget{sec-data}{%
+\subsection{Data}\label{sec-data}}
+
+In the present analysis, the Fare-Free public transit policy is examined
+as a quasi-experimental design. Given the non-randomized nature of the
+intervention, it is imperative to account for potential confounding
+variables to ascertain the causal impact of fare exemption on tax
+revenue. If all needed information is available, then potential outcomes
+can be treated as random, conditional on covariates. The data to fit the
+models needs to be in the ``panel data'' format (longitudinal data, in
+Statistics jargon). In summary, the data must have information over the
+units (municipalities) and time (years) and no restriction on time
+series correlation is necessary, in principle
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 203}).
+
+Therefore, data pertaining to Brazilian municipalities will be utilized
+for this study. The potential confounders variables will serve as
+control covariates (\(\boldsymbol{X_i}\)) within the
+Difference-in-Differences analytical framework. The dataset encompasses
+municipal records spanning from 2003 to 2019, thus presenting a hybrid
+of cross-sectional and time series data. Details regarding the
+implementation year of the FFPT policy can be found in Santini
+(\protect\hyperlink{ref-Santini-FFPT-2024}{2024})\footnote{Accessed on
+  05/04/2024}, while the tax revenue data has been procured from
+Instituto de Pesquisa Econômica Aplicada (IPEA)
+(\protect\hyperlink{ref-IPEA-iss-2020}{2020}). From the Brazilian
+Institute of Geography and Statistics (IBGE), the datasets are:
+Municipal Gross Domestic Product (GDP), population projections, and land
+area.
+
+\hypertarget{sec-methods}{%
+\subsection{Methods}\label{sec-methods}}
+
+The assessment of the Fare-Free Public Transit (FFTP) policy's impact on
+tax revenue necessitates the application of the
+Differences-in-Differences (DiD) approach, as delineated in Section DID
+(Section~\ref{sec-did}). This methodology is necessitated due to the
+impracticality of a randomized controlled trial (RCT). Given the
+temporal variation in policy adoption, a time-varying treatment analysis
+was conducted, as explicated in Section~\ref{sec-did-time-varying}.
+Control groups were constituted by municipalities that have never
+implemented the policy or have not yet done so, limiting the sample to
+states with at least one municipality that has enacted the policy. The
+inception year of the FFTP served as the criterion for group
+classification.
+
+Data compilation, as detailed in Section~\ref{sec-data}, was executed
+utilizing official institutional websites. Section~\ref{sec-exploratory}
+elucidates the primary data characteristics, providing essential
+insights into the FFTP, tax collection, and control variables ---
+employed to mitigate selection bias---with foundational discussions
+presented in Section~\ref{sec-did-covariates}. Economic and demographic
+variables were logarithmically transformed to minimize data format
+discrepancies. Additionally, monetary variables were adjusted for
+inflation using the Broad Consumer Price Index (IPCA)\footnote{Brazil's
+  CPI.} to reflect December 2020 values. The R-packages, as introduced
+in Section~\ref{sec-r-packages}, underpin the principal methodological
+framework, with function outputs tailored to align with the findings and
+discussions in the results in Chapter~\ref{sec-results} and discussions
+in Chapter~\ref{sec-disc-conclusions}.
+
+The primary model's estimation, pursuant to Equation
+\eqref{eq-att-estimator}, represents the initial phase in evaluating
+potential aggregations, as discussed in Section~\ref{sec-aggregating}.
+This phase encompasses group, dynamic (whether balanced or not), and
+calendar time aggregations to ensure the robustness of the results,
+safeguarding against the possibility of spurious findings contingent
+upon the structural design of the model. These aggregations were
+facilitated by the functionalities provided within the referenced R
+packages, with all inferential statistics reported at a 95\% confidence
+interval. To further fortify against selection bias, diverse sets of
+covariates were employed, alongside an examination of the parallel
+trends assumption via an event-study analytical framework.
+
+\newpage
+
+\hypertarget{sec-results}{%
+\section{Results}\label{sec-results}}
+
+The results are presented in the following sections. The first section
+details the exploratory data analysis, which includes the staggered
+treatment assignment of the Fare-Free Public Transit policy. The
+subsequent sections delineate the causal inference analysis,
+encompassing the estimation of the Average Treatment Effect on the
+Treated and the aggregated treatment effects. The final section provides
+a comprehensive analysis of the policy's fiscal implications on
+Brazilian municipalities.
+
+\hypertarget{sec-exploratory}{%
+\subsection{Exploratory Data Analysis}\label{sec-exploratory}}
+
+Therefore, the units subject to treatment or acting as control are in
+Figure~\ref{fig-plot-staggered}. The implementation of staggered
+treatment assignments frequently characterizes quasi-experimental
+methodologies. This approach is notable in the adoption of the Fare-Free
+policy. Within the timeframe of 2003 to 2019, a total of 27
+municipalities elected to adopt this policy. Given that the enactment of
+such a policy is subject to discretionary application, the proposed
+methodological framework must be employed contingent upon the
+dependability of its underlying assumptions.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-plot-staggered-1.pdf}
+
+}
+
+\caption{\label{fig-plot-staggered}Staggered treatment assignment for
+the Fare-Free Public Transit policy.}
+
+\end{figure}
+
+In the assessment of causative factors influencing an outcome variable,
+it is anticipated that a variation in value, either ascending or
+descending, will be observed. This expectation is predicated on the
+hypothesis that the cause under evaluation exerts a measurable effect on
+the outcome variable in question. The average by a cohort of the
+treatment effect on the ISS revenue is presented in
+Figure~\ref{fig-iss-cohort}. The term `cohort' refers to a pool of
+municipalities that have concurrently implemented the Fare-Free within
+the same calendar year.
+
+Observationally, these cohorts have demonstrated a trend of progressive
+growth in ISS revenue in the years succeeding their adoption of the
+FFTP, maintaining an upward trajectory or reversing a prior decline.
+This pattern indicates a period of adjustment and eventual stabilization
+at an elevated operational plateau, reflecting the assimilation of the
+new public transit methodology.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-iss-cohort-1.pdf}
+
+}
+
+\caption{\label{fig-iss-cohort}Log(ISS) revenue by cohort. The treatment
+period is in blue. Vertical axes vary according to the subplot.}
+
+\end{figure}
+
+The overlapping of variable information sets constitutes an additional
+assumption within the model framework (see
+Section~\ref{sec-did-covariates}). This necessitates verification
+through a descriptive analytical approach. The density plot, as depicted
+in Figure~\ref{fig-density}, illustrates that the distributions of the
+response variables and covariates largely coincide. Accounting for
+time-varying treatment conditions, descriptive statistics for the
+reference year of 2010, are presented irrespective of the actual
+treatment starting point. The graphical representation reveals that the
+logarithmic transformation of the territorial area exhibits a highly
+similar distribution across both treated and untreated groups. The
+remaining three variables, also transformed logarithmically, display
+minor distributional discrepancies; however, the extent of overlap and
+the similarity in the design of the curves remain noticeable.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-density-1.pdf}
+
+}
+
+\caption{\label{fig-density}Density plot of the response variables and
+covariates.}
+
+\end{figure}
+
+Furthermore, the mean and median values, referenced in
+Table~\ref{tbl-descriptive-mean} and Table~\ref{tbl-descriptive-median}
+respectively, highlight the compositions between the treated and control
+groups. While the mean differences for the logarithms of ISS collection,
+population, and GDP are statistically significant, the order statistics
+portray a more congruent pattern.
+
+\hypertarget{tbl-descriptive-mean}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lcccc}
+\caption{\label{tbl-descriptive-mean}Descriptive statistics of the mean response variables and covariates by
+treatment status. }\tabularnewline
+
+\toprule
+\textbf{Variable (log)} & \textbf{Treated}, N = 27\textsuperscript{\textit{1}} & \textbf{Untreated}, N = 3,037\textsuperscript{\textit{1}} & \textbf{Difference}\textsuperscript{\textit{2}} & \textbf{95\% CI}\textsuperscript{\textit{2,3}} \\ 
+\midrule\addlinespace[2.5pt]
+ISS collection & 14.80 (1.33) & 13.60 (1.89) & 1.2 & 0.67, 1.7 \\ 
+Population & 9.87 (0.78) & 9.39 (1.23) & 0.48 & 0.17, 0.79 \\ 
+GDP & 13.50 (1.10) & 12.42 (1.49) & 1.1 & 0.64, 1.5 \\ 
+Territorial area & 5.79 (1.09) & 5.96 (1.04) & -0.17 & -0.60, 0.26 \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+\textsuperscript{\textit{1}}Mean (SD)\\
+\textsuperscript{\textit{2}}Welch Two Sample t-test\\
+\textsuperscript{\textit{3}}CI = Confidence Interval\\
+\end{minipage}
+\endgroup
+
+\hypertarget{tbl-descriptive-median}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lcc}
+\caption{\label{tbl-descriptive-median}Descriptive statistics of median response variables and covariates by
+treatment status. }\tabularnewline
+
+\toprule
+\textbf{Variable (log)} & \textbf{Treated}, N = 27\textsuperscript{\textit{1}} & \textbf{Untreated}, N = 3,037\textsuperscript{\textit{1}} \\ 
+\midrule\addlinespace[2.5pt]
+ISS collection & 14.68 (13.74, 15.89) & 13.33 (12.25, 14.74) \\ 
+Population & 9.89 (9.25, 10.35) & 9.24 (8.47, 10.07) \\ 
+GDP & 13.26 (12.80, 14.19) & 12.11 (11.31, 13.21) \\ 
+Territorial area & 5.99 (5.21, 6.45) & 5.87 (5.25, 6.60) \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+\textsuperscript{\textit{1}}Median (IQR)\\
+\end{minipage}
+\endgroup
+
+Given that these variables exhibit a certain level of asymmetry, even on
+a logarithmic scale, these ordered summaries provide additional insight
+into the overlapping conditions. Consequently, the current dataset may
+satisfy several of the Difference-in-Differences model's
+presuppositions.
+
+\hypertarget{application}{%
+\subsection{Application}\label{application}}
+
+Two pivotal inquiries in assessing the validity of a causal model via
+observational data pertain to the determinants of treatment allocation
+and the treated units' knowledge of the outcome variable. Selection bias
+introduces noise into the estimation of causal effects, necessitating
+meticulous scrutiny. The dependency of treatment adoption on antecedent
+conditions of the outcome variable amplifies the need for vigilance in
+affirming the model's presuppositions.
+
+In the present case, the proposition of a Fare-Free Public Transit
+policy is conducted by a municipal mayor articulation on the local
+legislature's endorsement, contingent upon a demonstration of fiscal
+viability. Given that budgetary projections are speculative, the actual
+fiscal condition of the municipality does not constitute a primary
+impediment. Furthermore, the collection of the Service Tax mirrors
+economic activity, making a contrived effort to inflate it to justify
+FFTP implementation unlikely.
+
+Moreover, the decision-making process encompasses all local political
+entities. Debates surrounding FFTP typically engage civil organizations,
+non-governmental organizations, public transit users, and others,
+indicating that policy enactment is seldom the purview of a solitary
+individual or confined to a select group of municipalities. In the
+absence of specific legislative mandates for this type of public transit
+policy, the collective nature of the decision-making precludes the
+existence of an independent cause within this research milieu that would
+render all treated entities as unique and thus create insoluble
+selection bias dilemmas.
+
+Within the context of the reciprocal relationship between treatment and
+outcome variables, the enactment of FFTP policy does not appear to be a
+direct consequence of fluctuations in Service Tax revenue. Additionally,
+since the impact of FFTP on tax revenues remains undetermined, increased
+tax income is not the primary impetus behind the policy's introduction.
+Given that public transit expenses often represent a significant portion
+of household budgets, the political capital gained by the implementing
+authority may warrant such fiscal commitments. Other motivations
+outlined in Section~\ref{sec-fftp-policy} could also hold significance.
+
+\hypertarget{sec-iss-results}{%
+\subsection{Tax on Service (ISS) Revenue}\label{sec-iss-results}}
+
+The Service Tax (ISS) is intrinsically tied to economic activities,
+making it vulnerable to shifts in the allocation of funds previously
+earmarked for public transit costs. It has been suggested that the
+income elasticity of services is considerable
+(\protect\hyperlink{ref-fuchs_1965}{Fuchs, 1965}). This implies that a
+family's consumption of services and goods tends to increase as its
+disposable income rises, exemplified by savings from transportation
+expenses. If services exhibit greater income elasticity than goods, an
+increase in service consumption patterns and, consequently, ISS tax
+revenue is anticipated\footnote{Should goods demonstrate greater
+  elasticity than services upon the release of income, a heightened
+  condition of tax on goods would be observed.}.
+
+If this hypothesis is validated, implementing the Fare-Free
+Transportation Policy could lead to a surge in consumption that exceeds
+organic growth, thus enhancing tax revenues beyond the existing trend.
+This potential uptick in consumption could improve individual welfare
+and strengthen the financial stability of municipal governments via
+increased tax collections. Nevertheless, the sufficiency of this
+increase to counterbalance the related expenditures warrants additional
+empirical scrutiny.
+
+\hypertarget{group-treatment-effects}{%
+\subsubsection{Group Treatment Effects}\label{group-treatment-effects}}
+
+Aggregating groups based on the year of Fare-Free Public Transit
+adoption entails calculating the mean causal impact on the dependent
+variable for entities that implemented the policy concurrently.
+Additionally, the aggregate average treatment effect on the treated is
+derived as a weighted average across all group values. This
+dual-aggregated metric more closely approximates the estimator used in
+conventional ``two-way'' fixed effects regression models, as referenced
+by Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 211}). The model base
+is given in the Section~\ref{sec-did-covariates}, which results are
+aggregated by the process delineated by Equation \eqref{eq-group-aggte},
+while the comprehensive summary of the ATT is computed following
+Equation \eqref{eq-group-aggte-overall}. The not yet treated units were
+also included in the analysis, as part of the control units.
+
+The summary outcomes are displayed in
+Figure~\ref{fig-pop_gdp_pop_group}, where five groups demonstrated
+statistically significant positive effects, and four exhibited negative
+ones. The results are also presented in
+Table~\ref{tbl-pop_gdp_pop_group}. The overall summary is statistically
+positive and significant, suggesting that the enactment of FFTP is
+associated with an 10.1\% {[}3.6\%, 16.6\%{]} increase in ISS tax
+revenue, potentially due to enhanced economic activity. It is worth
+evaluating such results along with the fact that early adopters present
+more years of results to be averaged.
+
+Notably, earlier adopters show larger effects, yet the divergent
+outcomes among groups signal a potential dependency on the business
+cycle and local conditions. Also, the unstable group composition may
+influence the results. It is recommended that subsequent research
+address these aspects. Also, the precision of these estimates is likely
+to improve as additional municipalities adopt the policy.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-pop_gdp_pop_group-1.pdf}
+
+}
+
+\caption{\label{fig-pop_gdp_pop_group}DiD for the average effect of the
+treatment by group (GDP, population, and area logarithms as
+covariates).}
+
+\end{figure}
+
+\hypertarget{tbl-pop_gdp_pop_group}{}
+\begin{table}[!h]
+\caption{\label{tbl-pop_gdp_pop_group}DiD for the average effect of the treatment by group (GDP, population,
+and area logarithms as covariates). }\tabularnewline
+
+\centering\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}l}
+\toprule
+Event time & Estimate (ATT) & Std. Error & 95\% Lower Bound & 95\% Upper Bound & Number of units & \\
+\midrule
+2004 & 0.435 & 0.015 & 0.399 & 0.470 & 1 & *\\
+2007 & -0.293 & 0.057 & -0.431 & -0.156 & 1 & *\\
+2008 & 0.284 & 0.100 & 0.042 & 0.525 & 2 & *\\
+2009 & 0.591 & 0.249 & -0.012 & 1.195 & 1 & \\
+2010 & -0.142 & 0.009 & -0.163 & -0.121 & 1 & *\\
+\addlinespace
+2011 & 0.285 & 0.083 & 0.083 & 0.487 & 2 & *\\
+2012 & -0.137 & 0.014 & -0.172 & -0.103 & 1 & *\\
+2013 & -0.034 & 0.073 & -0.210 & 0.142 & 1 & \\
+2014 & 0.312 & 0.099 & 0.073 & 0.551 & 5 & *\\
+2015 & -0.491 & 0.089 & -0.706 & -0.276 & 1 & *\\
+\addlinespace
+2017 & 0.087 & 0.081 & -0.110 & 0.283 & 2 & \\
+2018 & 0.120 & 0.046 & 0.007 & 0.232 & 4 & *\\
+2019 & -0.112 & 0.077 & -0.298 & 0.074 & 5 & \\
+\bottomrule
+\multicolumn{7}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{7}{l}{\rule{0pt}{1em}Signif. codes: `*' confidence band does not cover 0.}\\
+\end{tabular}
+\end{table}
+
+\hypertarget{dynamic-treatment-effects}{%
+\subsubsection{Dynamic Treatment
+Effects}\label{dynamic-treatment-effects}}
+
+The variability of treatment effects may be contingent upon the
+underlying causal structure. For example, a policy might exhibit lagged
+effects if its operational mechanism necessitates behavioral
+modifications among its recipients. Conversely, a treatment could
+engender an immediate and singular alteration in the outcome variable,
+devoid of subsequent variations. Thus, an aggregation attuned to the
+duration of pre- and post-treatment exposure could elucidate the
+accommodation of dynamic effects.
+
+The temporal influence of FFTP adoption calculated using Equation
+\eqref{eq-dyn-time-aggte} is illustrated in Figure~\ref{fig-pop-gdp}. At
+this juncture, the zero-time marker denotes the immediate effect of
+adoption, while a length of \(-1\) signifies the interval just prior to
+policy implementation. Preliminary analysis suggests that estimations of
+the effect are predominantly stable pre-treatment and turn positive
+post-treatment. A discernible pattern within the graph indicates that
+the impact of FFTP on ISS revenue collection intensifies progressively,
+culminating in a peak average value approximately seven to ten years
+subsequent to adoption. Moreover, there appears to be no deviation from
+the parallel trend assumption before the introduction of the treatment,
+as evidenced by the absence of significant disparities between the
+treatment and control cohorts (as represented by the red dots).
+
+A summative assessment of the treatment effect calculated by Equation
+\eqref{eq-dyn-overall} yields a positive outcome (19.7\% {[}4.8\%,
+34.5\%{]}), signifying a beneficial influence of FFTP on ISS tax
+accrual. Nonetheless, this aggregation is subject to certain
+limitations. Given that exposure duration is contingent upon the group
+and the corresponding temporal progression, the estimates presented are
+inherently imbalanced --- that is, the effects associated with exposure
+length are assessed solely within entities that have attained such a
+temporal milestone. To rectify this imbalance, a balanced approach to
+dynamic effect aggregation may be employed.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-pop-gdp-1.pdf}
+
+}
+
+\caption{\label{fig-pop-gdp}DiD for the average effect of the treatment
+by length of exposure (GDP, population, and area logarithms as
+covariates).}
+
+\end{figure}
+
+\hypertarget{balanced-dynamic-effects}{%
+\paragraph{Balanced Dynamic effects}\label{balanced-dynamic-effects}}
+
+The dynamic effects of the FFPT policy on the Income from Service Tax
+revenue are estimated in a balanced manner delineated by Equation
+\eqref{eq-bal-dyn-time-aggte} and depicted in the
+Figure~\ref{fig-pop-gdp-area-balanced}. This analysis is confined to
+municipalities that have implemented the policy for a minimum of five
+years. Such an approach is advocated in instances of group heterogeneity
+(\protect\hyperlink{ref-did_r}{Callaway and Sant'Anna, 2021b}),
+averaging the same units across all periods preceding and succeeding the
+treatment.
+
+Conversely, the dynamics closely resemble those observed when
+considering all treated units. Prior to the implementation of FFPT, the
+treated municipalities exhibited negative/null variations in ISS tax
+collection relative to control groups. Post-treatment, this trend
+inverted, resulting in positive differentials. The overarching summary
+--- there were 15 units with complete information --- indicates an
+increase in ISS tax revenue by 15.3\% {[}0.2\%, 30.4\%{]}, albeit with
+marginal statistical significance.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-pop-gdp-area-balanced-1.pdf}
+
+}
+
+\caption{\label{fig-pop-gdp-area-balanced}DiD for the average effect of
+the treatment by length of exposure in balanced aggregation (GDP,
+population, and area logarithms as covariates).}
+
+\end{figure}
+
+\begin{table}
+
+\end{table}
+
+\hypertarget{calendar-time-treatment-effects}{%
+\subsubsection{Calendar-time treatment
+effects}\label{calendar-time-treatment-effects}}
+
+In conjunction with the aforementioned aggregations, examining the
+effect in each year of adoption could shed light on the variability of
+the treatment effect contingent on the year of analysis. The
+Difference-in-Differences framework neutralizes the influence of
+unit-specific variables that remain constant over time or affect all
+units uniformly. The ``calendar effect'' then measures the impact of
+year-specific economic conditions on the FFPT policy's influence on ISS
+collection. Notable distinct effects suggest that economic cycles may
+elucidate the variable effects. These calendar effects given by Equation
+\eqref{eq-cal-time-aggte} are illustrated in
+Figure~\ref{fig-gdp-pop-calendar}.
+
+In this particular model, the average treatment effect is 21.3\%
+{[}5.2\%, 37.4\%{]}, despite the absence of significant discrepancies in
+treatment effects across the years studied (all positive).
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-gdp-pop-calendar-1.pdf}
+
+}
+
+\caption{\label{fig-gdp-pop-calendar}DiD for the average effect of the
+treatment by calendar time (GDP, population, and area logarithms as
+covariates).}
+
+\end{figure}
+
+A last caveat is that the calendar-time treatment effects depends on the
+size of the groups. The summary statistics are in
+Table~\ref{tbl-gdp-pop-calendar}.
+
+\hypertarget{tbl-gdp-pop-calendar}{}
+\begin{table}[!h]
+\caption{\label{tbl-gdp-pop-calendar}Summary of the DiD for the average effect of the treatment by calendar
+time (GDP, population, and area logarithms as covariates). }\tabularnewline
+
+\centering\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}l}
+\toprule
+Event time & Estimate (ATT) & Std. Error & 95\% Lower Bound & 95\% Upper Bound & Number of units & \\
+\midrule
+2004 & 0.452 & 0.011 & 0.365 & 0.539 & 1 & *\\
+2005 & 0.556 & 0.014 & 0.451 & 0.662 & 1 & *\\
+2006 & 0.500 & 0.014 & 0.390 & 0.611 & 1 & *\\
+2007 & 0.256 & 0.320 & -2.248 & 2.760 & 2 & \\
+2008 & 0.077 & 0.234 & -1.751 & 1.906 & 4 & \\
+\addlinespace
+2009 & 0.180 & 0.215 & -1.505 & 1.865 & 5 & \\
+2010 & 0.053 & 0.140 & -1.042 & 1.148 & 6 & \\
+2011 & 0.007 & 0.097 & -0.748 & 0.762 & 8 & \\
+2012 & 0.100 & 0.123 & -0.865 & 1.064 & 9 & \\
+2013 & 0.027 & 0.127 & -0.964 & 1.018 & 10 & \\
+\addlinespace
+2014 & 0.165 & 0.112 & -0.714 & 1.045 & 15 & \\
+2015 & 0.273 & 0.096 & -0.477 & 1.023 & 16 & \\
+2016 & 0.254 & 0.147 & -0.893 & 1.402 & 16 & \\
+2017 & 0.228 & 0.122 & -0.722 & 1.179 & 18 & \\
+2018 & 0.147 & 0.087 & -0.530 & 0.824 & 22 & \\
+\addlinespace
+2019 & 0.134 & 0.076 & -0.458 & 0.726 & 27 & \\
+\bottomrule
+\multicolumn{7}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{7}{l}{\rule{0pt}{1em}Signif. codes: `*' confidence band does not cover 0.}\\
+\end{tabular}
+\end{table}
+
+\hypertarget{sec-sensitivity-analysis}{%
+\subsection{Sensitivity Analysis}\label{sec-sensitivity-analysis}}
+
+In this Section, a sensitivity analysis was conducted to evaluate the
+model's robustness. In the Section~\ref{sec-covariates-sensitivity},
+distinct sets of covariates are tested. In the
+Section~\ref{sec-event-study}, the parallel trends assumption is under
+(although limited) scrutiny.
+
+\hypertarget{sec-covariates-sensitivity}{%
+\subsubsection{Evaluating Distinct Covariates
+Sets}\label{sec-covariates-sensitivity}}
+
+The structure of covariates may be deemed essential to validate the
+assumption of parallel trends. In the absence of such a structure, the
+effects estimated could be confounded, leading to biased outcomes.
+Alternative model configurations could be explored to determine the
+implications of alterations in the covariate structure. These findings
+are delineated in Table~\ref{tbl-other-models}. The absence of
+covariates results in group and dynamic effects that are statistically
+indistinguishable from zero. This indicates that variables such as
+population and GDP are influential factors in the ISS collection
+outcomes when contrasting treated and untreated groups, given that their
+distributions do not fully coincide (refer to Figure~\ref{fig-density}).
+
+\hypertarget{tbl-other-models}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lrrr}
+\caption{\label{tbl-other-models}Estimated average treatment effect by different covariates structures. }\tabularnewline
+
+\toprule
+Covariate(s) & Lower bound & Upper bound &   \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Group} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & -0.013 & 0.142 &  \\ 
+Population and Area & 0.000 & 0.151 & * \\ 
+GDP and Population & 0.033 & 0.162 & * \\ 
+GDP, Population and Area & 0.036 & 0.166 & * \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Dynamic} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & -0.008 & 0.224 &  \\ 
+Population and Area & 0.030 & 0.267 & * \\ 
+GDP and Population & 0.038 & 0.330 & * \\ 
+GDP, Population and Area & 0.048 & 0.345 & * \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Calendar-time} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & 0.015 & 0.304 & * \\ 
+Population and Area & 0.039 & 0.337 & * \\ 
+GDP and Population & 0.040 & 0.367 & * \\ 
+GDP, Population and Area & 0.052 & 0.374 & * \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+Signif. codes: `*' confidence band does not cover 0.\\
+All models include an intercept.\\
+\end{minipage}
+\endgroup
+
+A comparison between the models with complete and partial covariates
+reveals a convergence of values, although the model with the full
+complement of covariates registers marginally higher values. This
+convergence bolsters the reliability of the model's findings.
+Consequently, a comprehensive covariate set, which aligns with the
+theoretical framework, ensures the maintenance of the parallel trend
+assumption and the exclusion of confounding variables.
+
+\hypertarget{sec-event-study}{%
+\subsubsection{Parallel trends: an event-study}\label{sec-event-study}}
+
+The assumption of parallel trends constitutes a foundational premise in
+the evaluation of causal inferences, despite its inherent
+unverifiability within empirical contexts. A methodological approach to
+approximate the validation of this assumption is the implementation of
+an event-study analysis, which scrutinizes the consistency of parallel
+trends prior to the intervention. This is exemplified in
+Figure~\ref{fig-event-study}, wherein the grey data points demarcate the
+pre-intervention phase, revealing negligible discrepancies antecedent to
+the adoption of treatment. Conversely, post-treatment estimations
+corroborate the findings delineated in antecedent sections.
+
+Event-studies serve as a pivotal methodology for estimating dynamic
+treatment effects utilizing panel data, wherein the zero point
+demarcates the inaugural year of intervention. Within this framework,
+temporal combinations antecedent and subsequent to treatment adoption
+are encapsulated in the regression model. Miller
+(\protect\hyperlink{ref-Miller-2023}{2023}) posits that an absence of
+trend is anticipated prior to the treatment. Deviations from this
+expected pattern may indicate the presence of confounding variables,
+potentially rendering the model specious. Such anomalies also intimate
+potential issues with the assumption of parallel trends.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{bachelor-dissertation-rafael-causal-inference_files/figure-pdf/fig-event-study-1.pdf}
+
+}
+
+\caption{\label{fig-event-study}Event-study for the average effect of
+the treatment on the ISS collection (GDP, population, and area
+logarithms as covariates).}
+
+\end{figure}
+
+The parallel trend assumption endeavors to authenticate that the
+outcomes observed are not attainable independently of the policy
+implementation. While the assumption is intrinsically linked to the
+post-treatment parallel trend --- rendering it empirically unverifiable
+--- the analysis of the pre-treatment phase can provide some evidentiary
+support. Absent pre-treatment convergence, the plausibility of
+post-treatment parallel trends sustaining becomes questionable.
+
+\newpage
+
+\hypertarget{sec-disc-conclusions}{%
+\section{Discussion and Conclusion}\label{sec-disc-conclusions}}
+
+The feasibility of an experimental design involving the random
+implementation of Fare-Free Public Transit (FFPT) is compromised due to
+its inherently political nature, which is contingent upon the agenda of
+local governance. Consequently, the assessment of causal relationships
+necessitates an observational study design. The
+Differences-in-Differences (DiD) analytical framework provides a robust
+structure for drawing causal inferences, provided that the underlying
+assumptions are met. The validity of causal effect identification is
+contingent upon the satisfaction of parallel trends, the Stable Unit
+Treatment Value Assumption (SUTVA), and the absence of anticipation
+effects. The incorporation of covariates allows to make causal
+affirmations, ensuring the robustness of the model's assumptions.
+
+Upon the application of the DiD analytical framework, the empirical
+evidence suggests a statistically significant positive impact of the
+Fare-Free Public Transit policy on the collection of the Service Tax
+(ISS). The computed average treatment effect the treated (ATT) across
+the cohort of municipalities that concurrently instituted the fare
+exemption reveals an augmentation of ISS revenues by an estimated 10.1\%
+--- the 95\% confidence interval is {[}3.6\%, 16.6\%{]}. This estimator
+aligns closely with the conventional two-by-two DiD model. The set of
+covariates is given by the logarithms of GDP, population, and area.
+
+Upon examination of the dynamic effects contingent relative to the
+duration of policy adoption, the assessed ATT was 19.7\% {[}4.8\%,
+34.5\%{]}. The substantial confidence interval suggests that,
+notwithstanding the limited sample size, the ramifications of the FFTP
+effect on tax collection may exhibit temporal variability. Subsequent
+metrics corroborate this positive trend, albeit with marginally varying
+magnitudes. The observed fiscal enhancement is ostensibly linked to a
+reallocation of household spending from public transit fares to the
+consumption of services and goods. The redirection of financial
+resources from fare-based funding to alternative mechanisms is
+imperative for the sustained implementation of this public policy.
+
+However, it is imperative to acknowledge the limitations inherent in
+this methodological approach, particularly when applied to a limited
+sample size, as is the case in our study. With only 27 municipalities
+adopting the FFPT within the studied timeframe, the confidence intervals
+for group-specific or temporal analyses often yield inconclusive
+results, despite more robust aggregated data. Consequently, further
+research incorporating a larger sample size is advisable when additional
+data becomes available. For instance, as of May 2024, the number of
+municipalities that have adopted the FFPT has expanded to 108. This
+expansion is anticipated to provide more robust estimators for both
+overall and dynamic analyses. Furthermore, an exhaustive examination of
+the modifications within the tax legislation could significantly enhance
+the study. This is particularly pertinent if the newly proposed bill
+permits a phased enactment. Such an analysis would provide a
+comprehensive understanding of the incremental changes and their
+potential impacts on the application of the tax law.
+
+Further exploration into the motivations behind the adoption of FFPT is
+necessary. The observed behaviors exhibited by the municipalities with
+the highest and lowest performance metrics provide a foundational basis
+for understanding the underlying causes of the pronounced variability
+observed between these cohorts. This comparative analysis is essential
+for elucidating the factors that contribute to the disparities in
+municipal performance outcomes. Moreover, given that selection bias is a
+significant assumption in the Difference-in-Differences model,
+elucidating the determinants of policy adoption can strengthen the
+validity of the estimated causal effects. Typically, qualitative
+research methods are better suited to explore the decision-making
+processes, the knowledge base of the policymakers, and the permissible
+sources of selection to being treated. Future research endeavors should
+consider the disaggregation of service sectors as a focal point of
+study. This approach is pivotal to elucidate the nuanced impacts of the
+FTTP on distinct service industries.
+
+Enhancing access to public transit serves as a pivotal strategy for
+combating social exclusion, diminishing greenhouse gas emissions from
+personal vehicles, and bolstering urban mobility. Moreover, the
+allocation of public funds to this essential service reinforces the
+concept of right to city. Therefore, subsequent research could provide
+valuable insights into the fiscal viability of such initiatives,
+ensuring their long-term sustainability and effectiveness.
+
+\newpage
+
+\hypertarget{references}{%
+\section{References}\label{references}}
+
+\begin{comment}
+
+
+*Therefore, the choice in adopting the FFTP policy allows to make causal affirmations, when conditioning in the cofounders. As it is the case, the principal finding of this investigation revealed an influence attributable to the Fare-Free Public Transit Policy, manifesting as an average 10.1% [3.6%, 16.6%]^[All intervals represent a 95% confidence interval, barring any contrary indication.] augmentation in ISS tax revenue, which constitutes the overall average treatment effect on the treated (ATT). The set of covariates is given by the logarithms of GDP, population, and area. This outcome was deduced from the model delineated in @sec-did-covariates, adhering to the group aggregation methodology as explicated in Equation \eqref{eq-group-aggte-overall}.*
+
+Other less expressive results are evaluated in the @sec-iss-results. Also in this section, the principal findings are elucidated in detail, and the assumptions underlying parallel trends are subjected to analysis.
+
+
+
+
+
+
+# Further study points
+
+
+the quantitative methodologies usually estimate some kind of "mean treatment effect" and would be completed by a qualitative analysis, which would allow a more comprehensive understanding of the policy adoption process, such as \textcolor{red}{cite case studies}.
+
+What could be a placebo test? 
+
+Robustness checks [@Miller-etal-2021, p. 34], using different specifications, such as the inclusion of different control variables, or the use of different econometric models, such as the synthetic control method.
+
+
+    \item Evaluate the potential savings in administrative costs (e.g., fare collection, ticket processing) associated with a Fare-Free system.
+
+
+
+# Objectives
+
+## General objective
+
+Evaluate the impact of a Fare-Free policy on public transit on the service tax collection.
+
+
+## Specific objectives
+
+\begin{itemize}
+
+
+
+    \item Organize the database of variables related to transportation policies.
+
+    \item Identify the most suitable DiD causal model to assess the implications of the Zero-Fare policy on municipal tax revenue. 
+
+    \item Compare the municipalities that have adopted the Zero-Fare policy, establishing municipalities that can serve as a counterfactual.
+
+    \item Investigate the indirect economic benefits, such as increased economic activity, which may positively impact the municipality’s overall fiscal health.
+\end{itemize}
+
+
+  
+\newpage
+
+
+\end{comment}
+
+\begin{comment}
+Conferir se um estudo estratificado não gera selection bias [@Hernan2020, p. 105]
+\end{comment}
+
+\begin{comment}
+\textcolor{red}{Afirmar que características não observáveis, mas que são constantes ao longo do tempo ou que afetem todas as unidades de maneira igual, não são um problema para o método, que é capaz de evitar tal problema de viés de seleção. Apenas STUVA continua necessário (ver Piazza, p. 39)}
+
+
+\textcolor{blue}{Como selecionar os municípios? Como fazer a limpeza dos dados?}
+
+\end{comment}
+
+\begin{comment}
+
+3- \textit{\underline{Staggered}} [@staggered]: The \textbf{staggered} R package computes the efficient estimator for settings with randomized treatment timing, based on the theoretical results in @roth2023efficient. If units are randomly (or quasi-randomly) assigned to begin treatment at different dates, the efficient estimator can potentially offer substantial gains over methods that only impose parallel trends. 
+
+
+
+
+### Parallel Trends and Placebo Tests (and sampling independence)
+
+\textcolor{red}{Desenvolver mais}
+
+To further investigate the robustness of the DiD model, placebo tests can be applied. In this case, simulations using the same data but as if the units had received distinct treatment assignments are performed. The quantities of treated units and times remained equal. With the simulations and t-tests, it is possible to verify if the model is robust to different treatment assignments using the simulation distribution [@Miller-etal-2021, p. 16]. 
+
+Another placebo test is to verify the outcome evolution in municipalities not covered by public transit policy. 
+
+
+
+
+## Synthetic control
+
+Synthetic control is an ulterior DiD development, but the former generalizes the last [@cunningham_causal_2024, ch. 10.1]. In a nutshell, this method creates, objectively, a control group to serve as a counterfactual. It is done by aggregating untreated groups --- from a donor pool --- that act as the treated group would behave if not treated. The main reason is that a weighted combination^[The weights are explicitly constructed, unlike the weights in linear regression, which offers more transparency [@cunningham_causal_2024, ch. 10.1.1].] of untreated units offers a more accurate counterfactual than comparing with a single one [@cunningham_causal_2024, ch. 10.1.1]. Thus, such a combination is selected by the closest resembling unit to the treated group in the pre-treatment period. 
+
+In this case, the weights are the result of a minimization of the distance between a set of matching variables which acts as post-treatment outcome predictors for both the treated and the control groups [@cunningham_causal_2024, ch. 10.1.3]. In the case of this analysis, variables such as population, gross domestic product, employment level, territorial area, and others will be used to create the synthetic control group. As it is a method developed in 2003, there are some open questions, like how to test the balance of covariates used in matching and to make inferences about the parameter of interest. 
+
+
+
+### Panel data analysis {#sec-panel-data}
+
+Panel data analysis will be used to evaluate DiD model. This model is a mix of cross-sectional and time-varying data, i.e., several units are observed across time. The main panel data design is called "two-way fixed effects" (TWFE), which eliminates unit and year-fixed effects, reducing potential selection biases. It means that there exists an unmeasured variable but constant over time, then omitted variable bias will not be a problem [@cunningham_causal_2024, ch. 8.2]. If all time-varying confounders are controlled, the current outcomes are not caused by past outcomes (no autocovariance), and past treatments but the contemporary does not affect current outcomes, the panel data model identifies the causal effect^[If treatment and outcome variables present a reverse causality structure, panel "fixed effects" will not estimate the correct causal effect [@cunningham_causal_2024, ch. 8.2.4]. However, it just would occur in the Fare-Free example if the increased tax revenue was automatically translated into Fare-Free policy adoption, which does not seem to be the case. \textcolor{red}{As the descriptive analysis has shown}, municipalities with surplus budgets may adopt or not such transportation policy.] [@cunningham_causal_2024, ch. 8.1].
+
+However, the TWFE model has some assumptions that cannot be met by time-varying treatments, also called the "generalized model with staggered treatment assignment and time" [@roth_whats_2023, p. 2223]. Thus, the traditional "static" TWFE is a weighted average of treatments over time, potentially non-convex.  Because of that, this estimator may input negative weights [@Goodman-Bacon-2021-DiD, p. 255] to the early treatment periods, and use early-treated groups as "control" for late-treated groups [@roth_whats_2023, p. 2228]. To overcome it, Goodman-Bacon [-@Goodman-Bacon-2021-DiD, p. 259] decomposed the TWFE estimator as a weighted average of simpler 2x2 estimators, with positive weights summing 1. The weakness of this approach is its time-sensibility, where units treated in the middle period under analysis present greater weights.
+
+In the inference phase with the model, the standard errors must be "clustered" at the unit level (in this case, at the municipality). It allows error correlation ($\varepsilon_{i,t}$) constant over time for each $i$ unit [@cunningham_causal_2024, ch. 8.2.3]. 
+
+## Data section
+
+Additional variables to be incorporated include from:
+
+\begin{itemize}
+    \item Brazilian Institute of Geography and Statistics (IBGE): Municipal Gross Domestic Product (GDP), population projections, land area, and working-age population
+    \item Ministry of Labor and Employment: levels of formal employment
+    \item Ministry of Transportation: vehicle fleet size
+    \item Ministry of Health: road traffic mortality
+\end{itemize}
+
+Additional covariates may be incorporated as required to ensure the validity of the parallel trends assumption. 
+
+
+
+\end{comment}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-mostly_harmless_econometrics}{}}%
+ANGRIST, J. D.; PISCHKE, J.-S.
+\textbf{\href{http://www.jstor.org/stable/j.ctvcm4j72}{Mostly harmless
+econometrics: An empiricist's companion}}. {[}s.l.{]} Princeton
+University Press, 2009.
+
+\leavevmode\vadjust pre{\hypertarget{ref-batista_domingos_2017}{}}%
+BATISTA, M.; DOMINGOS, A.
+\href{https://doi.org/10.17666/329414/2017}{MAIS QUE BOAS INTENÇÕES:
+Técnicas quantitativas e qualitativas na avaliação de impacto de
+políticas públicas}. \textbf{Revista Brasileira de Ciências Sociais}, v.
+32, n. 94, 2017.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bladimir_carrillo_bermudez_o_2024}{}}%
+BERMUDEZ, BLADIMIR CARRILLO; BRANCO, DANYELLE SANTOS. O {Método}
+diferenças-em-diferenças ({CAPÍTULO} 12). \emph{In}: \textbf{Avaliação
+de impacto das políticas de saúde: Um guia para o {SUS}}. Brasília, DF:
+Ministério da Saúde, 2024.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Brown_2003}{}}%
+BROWN, J.; HESS, D. B.; SHOUP, D.
+\href{https://doi.org/10.1177/0739456X03255430}{Fare-free public transit
+at universities: An evaluation}. \textbf{Journal of Planning Education
+and Research}, v. 23, n. 1, p. 69--82, 2003.
+
+\leavevmode\vadjust pre{\hypertarget{ref-BULL-RCT-2021}{}}%
+BULL, O.; MUÑOZ, J. C.; SILVA, H. E.
+\href{https://doi.org/10.1016/j.regsciurbeco.2020.103616}{The impact of
+fare-free public transport on travel behavior: Evidence from a
+randomized controlled trial}. \textbf{Regional Science and Urban
+Economics}, v. 86, p. 103616, 2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-CALLAWAY2021200}{}}%
+CALLAWAY, B.; SANT'ANNA, P. H. C.
+\href{https://doi.org/10.1016/j.jeconom.2020.12.001}{Difference-in-differences
+with multiple time periods}. \textbf{Journal of Econometrics}, v. 225,
+n. 2, p. 200--230, a2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-did_r}{}}%
+\_\_\_. \textbf{Did: Difference in differences}, b2021. Disponível em:
+\textless{}\url{https://bcallaway11.github.io/did/}\textgreater{}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cats_prospects_2017}{}}%
+CATS, O.; SUSILO, Y. O.; REIMAL, T.
+\href{https://doi.org/10.1007/s11116-016-9695-5}{The prospects of
+fare-free public transport: Evidence from {Tallinn}}.
+\textbf{Transportation}, v. 44, n. 5, p. 1083--1104, Sep. 2017.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Cinelli-2024}{}}%
+CINELLI, C.; FORNEY, A.; PEARL, J.
+\href{https://doi.org/10.1177/00491241221099552}{A crash course in good
+and bad controls}. \textbf{Sociological Methods \& Research}, v. 53, n.
+3, p. 1071--1104, 2024.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Costa_Gonuxe7alves_Santini_2023}{}}%
+COSTA GONÇALVES, C.; SANTINI, D.
+\href{https://doi.org/10.53613/josum.2023.v3.009}{Tarifa zero,
+segregação e desigualdade social: Um estudo de caso sobre a experiência
+de mariana (MG)}. \textbf{Journal of Sustainable Urban Mobility}, v. 3,
+n. 1, p. 111--121, a2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gonuxe7alves_Santini_2023}{}}%
+\_\_\_. \href{https://doi.org/10.53613/josum.2023.v3.009}{Tarifa zero,
+segregação e desigualdade social: Um estudo de caso sobre a experiência
+de mariana (MG)}. \textbf{Journal of Sustainable Urban Mobility}, v. 3,
+n. 1, p. 111--121, b2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cunningham_causal_2024}{}}%
+CUNNINGHAM, S. \textbf{Causal {Inference}: {The} {Mixtape}}, 2024.
+Disponível em:
+\textless{}\url{https://mixtape.scunning.com/}\textgreater. Acesso em: 8
+apr. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-fuchs_1965}{}}%
+FUCHS, V. R.
+\href{https://www.nber.org/books-and-chapters/growing-importance-service-industries/growing-importance-service-industries}{The
+{Growing} {Importance} of the {Service} {Industries}}. \emph{In}:
+\textbf{The {Growing} {Importance} of the {Service} {Industries}}.
+{[}s.l.{]} NBER, 1965. p. 1--30.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gabaldon_ffpt_2019}{}}%
+GABALDÓN-ESTEVAN, D. \emph{et al.}
+\href{https://doi.org/10.1080/19463138.2019.1596114}{Broader impacts of
+the fare-free public transportation system in tallinn}.
+\textbf{International Journal of Urban Sustainable Development}, v. 11,
+n. 3, p. 332--345, 2019.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Goodman-Bacon-2021-DiD}{}}%
+GOODMAN-BACON, A.
+\href{https://doi.org/10.1016/j.jeconom.2021.03.014}{Difference-in-differences
+with variation in treatment timing}. \textbf{Journal of Econometrics},
+v. 225, n. 2, p. 254--277, 2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hernan2020}{}}%
+HERNAN, M. A.; ROBINS, J. M. \textbf{Causal inference: What if}. Boca
+Raton: Taylor \& Francis, 2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-IPEA-iss-2020}{}}%
+INSTITUTO DE PESQUISA ECONÔMICA APLICADA (IPEA). \textbf{Carta de
+{Conjuntura} número 48: {Estimativas} anuais da arrecadação tributária e
+das receitas totais dos municípios brasileiros entre 2003 e 2019}, 2020.
+Disponível em:
+\textless{}\url{https://www.ipea.gov.br/portal/images/stories/PDFs/conjuntura/200730_cc48_nt_municipios_final.pdf}\textgreater.
+Acesso em: 5 may. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-keblowski_why_2020}{}}%
+KĘBŁOWSKI, W. \href{https://doi.org/10.1007/s11116-019-09986-6}{Why
+(not) abolish fares? {Exploring} the global geography of fare-free
+public transport}. \textbf{Transportation}, v. 47, n. 6, p. 2807--2835,
+Dec. 2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Miller-2023}{}}%
+MILLER, D. L. \href{https://doi.org/10.1257/jep.37.2.203}{An
+introductory guide to event study models}. \textbf{Journal of Economic
+Perspectives}, v. 37, n. 2, p. 203--30, May 2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pearl2018}{}}%
+PEARL, J. The seven tools of causal inference, with reflections on
+machine learning. \textbf{Communications of the ACM}, v. 62, n. 3, p.
+54--60, 2018.
+
+\leavevmode\vadjust pre{\hypertarget{ref-PearlMackenzie18}{}}%
+PEARL, J.; MACKENZIE, D. \textbf{The book of why: The new science of
+cause and effect}. New York: Basic Books, 2018.
+
+\leavevmode\vadjust pre{\hypertarget{ref-PHILLIPS2014}{}}%
+PHILLIPS, D. C.
+\href{https://doi.org/10.1016/j.labeco.2014.07.005}{Getting to work:
+Experimental evidence on job search and transportation costs}.
+\textbf{Labour Economics}, v. 29, p. 72--82, 2014.
+
+\leavevmode\vadjust pre{\hypertarget{ref-piazza_avaliacao_2017}{}}%
+PIAZZA, C. K. \textbf{Avaliação do impacto econômico da gratuidade no
+transporte coletivo (monografia de conclusão de curso)}Santa Catarina,
+BrazilUniversity of Santa Catarina, 2017. Disponível em:
+\textless{}\url{https://repositorio.ufsc.br/handle/123456789/178734}\textgreater.
+Acesso em: 1 may. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-roth_whats_2023}{}}%
+ROTH, J. \emph{et al.}
+\href{https://doi.org/10.1016/j.jeconom.2023.03.008}{What's trending in
+difference-in-differences? {A} synthesis of the recent econometrics
+literature}. \textbf{Journal of Econometrics}, v. 235, n. 2, p.
+2218--2244, Aug. 2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-DRDID_r}{}}%
+SANT'ANNA, P. H. C.; ZHAO, J.
+\href{https://doi.org/10.1016/j.jeconom.2020.06.003}{Doubly robust
+difference-in-differences estimators}. \textbf{Journal of Econometrics},
+v. 219, p. 101--122, b2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-SANTANNA2020101}{}}%
+\_\_\_. \href{https://doi.org/10.1016/j.jeconom.2020.06.003}{Doubly
+robust difference-in-differences estimators}. \textbf{Journal of
+Econometrics}, v. 219, n. 1, p. 101--122, a2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Santini-FFPT-2024}{}}%
+SANTINI, D. \textbf{{Brazilian municipalities with full Fare-Free Public
+Transport policies - updated March 2024}}Harvard Dataverse, 2024.
+Disponível em:
+\textless{}\url{https://doi.org/10.7910/DVN/Z927PD}\textgreater{}
+
+\leavevmode\vadjust pre{\hypertarget{ref-straub_2020}{}}%
+ŠTRAUB, D. \href{https://doi.org/10.3390/su12219111}{The effects of
+fare-free public transport: A lesson from frýdek-místek (czechia)}.
+\textbf{Sustainability}, v. 12, n. 21, 2020.
+
+\end{CSLReferences}
+
+
+%% CRONOGRAMA ----
+%%%
+
+
+\appendix
+
+
+
+
+%% REFERÊNCIAS ----
+
+%%\bibliography{}
+\end{document}

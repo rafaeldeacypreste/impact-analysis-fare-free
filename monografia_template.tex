@@ -1,0 +1,338 @@
+
+%%%
+% TIPO DE DOCUMENTO E PACOTES ----
+%%%%
+\documentclass[12pt, a4paper, twoside]{article}
+\usepackage[left = 3cm, top = 3cm, right = 2cm, bottom = 2cm]{geometry}
+
+
+
+%%%\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\numberwithin{equation}{subsection} %subsection
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{titletoc,titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+%\usepackage{natbib}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+%\usepackage[brazilian,hyperpageref]{backref}
+%\usepackage[alf]{abntex2cite}
+\usepackage{multirow} % https://www.ctan.org/pkg/multirow
+\usepackage{float} % https://www.ctan.org/pkg/float
+\usepackage{booktabs} % https://www.ctan.org/pkg/booktabs
+\usepackage{enumitem} % https://www.ctan.org/pkg/enumitem
+\usepackage{quoting} % https://www.ctan.org/pkg/quoting
+\usepackage{epigraph}
+\usepackage{subfigure}
+\usepackage{anyfontsize}
+\usepackage{caption}
+\usepackage{adjustbox}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{dsfont}
+\usepackage{longtable}
+
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+$endif$
+
+
+\raggedbottom % https://latexref.xyz/_005craggedbottom.html
+
+
+% COMANDOS -----
+%%%%
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lema}[teo]{Lema}
+\newtheorem{cor}[teo]{Corolário}
+\newtheorem{prop}[teo]{Proposição}
+\newtheorem{defi}{Definição}
+\newtheorem{exem}{Exemplo}
+
+\newcommand{\titulo}{$titulo$ \\ $subtitulo$}
+\newcommand{\autor}{$aluno$}
+\newcommand{\orientador}{ Professor $orientador$ }
+\newcommand{\coorientador}{ Prof(a). $coorientador$ }
+
+
+
+\pagestyle{fancy}
+\fancyhf{}
+%\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%C - Centro, L - Esquerda, R - Direita, O - impar, E - par
+\fancyhead[RO, LE]{\thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\titlecontents{section}[0cm]{}{\bf\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+\titlecontents{subsection}[0.75cm]{}{\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+
+\setcounter{secnumdepth}{4}
+%\setcounter{tocdepth}{3}
+
+\DeclareCaptionFormat{myformat}{ \centering \fontsize{10}{12}\selectfont#1#2#3}
+\captionsetup{format=myformat}
+
+%%%
+%% INÍCIO DO DOCUMENTO 
+%%%%%%
+
+%% CAPA ----
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale = 0.6]{img/as_vert_cor.jpg}
+	\label{fig:unb}
+\end{figure}
+{\bf University of Brasília \\
+\bf Departament of Statistics}
+\vspace{5cm}
+
+\setcounter{page}{0}
+\null
+\textbf{\titulo}
+\vspace{2.5cm}
+
+
+\vspace{0.2cm}
+\textbf{\autor}
+\end{center}
+\vspace{1.5cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+\parbox[t]{7.5cm}{$pre-texto$}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{$ano$}
+\end{center}
+\end{titlepage}
+
+
+%%% FOLHA DE ROSTO -----
+
+\thispagestyle{empty}
+
+\begin{center}
+\textbf{\autor} \\
+\vspace{5cm}
+\textbf{\titulo} \\
+\vspace{3cm}
+\small
+Advisor: \orientador \\
+%Coorientador(a): \coorientador
+\end{center}
+
+
+\vspace*{3cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+ \parbox[t]{7.5cm}{$pre-texto$}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{$ano$}
+\end{center}
+
+
+
+
+\newpage % Start the dedicatory on a new page
+\thispagestyle{empty} % Optional: Removes the page number
+
+\vspace*{\stretch{1}} % Add vertical space
+
+\begin{flushright} % Align the text to the right
+\textit{Às pequenas cidadãs comuns tais como \\
+        ``a merendeira [que] desce, o ônibus sai \\
+        Dona Maria já se foi, só depois é que o sol nasce."}\\
+\vspace{1cm}        
+Adaptado de ``A ordem natural das coisas", de Damien Seth / Emicida.
+\end{flushright}
+
+\vspace*{\stretch{2}} % Balance the page layout
+
+\pagenumbering{roman}
+\setcounter{page}{3} 
+
+
+\newpage % Start on a new page (optional)
+
+\doublespacing
+
+\section*{Acknowledgements}
+
+I would like to express my gratitude to Renata Florentino, Daniel Santini, and Diego Maggi, who have an incredible research agenda in Tarifa Zero and have contributed to and encouraged my research on this topic.
+
+I am thankful to Professor Thaís Carvalho, my advisor, for accepting the invitation to supervise, collaborating on the execution of this work, and especially for her dedication throughout the guidance, accepting the challenge of a theme that is not her central research agenda.
+
+I also extend my thanks to Professor Alan Ricardo for his excellent suggestions on the design of this research, to Professor Guilherme Rodrigues for his support and guidance on my previous research topic and encouragement in adopting the current theme, to Professor Mauro Patrão for introducing me to studies in causal inference, and to Mateus Umberto for his assistance on how to construct the database.
+
+Finally, I am grateful to the informal study group on causal inference for the fruitful debates on the subject and, in particular, to Carol Musso, Érica, and Halian for their comments and discussions on the early versions of the research.
+
+
+[\textit{Portuguese version}]
+
+Agradeço a Renata Florentino, Daniel Santini e Diego Maggi, que têm na Tarifa Zero uma agenda incrível de pesquisa e que contribuíram e me incentivaram a pesquisar tal tema.
+
+Agradeço à professora Thaís Carvalho, minha orientadora, pelo aceite do convite de supervisão, colaboração na execução deste trabalho e, em especial, pela dedicação ao longo de toda orientação, aceitando o desafio de um tema que não é sua agenda central de pesquisa.
+
+Agradeço também ao professor Alan Ricardo pelas excelentes sugestões sobre o projeto desta pesquisa, ao professor Guilherme Rodrigues pelo apoio e orientação no meu tema anterior de pesquisa e encorajamento na adoção do tema atual, ao professor Mauro Patrão por ter me apresentado os estudos em inferência causal e ao Mateus Umberto pelo auxílio sobre como construir a base de dados.
+
+Agradeço, por fim, ao grupo informal de estudos em inferência causal pelos fecundos debates sobre o tema e, em espcial, a Carol Musso, Érica e Halian pelos comentários e debates das primeiras versões da pesquisa.
+
+
+\newpage
+
+
+
+\begin{abstract}
+Fare-Free Public Transportation (FFTP) means that passengers do not pay for the service directly.
+This policy increases the utilization of public transportation, serves as an instrument of social inclusion, and helps to reduce traffic congestion, pollution, and greenhouse gas emissions.
+This research aims is to evaluate the impact of the Fare-free policy on the municipality's service tax collection.
+To accomplish such main objective, a causal inference framework is used, with the Differences-in-Differences (DiD) technique serving as the method of analysis.
+The municipalities which adopted the FFPT policy between 2003 and 2019 were evaluated in Brazil.
+The principal finding of this investigation revealed an influence attributable to the Fare-Free Public Transportation policy, manifesting as an average 10.1\% (95\% confidence interval: [3.6\%, 16.6\%]) augmentation in ISS (tax on servies) tax revenue, which constitutes the overall average treatment effect on the treated (ATT). 
+Subsequent metrics corroborate this positive trend, albeit with marginally varying magnitudes.
+Further research incorporating a larger time span --- consequently, amplified sample size --- is advisable when additional data becomes available. Also, elucidating the determinants of policy adoption can strengthen the validity of the estimated causal effects.
+\end{abstract}
+
+% Adding keywords
+\vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Keywords:} Differences-in-Differences, Fare-Free Public Transportation, Causal Inference.
+
+
+\newpage
+
+
+\renewcommand{\abstractname}{Resumo}
+
+
+\begin{abstract}
+Tarifa-Zero no Transporte Público (TZ) significa que os passageiros não pagam diretamente pelo serviço.
+Essa política aumenta a utilização do transporte público, serve como instrumento de inclusão social e ajuda a reduzir o congestionamento do trânsito, a poluição e a emissão de gases de efeito estufa.
+O objetivo desta pesquisa é avaliar o impacto da política de gratuidade na arrecadação do imposto sobre serviços do município.
+Para atingir esse objetivo principal, utiliza-se uma estrutura de inferência causal, com a técnica de Diferenças-em-Diferenças (DiD) servindo como método de análise.
+Foram avaliados os municípios que adotaram a política de TZ entre 2003 e 2019 no Brasil.
+O principal resultado desta investigação revelou uma influência atribuível à política de Transporte Público Gratuito, manifestando-se como um aumento médio de 10,1\% (intervalo de confiança de 95\%: [3,6\%, 16,6\%]) na receita tributária do Imposto sobre Serviços (ISS), que constitui o efeito médio geral do tratamento sobre os tratados. 
+As métricas subsequentes corroboram essa tendência positiva, embora com magnitudes marginalmente variáveis.
+É aconselhável efetuar mais investigação do efeito da TZ, incorporando um período de tempo mais alargado --- consequentemente, uma amostra de maior dimensão --- quando estiverem disponíveis dados adicionais. Além disso, a elucidação dos factores determinantes da adoção de políticas pode reforçar a validade dos efeitos causais estimados.        
+\end{abstract}
+        
+        % Adding keywords
+        \vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Palavras-chave:} Diferenças-em-Diferenças, Tarifa-Zero no Transporte Público, Inferência Causal.
+        
+
+\newpage
+
+
+\listoftables
+
+
+
+\newpage
+
+\listoffigures
+
+\newpage
+
+%\pagenumbering{arabic}
+%\setcounter{page}{10}
+%\onehalfspacing
+%\doublespacing
+
+
+
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0.2cm}
+\setlength{\intextsep}{0.5cm}
+
+\titlespacing*{\section}{0cm}{0cm}{0.5cm}
+\titlespacing*{\subsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\subsubsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\paragraph}{0cm}{0.5cm}{0.5cm}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+
+%\pagenumbering{arabic}
+%\setcounter{page}{3}
+
+\fancyhead[RE, LO]{\nouppercase{\emph\leftmark}}
+%\fancyfoot[C]{Departamento de Estatística}
+
+% SUMÁRIO
+%%%
+
+\tableofcontents
+
+
+
+\newpage
+
+\pagenumbering{arabic} % Switch to Arabic numerals for the main content
+\setcounter{page}{12} % Optionally reset the page counter for the main content
+
+
+% CONTEÚDO (AS SEÇÕES SAO SEPARADAS NO RMARKDOWN) ---
+%%%
+
+
+
+$body$
+
+
+%% CRONOGRAMA ----
+%%%
+
+
+\appendix
+
+
+
+
+%% REFERÊNCIAS ----
+
+%%\bibliography{$referencias$}
+\end{document}
+

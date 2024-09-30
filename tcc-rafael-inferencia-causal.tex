@@ -1,0 +1,2337 @@
+
+%%%
+% TIPO DE DOCUMENTO E PACOTES ----
+%%%%
+\documentclass[12pt, a4paper, twoside]{article}
+\usepackage[left = 3cm, top = 3cm, right = 2cm, bottom = 2cm]{geometry}
+
+
+
+%%%\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts, amssymb}
+\numberwithin{equation}{subsection} %subsection
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{colortbl}
+\usepackage{titletoc,titlesec}
+\usepackage{setspace}
+\usepackage{indentfirst}
+%\usepackage{natbib}
+\usepackage[colorlinks=true, allcolors=black]{hyperref}
+%\usepackage[brazilian,hyperpageref]{backref}
+%\usepackage[alf]{abntex2cite}
+\usepackage{multirow} % https://www.ctan.org/pkg/multirow
+\usepackage{float} % https://www.ctan.org/pkg/float
+\usepackage{booktabs} % https://www.ctan.org/pkg/booktabs
+\usepackage{enumitem} % https://www.ctan.org/pkg/enumitem
+\usepackage{quoting} % https://www.ctan.org/pkg/quoting
+\usepackage{epigraph}
+\usepackage{subfigure}
+\usepackage{anyfontsize}
+\usepackage{caption}
+\usepackage{adjustbox}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{dsfont}
+\usepackage{longtable}
+
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newlength{\cslentryspacingunit} % times entry-spacing
+\setlength{\cslentryspacingunit}{\parskip}
+\newenvironment{CSLReferences}[2] % #1 hanging-ident, #2 entry spacing
+ {% don't indent paragraphs
+  \setlength{\parindent}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+  \let\oldpar\par
+  \def\par{\hangindent=\cslhangindent\oldpar}
+  \fi
+  % set entry spacing
+  \setlength{\parskip}{#2\cslentryspacingunit}
+ }%
+ {}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{#1\hfill\break}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{#1}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+
+\raggedbottom % https://latexref.xyz/_005craggedbottom.html
+
+
+% COMANDOS -----
+%%%%
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lema}[teo]{Lema}
+\newtheorem{cor}[teo]{Corolário}
+\newtheorem{prop}[teo]{Proposição}
+\newtheorem{defi}{Definição}
+\newtheorem{exem}{Exemplo}
+
+\newcommand{\titulo}{Análise de Impacto do Programa de Tarifa
+Zero \\ sobre o Imposto sobre Serviços}
+\newcommand{\autor}{Rafael de Acypreste Monteiro Rocha}
+\newcommand{\orientador}{ Professora Thais Carvalho Valadares
+Rodrigues }
+\newcommand{\coorientador}{ Prof(a).  }
+% Redefine the titles for the lists of tables and figures
+\renewcommand{\listtablename}{Lista de Tabelas}
+\renewcommand{\listfigurename}{Lista de Figuras}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+%\renewcommand{\headrulewidth}{0pt}
+\setlength{\headheight}{16pt}
+%C - Centro, L - Esquerda, R - Direita, O - impar, E - par
+\fancyhead[RO, LE]{\thepage}
+\renewcommand{\sectionmark}[1]{\markboth{#1}{}}
+
+\titlecontents{section}[0cm]{}{\bf\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+\titlecontents{subsection}[0.75cm]{}{\thecontentslabel\ }{}{\titlerule*[.75pc]{.}\contentspage}
+
+\setcounter{secnumdepth}{4}
+%\setcounter{tocdepth}{3}
+
+\DeclareCaptionFormat{myformat}{ \centering \fontsize{10}{12}\selectfont#1#2#3}
+\captionsetup{format=myformat}
+
+%%%
+%% INÍCIO DO DOCUMENTO 
+%%%%%%
+
+%% CAPA ----
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\begin{figure}[h!]
+	\centering
+		\includegraphics[scale = 0.6]{img/as_vert_cor.jpg}
+	\label{fig:unb}
+\end{figure}
+{\bf Universidade de Brasília \\
+\bf Departamento de Estatística}
+\vspace{4cm}
+
+\setcounter{page}{0}
+\null
+\textbf{\titulo}
+\vspace{2.5cm}
+
+
+\vspace{0.2cm}
+\textbf{\autor}
+\end{center}
+\vspace{1.5cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+\parbox[t]{7.5cm}{Trabalho de conclusão de curso submetido ao
+Departamento de Estatística da Universidade de Brasília como requisito
+parcial para a obtenção do grau de Bacharel em Estatística.}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{2024}
+\end{center}
+\end{titlepage}
+
+
+%%% FOLHA DE ROSTO -----
+
+\thispagestyle{empty}
+
+\begin{center}
+\textbf{\autor} \\
+\vspace{5cm}
+\textbf{\titulo} \\
+\vspace{3cm}
+\small
+Orientadora: \orientador \\
+%Coorientador(a): \coorientador
+\end{center}
+
+
+\vspace*{3cm}
+
+\begin{flushright}
+\begin{minipage}{7.5cm}
+ \parbox[t]{7.5cm}{Trabalho de conclusão de curso submetido ao
+Departamento de Estatística da Universidade de Brasília como requisito
+parcial para a obtenção do grau de Bacharel em Estatística.}
+\end{minipage}
+\end{flushright}
+
+\vspace{5cm}
+
+\begin{center}
+{\bf{Brasília} \\ }
+\bf{2024}
+\end{center}
+
+
+
+
+\newpage % Start the dedicatory on a new page
+\thispagestyle{empty} % Optional: Removes the page number
+
+\vspace*{\stretch{1}} % Add vertical space
+
+\begin{flushright} % Align the text to the right
+\textit{Às pequenas cidadãs comuns tais como \\
+        ``a merendeira [que] desce, o ônibus sai \\
+        Dona Maria já se foi, só depois é que o sol nasce."}\\
+\vspace{1cm}        
+Adaptado de ``A ordem natural das coisas", de Damien Seth / Emicida.
+\end{flushright}
+
+\vspace*{\stretch{2}} % Balance the page layout
+
+\pagenumbering{roman}
+\setcounter{page}{3} 
+
+
+\newpage % Start on a new page (optional)
+
+\doublespacing
+
+\section*{Agradecimentos}
+
+
+Agradeço a Renata Florentino, Daniel Santini e Diego Maggi, que têm na Tarifa Zero uma agenda incrível de pesquisa e que contribuíram e me incentivaram a pesquisar tal tema.
+
+Agradeço à professora Thaís Carvalho, minha orientadora, pelo aceite do convite de supervisão, colaboração na execução deste trabalho e, em especial, pela dedicação ao longo de toda orientação, aceitando o desafio de um tema que não é sua agenda central de pesquisa.
+
+Agradeço também ao professor Alan Ricardo pelas excelentes sugestões sobre o projeto desta pesquisa, ao professor Guilherme Rodrigues pelo apoio e orientação no meu tema anterior de pesquisa e encorajamento na adoção do tema atual, ao professor Mauro Patrão por ter me apresentado os estudos em inferência causal e ao Mateus Umberto pelo auxílio sobre como construir a base de dados.
+
+Agradeço, por fim, ao grupo informal de estudos em inferência causal pelos fecundos debates sobre o tema e, em espcial, a Carol Musso, Érica e Halian pelos comentários e debates das primeiras versões da pesquisa.
+
+
+\newpage
+
+
+
+\begin{abstract}
+Fare-Free Public Transportation (FFTP) means that passengers do not pay for the service directly.
+This policy increases the utilization of public transportation, serves as an instrument of social inclusion, and helps to reduce traffic congestion, pollution, and greenhouse gas emissions.
+This research aims is to evaluate the impact of the Fare-free policy on the municipality's service tax collection.
+To accomplish such main objective, a causal inference framework is used, with the Differences-in-Differences (DiD) technique serving as the method of analysis.
+The municipalities which adopted the FFPT policy between 2003 and 2019 were evaluated in Brazil.
+The principal finding of this investigation revealed an influence attributable to the Fare-Free Public Transportation policy, manifesting as an average 10.1\% (95\% confidence interval: [3.6\%, 16.6\%]) augmentation in ISS (tax on servies) tax revenue, which constitutes the overall average treatment effect on the treated (ATT). 
+Subsequent metrics corroborate this positive trend, albeit with marginally varying magnitudes.
+Further research incorporating a larger time span --- consequently, amplified sample size --- is advisable when additional data becomes available. Also, elucidating the determinants of policy adoption can strengthen the validity of the estimated causal effects.
+\end{abstract}
+
+% Adding keywords
+\vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Keywords:} Differences-in-Differences, Fare-Free Public Transportation, Causal Inference.
+
+
+\newpage
+
+
+\renewcommand{\abstractname}{Resumo}
+
+
+\begin{abstract}
+Tarifa-Zero no Transporte Público (TZ) significa que os passageiros não pagam diretamente pelo serviço.
+Essa política aumenta a utilização do transporte público, serve como instrumento de inclusão social e ajuda a reduzir o congestionamento do trânsito, a poluição e a emissão de gases de efeito estufa.
+O objetivo desta pesquisa é avaliar o impacto da política de gratuidade na arrecadação do imposto sobre serviços do município.
+Para atingir esse objetivo principal, utiliza-se uma estrutura de inferência causal, com a técnica de Diferenças-em-Diferenças (DiD) servindo como método de análise.
+Foram avaliados os municípios que adotaram a política de TZ entre 2003 e 2019 no Brasil.
+O principal resultado desta investigação revelou uma influência atribuível à política de Transporte Público Gratuito, manifestando-se como um aumento médio de 10,1\% (intervalo de confiança de 95\%: [3,6\%, 16,6\%]) na receita tributária do Imposto sobre Serviços (ISS), que constitui o efeito médio geral do tratamento sobre os tratados. 
+As métricas subsequentes corroboram essa tendência positiva, embora com magnitudes marginalmente variáveis.
+É aconselhável efetuar mais investigação do efeito da TZ, incorporando um período de tempo mais alargado --- consequentemente, uma amostra de maior dimensão --- quando estiverem disponíveis dados adicionais. Além disso, a elucidação dos factores determinantes da adoção de políticas pode reforçar a validade dos efeitos causais estimados.        
+\end{abstract}
+        
+        % Adding keywords
+        \vspace{1cm} % Adds some vertical space for separation, adjust as needed
+\noindent \textbf{Palavras-chave:} Diferenças-em-Diferenças, Tarifa-Zero no Transporte Público, Inferência Causal.
+        
+
+\newpage
+
+
+\listoftables
+
+
+
+\newpage
+
+\listoffigures
+
+\newpage
+
+%\pagenumbering{arabic}
+%\setcounter{page}{10}
+%\onehalfspacing
+%\doublespacing
+
+
+
+\setlength{\parindent}{1.5cm}
+\setlength{\parskip}{0.2cm}
+\setlength{\intextsep}{0.5cm}
+
+\titlespacing*{\section}{0cm}{0cm}{0.5cm}
+\titlespacing*{\subsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\subsubsection}{0cm}{0.5cm}{0.5cm}
+\titlespacing*{\paragraph}{0cm}{0.5cm}{0.5cm}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+
+%\pagenumbering{arabic}
+%\setcounter{page}{3}
+
+\fancyhead[RE, LO]{\nouppercase{\emph\leftmark}}
+%\fancyfoot[C]{Departamento de Estatística}
+
+% SUMÁRIO
+%%%
+
+\tableofcontents
+
+
+
+\newpage
+
+\pagenumbering{arabic} % Switch to Arabic numerals for the main content
+\setcounter{page}{12} % Optionally reset the page counter for the main content
+
+
+% CONTEÚDO (AS SEÇÕES SAO SEPARADAS NO RMARKDOWN) ---
+%%%
+
+
+
+\hypertarget{introduuxe7uxe3o}{%
+\section{Introdução}\label{introduuxe7uxe3o}}
+
+``Tarifa Zero no Transporte Público'' (TZ) é um modelo de financiamento
+no qual o custo do transporte público (TP) é coberto por impostos ou
+outras fontes, em vez de ser cobrado dos passageiros por meio de
+tarifas. Várias cidades e modelos de transporte público total ou
+parcialmente subsidiado estão presentes nos Estados Unidos, na Europa,
+na Austrália e na China
+(\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020}). Em abril
+de 2024, 106 dos 5.570 municípios do Brasil\footnote{A República
+  Federativa do Brasil está estruturada como uma união de 26 entidades
+  subnacionais distintas e suas respectivas subdivisões em municípios,
+  ao lado de um Distrito Federal singular que engloba de forma única as
+  funções de uma unidade federativa e de um município. Essa complexa
+  organização política garante que cada componente - seja a União, as
+  unidades federativas (Estados), as entidades subnacionais (municípios)
+  ou o Distrito Federal - exerça tanto a autoridade executiva quanto a
+  legislativa. No entanto, o Poder Judiciário é reservado exclusivamente
+  à União Federal, às unidades federativas individuais e ao Distrito
+  Federal, delineando uma clara separação de poderes dentro da estrutura
+  de governança da nação.} tinham adotado tal política
+(\protect\hyperlink{ref-Santini-FFPT-2024}{Santini, 2024}). Portanto,
+uma análise do impacto do FFPT no transporte público ajuda a entender os
+efeitos da política na saúde fiscal do município.
+
+Em geral, o objetivo principal dessa política é aumentar a utilização do
+transporte público, o que beneficia os mais pobres, especificamente
+aqueles que têm mobilidade limitada
+(\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017, p. 1095}). Essa política também pode reduzir o uso de carros
+particulares (\protect\hyperlink{ref-Brown_2003}{Brown, Hess and Shoup,
+2003}) e, consequentemente, os congestionamentos, a poluição e as
+emissões de gases de efeito estufa seriam reduzidos, embora alguns
+argumentem que a maior parte dos novos usuários será de pedestres e
+ciclistas, em vez de motoristas
+(\protect\hyperlink{ref-BULL-RCT-2021}{Bull, Muñoz and Silva, 2021};
+\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017, p. 1095}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}). Se
+esse for o caso, a segurança no trânsito seria a principal externalidade
+positiva (\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, p.
+2816}).
+
+Uma vez que os usuários de transporte público não usam carros
+diariamente, eles oferecem um serviço para os motoristas - como menos
+congestionamento de tráfego - e devem gastar menos ou nada com esse
+transporte
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a, p. 113};
+\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, p. 2816}).
+Além disso, o transporte público serve como um instrumento de inclusão
+social, pois permite que as pessoas tenham acesso a empregos, educação e
+serviços de saúde que, de outra forma, seriam inacessíveis. Porém, a
+recente redução no uso do transporte público vem acompanhada de um menor
+financiamento da política de transporte por meio da cobrança de tarifas
+- um fenômeno que ocorre não apenas no Brasil
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}),
+o que exige alternativas de políticas.
+
+Os custos associados à política levantam dúvidas e receios entre os
+formuladores de políticas, que se preocupam com sua sustentabilidade
+financeira e com o aumento da demanda por transporte público. Tarifa
+Zero significa que o transporte público pode ser usado sem bilhete
+porque o sistema é totalmente subsidiado. Alguns engenheiros de
+transporte e economistas estão preocupados com o risco de externalidades
+de aglomeração (\protect\hyperlink{ref-BULL-RCT-2021}{Bull, Muñoz and
+Silva, 2021}) e de viagens ``inúteis''
+(\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020, pp.
+2807--14}) feitas somente pelo fato de serem gratuitas. Em uma linha de
+raciocínio contrária, alguns pesquisadores sugerem que o TZ libera a
+parte do orçamento familiar alocada para o transporte, permitindo que
+ela seja usada para outras atividades econômicas locais. Isso, por sua
+vez, impulsiona a economia do município e a arrecadação de impostos.
+
+Nesse contexto, o estudo examina a variabilidade do Imposto sobre
+Serviços --- conhecido como ``Imposto Sobre Serviços de Qualquer
+Natureza'' (ISS ou ISSQN) --- como a variável de resposta influenciada
+pela adoção da política de Tarifa Zero. O ISS foi instituído pela Lei
+Complementar Federal nº 116, de 31 de julho de 2003, sendo seu fato
+gerador a prestação de serviços delineados nos anexos da lei\footnote{Os
+  anexos listam 40 atividades sujeitas ao ISS, incluindo serviços de
+  saúde, educação e tecnologia da informação}. No Brasil, os municípios
+têm a competência para cobrar esse imposto, que constitui uma parcela
+significativa de suas receitas fiscais.
+
+Portanto, o objetivo principal desta pesquisa é avaliar o impacto da
+política de Tarifa Zero sobre as circunstâncias fiscais do Município.
+Especificamente, o estudo visa avaliar a sustentabilidade fiscal de
+médio e longo prazo, bem como as considerações de direitos civis, da
+implementação dessa política. A presente investigação diz respeito à
+determinação de efeitos causais, em que as metodologias estatísticas e
+econômicas tradicionais, como análise de custo-benefício, séries
+temporais convencionais, modelos econométricos e estudos de caso,
+mostram-se insuficientes. Embora as primeiras três metodologias possam
+facilitar a identificação de correlações e possíveis previsões de
+tendências futuras, eles não conseguem estabelecer a causalidade devido
+aos possíveis vieses e imprecisões introduzidos durante a seleção de
+variáveis (\protect\hyperlink{ref-Cinelli-2024}{Cinelli, Forney and
+Pearl, 2024}). Por outro lado, os estudos de caso oferecem percepções
+sobre os fundamentos contextuais e as motivações por trás da
+implementação de políticas, mas não fornecem um mecanismo robusto para
+avaliar as consequências econômicas dessas políticas. Consequentemente,
+para atingir esse objetivo, é usada uma estrutura de inferência causal.
+Foram avaliados os municípios que adotaram a política de TZ entre 2003 e
+2019\footnote{O número de cidades incluídas no estudo de caso pode
+  aumentar dependendo da adoção da política e da disponibilidade de
+  dados. Notavelmente, o perfil político do governo no momento da adoção
+  parece não ter influência sobre a decisão de implementar um sistema de
+  tarifa livre (\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski,
+  2020})}.
+
+Assim, o impacto do TZ na receita tributária é estimado usando o método
+de diferenças-em-diferenças (DD) como uma ponte para afirmações de
+inferência causal. Essa é uma abordagem quase-experimental que atenua as
+restrições em estudos observacionais quando um estudo controlado
+aleatorizado (RCT, na sigla em inglês) não é viável. Ela facilita a
+estimativa do efeito causal de uma política ao contrastar as
+experiências do grupo de tratamento com um grupo de controle, tanto
+antes quanto depois da implementação da política. Desde que as
+suposições do modelo sejam verdadeiras (ver
+Seção~\ref{sec-literature-review} e Seção~\ref{sec-po}), não há vieses
+de seleção, o que permite uma estimativa precisa do efeito causal. A
+técnica DD funciona calculando as diferenças dentro do grupo antes e
+depois da intervenção e, em seguida, determinando a diferença entre
+esses dois valores. Daí surge o termo ``diferenças-em-diferenças''.
+
+Com suas hipóteses mantidas, o modelo DD torna-se identificável,
+permitindo a estimativa do efeito médio do tratamento sobre os tratados,
+mesmo em cenários em que os RCTs são impraticáveis. Os resultados dessa
+avaliação poderiam informar o discurso sobre políticas públicas,
+especialmente no âmbito dos sistemas de transporte público local, que
+sofrem com condições precárias e altos custos. Para atingir esse
+objetivo, são necessárias as seguintes tarefas: i) organizar o banco de
+dados de variáveis relacionadas às políticas de transporte; ii)
+identificar o modelo causal mais adequado para avaliar as implicações da
+política de Tarifa Zero na receita tributária municipal; iii) comparar
+os municípios que adotaram a política de Tarifa Zero, estabelecendo
+municípios que possam servir de contrafactual; e iv) investigar os
+benefícios econômicos indiretos, como o aumento da atividade econômica,
+que pode impactar positivamente a saúde fiscal geral do município.
+
+Na Seção~\ref{sec-literature-review}, é empregada uma revisão da
+literatura sobre experiências mundiais de TZ e métodos DD como fonte de
+interpretação causal. Na Seção~\ref{sec-po}, o método
+diferenças-em-diferenças é detalhado e a coleta de dados é explicada.
+Materiais e métodos são apresentados no
+Seção~\ref{sec-materials-methods}. A Seção~\ref{sec-results} apresenta
+os principais resultados, testa as suposições do modelo e implementa
+algumas análises de sensibilidade. Algumas discussões e conclusões estão
+na Seção~\ref{sec-disc-conclusions}.
+
+\newpage
+
+\hypertarget{sec-literature-review}{%
+\section{Revisão de Literatura}\label{sec-literature-review}}
+
+A interseção entre as iniciativas de transporte público gratuito e a
+geração de receita do estado ainda demanda um estudo mais detalhado no
+Brasil. Uma investigação causal é de particular interesse nesse
+contexto. A literatura existente oferece uma base de estruturas teóricas
+e metodológicas que poderiam facilitar essa análise.
+
+\hypertarget{sec-fftp-policy}{%
+\subsection{Política de Tarifa Zero}\label{sec-fftp-policy}}
+
+A evolução dos sistemas de transporte urbano em direção a um modelo
+centrado no uso de veículos particulares acarreta um uso significativo
+do solo e exige um investimento público substancial na manutenção da
+infraestrutura. A transição para um modelo mais sustentável, racional e
+de baixo carbono apresenta desafios, pois exige a alteração de
+comportamentos de usuários e estruturas regulatórias arraigados
+(\protect\hyperlink{ref-Gonuxe7alves_Santini_2023}{Costa Gonçalves and
+Santini, 2023b}; \protect\hyperlink{ref-straub_2020}{Štraub, 2020}).
+Notavelmente, o transporte público gratuito para grupos demográficos
+específicos, como idosos ou estudantes, geralmente recebe a aprovação do
+público (\protect\hyperlink{ref-Brown_2003}{Brown, Hess and Shoup,
+2003}).
+
+Por outro lado, a infraestrutura atual está mal equipada para suportar
+essa mudança
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Nesse sentido, qualquer política geral que vise a aumentar
+a utilização do transporte público deve levar em conta o possível
+aumento dos custos operacionais, incluindo mão de obra, capacidade dos
+veículos e gastos com combustíveis
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Esses problemas tendem a ser exacerbados durante os
+horários de pico de viagem\footnote{Embora nem sempre seja o caso,
+  conforme afirmado por Bull, Muñoz and Silva
+  (\protect\hyperlink{ref-BULL-RCT-2021}{2021})}. Consequentemente, a
+implementação de tais políticas deve ser sincronizada com melhorias na
+infraestrutura para suportar o aumento da demanda
+(\protect\hyperlink{ref-straub_2020}{Štraub, 2020}).
+
+Em contrapartida, a implementação da TZ pode agilizar as interações
+sociais e revigorar as atividades econômicas
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Essa política pode, também, neutralizar a tendência de
+diminuição do uso do transporte público, conforme evidenciado por vários
+estudos, como Gabaldón-Estevan \emph{et al.}
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{2019}), Costa Gonçalves and
+Santini (\protect\hyperlink{ref-Gonuxe7alves_Santini_2023}{2023b}),
+Brown, Hess and Shoup (\protect\hyperlink{ref-Brown_2003}{2003}) e
+Štraub (\protect\hyperlink{ref-straub_2020}{2020}). Além disso, as
+barreiras de transporte exacerbam desproporcionalmente as condições de
+emprego para grupos economicamente marginalizados. Notadamente, foi
+demonstrado que os subsídios ao transporte público facilitam os
+comportamentos de busca de emprego. Isso aumenta, potencialmente, o
+engajamento no mercado de trabalho, embora as evidências que sustentam
+essa última afirmação não sejam robustas\footnote{As evidências sobre
+  isso permanecem inconclusivas, como demonstrado pelo estudo de caso de
+  Tallinn, Estonia, avaliado por Cats, Susilo and Reimal
+  (\protect\hyperlink{ref-cats_prospects_2017}{2017}).}, como reportado
+por Phillips (\protect\hyperlink{ref-PHILLIPS2014}{2014}). Esse efeito é
+particularmente acentuado em áreas com oportunidades limitadas de
+emprego local, o que exige grandes deslocamentos para os centros de
+emprego.
+
+As tarifas de transporte público impõem um ônus financeiro significativo
+sobre a renda da classe trabalhadora
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Consequentemente, espera-se que a abolição dessas tarifas
+permita que esses indivíduos realoquem seus gastos em uma gama mais
+ampla de serviços e bens. Além disso, a atratividade da TZ pode
+catalisar um influxo de novos residentes, aumentando potencialmente as
+receitas fiscais locais. Para os menos favorecidos economicamente, o
+subsídio ao transporte público pode funcionar inadvertidamente como um
+mecanismo de redistribuição, beneficiando desproporcionalmente aqueles
+com mobilidade limitada
+(\protect\hyperlink{ref-Costa_Gonuxe7alves_Santini_2023}{Costa Gonçalves
+and Santini, 2023a};
+\protect\hyperlink{ref-keblowski_why_2020}{Kębłowski, 2020}).
+
+A eficácia desses benefícios é mais acentuada entre os usuários
+sensíveis aos altos custos de transporte, que utilizam regularmente os
+serviços públicos. Por outro lado, os usuários com menor sensibilidade
+aos custos podem perceber uma diminuição nas barreiras ao transporte
+(\protect\hyperlink{ref-Gabaldon_ffpt_2019}{Gabaldón-Estevan \emph{et
+al.}, 2019}). Essa dinâmica é fundamental para a transição modal de
+veículos particulares (\protect\hyperlink{ref-Brown_2003}{Brown, Hess
+and Shoup, 2003}; \protect\hyperlink{ref-cats_prospects_2017}{Cats,
+Susilo and Reimal, 2017}) para o transporte público, um canal essencial
+para alcançar a sustentabilidade ambiental. Investigações prolongadas
+sobre a mudança do uso do automóvel para o transporte público poderiam
+esclarecer esse fenômeno\footnote{Conforme indicado por Bull, Muñoz and
+  Silva (\protect\hyperlink{ref-BULL-RCT-2021}{2021}), os resultados
+  iniciais provavelmente representam uma estimativa conservadora da
+  transição modal, com a expectativa de que a adoção do transporte
+  público aumente progressivamente}.
+
+Além disso, os sistemas de Tarifa Zero geralmente operam dentro das
+fronteiras urbanas, exercendo uma atração sobre os padrões de migração
+(\protect\hyperlink{ref-cats_prospects_2017}{Cats, Susilo and Reimal,
+2017}). Uma análise empírica recente feita por Bull, Muñoz and Silva
+(\protect\hyperlink{ref-BULL-RCT-2021}{2021}) observou um aumento
+acentuado nas viagens fora do horário de pico após a implementação do
+TZ, principalmente para atividades de lazer. Isso sugere que as
+políticas de TZ podem ser mais eficazes na criação de novas viagens do
+que na alteração dos modos de viagem dos usuários atuais. Essas
+considerações também são imperativas quando o resultado pretendido é a
+redução das emissões de combustíveis fósseis. Dito tudo isso, é
+importante medir o impacto da adoção de uma política de TZ sobre a saúde
+fiscal do governo local.
+
+\hypertarget{inferuxeancia-causal-por-meio-de-estudos-observacionais}{%
+\subsection{Inferência Causal por meio de Estudos
+Observacionais}\label{inferuxeancia-causal-por-meio-de-estudos-observacionais}}
+
+Os efeitos causais são fundamentais para a avaliação do impacto de
+qualquer política pública
+(\protect\hyperlink{ref-batista_domingos_2017}{Batista and Domingos,
+2017}). Uma política é desenvolvida e aplicada para atingir objetivos
+específicos. Após sua implementação, formuladores(as) de políticas devem
+analisá-la para confirmar seus efeitos, principalmente se as metas
+originais foram atingidas ou se surgiram externalidades inesperadas.
+Assim, a principal questão causal é o contrafactual: o que teria
+acontecido se a política não tivesse sido implementada? A resposta a
+essa questão é o efeito causal da política, que, no entanto, não pode
+ser observado diretamente. Como resultado, as abordagens usadas para
+avaliar os efeitos causais buscam recuperar essa variável não
+observável.
+
+O padrão ouro para medir o efeito causal de uma política é o estudo
+controlado aleatorizado (ou randomizado). Quando aplicado, um RCT
+garante que o tratamento seja atribuído aleatoriamente às unidades.
+Portanto, os grupos tratados e não tratados (controle) diferem apenas
+pelo tratamento, e seu efeito pode ser avaliado. Dessa forma, o grupo de
+controle atua como um contrafactual. Entretanto, a randomização é rara
+em políticas públicas, mesmo que seja viável. Às vezes, a política já
+foi implementada e só é possível acessar dados observacionais. Na
+maioria dos casos, o RCT não é possível devido a questões políticas,
+éticas ou de custo. A Tarifa Zero é um desses casos: como não há um
+plano nacional de transporte, a adoção da política é uma opção da
+administração local, em que vários fatores desconhecidos são
+importantes.
+
+Para lidar com essas questões causais, são usados projetos
+quase-experimentais, como diferenças nas diferenças, \textit{matching}
+ou controle sintético
+(\protect\hyperlink{ref-mostly_harmless_econometrics}{Angrist and
+Pischke, 2009}; \protect\hyperlink{ref-batista_domingos_2017}{Batista
+and Domingos, 2017}). Os projetos quase-experimentais visam a ``isolar''
+o efeito causal dos fatores de confusão e do viés de seleção
+\textit{strictu sensu}
+(\protect\hyperlink{ref-batista_domingos_2017}{Batista and Domingos,
+2017}). Os fatores de confusão são variáveis que afetam tanto o
+tratamento quanto as variáveis de resultado
+(\protect\hyperlink{ref-pearl2018}{Pearl, 2018}). Sem levar em conta
+simultaneamente os fatores de confusão, é impossível determinar uma
+relação causal entre as variáveis, pois a medida também pode ser
+influenciada por essas variáveis. A confusão é amplamente considerada
+como o principal desafio na inferência causal e é a inspiração por trás
+do ditado ``correlação não implica causalidade''
+(\protect\hyperlink{ref-Hernan2020}{Hernan and Robins, 2020, p. 83}). O
+aumento do crescimento positivo do PIB de um município tem um impacto
+significativo na arrecadação de impostos e promove a construção de FFPT,
+por exemplo. A estimativa dos efeitos causais está sujeita a vieses se
+não for ajustada matematicamente. Os estudos controlados e randomizados
+podem mitigar os efeitos de confusão por meio do próprio desenho da
+pesquisa, enquanto os estudos observacionais normalmente estimam os
+efeitos causais controlando as variáveis de confusão.
+
+Nesse sentido, a questão de por que um município adotou o transporte
+público gratuito demanda atenção, pois o processo de seleção não é
+aleatório. Por exemplo, durante a pandemia da COVID-19, vários
+municípios testemunharam empresas privadas abandonando suas concessões
+de transporte público. Para preencher o vazio, alguns municípios
+assumiram o serviço e o forneceram gratuitamente. Isso levou a um viés
+na seleção dos sujeitos em análise, pois a falência das empresas
+privadas influenciou a adoção da TZ. Consequentemente, o grupo tratado
+pode não ser representativo da população, e algum controle estatístico
+deve ser empregado antes de generalizar as conclusões
+(\protect\hyperlink{ref-PearlMackenzie18}{Pearl and Mackenzie, 2018},
+cap. 5).
+
+Há também o viés de seleção \textit{strictu sensu} ocorre quando os
+efeitos comuns do tratamento e da variável de resultado são levados em
+conta (\protect\hyperlink{ref-Hernan2020}{Hernan and Robins, 2020, p.
+99}). Esse tipo de viés pode surgir quando os indivíduos se voluntariam
+para participar de um estudo não aleatorizado. No caso da TZ, o viés de
+seleção pode ser introduzido pelo condicionamento do nível de emprego ou
+de salários, já que a política de isenção de tarifas tende a aumentar o
+emprego e os salários
+(\protect\hyperlink{ref-piazza_avaliacao_2017}{Piazza, 2017}). Além
+disso, o aumento da arrecadação de impostos por meio da Tarifa Zero pode
+melhorar as aquisições de serviços estatais, levando a níveis mais altos
+de emprego. É também uma suposição crucial que os RCTs abordam, embora o
+viés de seleção ainda possa ocorrer nesses estudos quando algumas
+unidades deixam o estudo, ou seja, quando há censura no estudo.
+
+Embora existam distinções entre confusão e viés de seleção
+\textit{strictu sensu}, econometristas e estatísticos(as) geralmente se
+referem a eles genericamente como ``viés de seleção''. Isso ocorre
+porque ambos os tipos de viés estão relacionados ao processo de seleção,
+seja a seleção de indivíduos com dados observados em análise (viés de
+seleção \textit{strictu sensu}) ou a seleção de indivíduos sujeitos ao
+tratamento (confusão), conforme afirmado por Hernan and Robins
+(\protect\hyperlink{ref-Hernan2020}{2020, p. 103}). No caso do FFTP, em
+que a adoção de políticas é discricionária e os dados abrangem todos os
+municípios, a principal preocupação é a confusão. Consequentemente, na
+Seção~\ref{sec-po}, viés de seleção e confusão são usados de forma
+intercambiável quando não há risco de mistura de conceitos.
+
+Juntamente com esses dois alertas, a estrutura do possível efeito da TZ
+sobre a arrecadação de impostos exige duas comparações. Para começar, é
+importante considerar como a política afeta a situação fiscal em
+municípios com e sem transporte público gratuito. Além disso, talvez
+seja interessante examinar como a política afeta a situação fiscal nos
+municípios antes e depois da adoção. A primeira análise compara os dados
+de diferentes seções, enquanto a segunda examina os dados ao longo do
+tempo.
+
+Entretanto, nenhuma delas fornece automaticamente um contrafactual exato
+(\protect\hyperlink{ref-batista_domingos_2017}{Batista and Domingos,
+2017}). A estimativa contrafactual é necessária quando não há viés de
+seleção. Na análise de seção transversal, o viés de seleção pode ser
+causado pela influência dos motivos para a adoção do TZ por um município
+na variável de resultado. Por outro lado, ele também pode afetar a
+análise de séries temporais, uma vez que as variáveis variáveis
+temporais simultâneas também podem influenciar o resultado de interesse.
+
+A abordagem de diferença em diferenças neutraliza efetivamente as
+diferenças constantes entre os grupos, incluindo fatores não
+observáveis, por \textit{design}. Entretanto, outras fontes de viés de
+seleção podem surgir, dependendo das especificidades do caso. O modelo
+exige a adesão ao pressuposto de tendências paralelas, que pressupõe
+que, na ausência de tratamento, a trajetória do grupo tratado espelharia
+a do grupo não tratado. Embora isso não possa ser verificado
+diretamente, os métodos indiretos podem oferecer estimativas razoáveis.
+Além disso, duas outras suposições são fundamentais: primeiro, a
+ausência de antecipação do tratamento, garantindo que os indivíduos não
+alterem seu comportamento antes da intervenção real; e segundo, a
+suposição de valor de tratamento de unidade estável (SUTVA), que
+pressupõe que o tratamento de uma unidade não influencia os resultados
+potenciais de outra. Essas premissas são elaboradas posteriormente na
+Seção~\ref{sec-did}.
+
+\hypertarget{sec-po}{%
+\subsection{Arcabouço de Resultados Potenciais}\label{sec-po}}
+
+A avaliação do impacto causal de uma variável de tratamento em uma
+variável de resultado envolve a comparação do efeito observado quando o
+tratamento é administrado com o cenário hipotético em que o tratamento
+não foi aplicado, conhecido como contrafactual. Entretanto, esse
+contrafactual é inerentemente não observável. Por exemplo, não é viável
+que a TZ seja implementada e não implementada simultaneamente em um
+determinado município.
+
+O ponto crucial do debate, portanto, está na identificação de uma
+unidade (ou unidades) comparável(is) que possa(m) representar
+efetivamente o contrafactual. Na estrutura de um estudo controlado
+randomizado, o contrafactual é incorporado pelo grupo de controle, que é
+selecionado por meio de aleatorização
+(\protect\hyperlink{ref-mostly_harmless_econometrics}{Angrist and
+Pischke, 2009, p. 15}; \protect\hyperlink{ref-Hernan2020}{Hernan and
+Robins, 2020}). Esse método é considerado o padrão ouro, pois gera um
+alto nível de confiança de que quaisquer diferenças observadas nos
+resultados entre os grupos de tratamento e controle são atribuíveis
+exclusivamente ao tratamento. Nos casos em que a randomização é
+impraticável, metodologias estatísticas alternativas devem ser
+empregadas para a avaliação do impacto.
+
+Antes de explorar essas metodologias alternativas, é essencial
+estabelecer uma estrutura matemática para a inferência causal.
+Utilizando a notação para resultados potenciais\footnote{Pearl
+  (\protect\hyperlink{ref-pearl2018}{2018}) aplica algumas notações
+  distintas e arquitetura de inferência causal, mesmo com muito em comum
+  com ``resultados potenciais'', usados principalmente em Economia.}
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2221}), vamos denotar \(Y_{i,t}(0, 0)\) como o resultado de interesse
+para uma unidade que não recebeu o tratamento durante dois períodos
+distintos, em que \(i\) representa a unidade em estudo e
+\(t \in \{1,2\}\) significa o período. Por outro lado, \(Y_{i,t}(0, 1)\)
+representa o resultado de uma unidade que não recebeu tratamento no
+primeiro período (\(t = 1\)), mas recebeu tratamento no período
+subsequente. Por uma questão de simplicidade, a notação dos resultados
+potenciais será simplificada para \(Y_{i,t}(0) \equiv Y_{i,t}(0, 0)\) e
+\(Y_{i,t}(1) \equiv Y_{i,t}(0, 1)\)\footnote{É importante observar que,
+  nessa estrutura inicial, os grupos que sempre receberam tratamento
+  (\(Y_{i,t}(1, 1)\)) e aqueles que foram tratados anteriormente, mas
+  não estão mais recebendo tratamento (\(Y_{i,t}(1, 0)\)) não são
+  considerados. Na prática, se os efeitos do tratamento forem
+  consistentes ao longo do tempo, os grupos que são sempre tratados
+  podem servir como controle}. Nos casos em que o tratamento é
+dicotômico, o resultado resultante é delineado pela seguinte equação:
+\begin{equation} \label{eq-outcome-variable}
+Y_{i,t} = D_{i,t} \cdot Y_{i,t}(1) + (1 - D_{i,t}) \cdot Y_{i,t}(0).
+\end{equation} Aqui, \(D_{i,t} = 1\) significa o tratamento administrado
+durante o período \(t\), com a observação de apenas um resultado em
+potencial\footnote{É imperativo observar que se presume que a variável
+  causadora precede temporariamente o resultado, portanto, o período
+  simultâneo \(t\) para as variáveis de tratamento e resultado sugere o
+  início do tratamento e a culminação do resultado no mesmo período, um
+  conceito viável devido à sequência temporal discreta}.
+
+A principal preocupação é calcular o efeito médio do tratamento nos
+indivíduos que o receberam. A equação fundamental para estimar o efeito
+médio do tratamento sobre os tratados (\(\tau_2\) ou ATT, como comum na
+sigla em inglês) para o período \(t=2\) é expressa como:
+\begin{equation} 
+\label{eq-counterfactual}
+   \tau_2 = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1].
+\end{equation} Nesse contexto, \{\(Y_{i,2}(0) | D_{i,2} = 1\)\}
+simboliza o cenário contrafatual para a coorte tratada no segundo
+período, supondo a ausência de tratamento, que permanece inerentemente
+não observável.
+
+Portanto, \eqref{eq-counterfactual} pode ser reescrita para encontrar
+--- \(\{Y_{i,2}(0) | D_{i,2} = 0\}\) é o candidato natural --- um
+candidato a atuar como um contrafactual: \begin{equation*} 
+\tau_2 = \mathbb{E}[Y_{i,2}(1)| D_{i,2} = 1] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1] + \overbrace{\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0]}^{= 0},
+\end{equation*} que pode ser rearranjado para: \begin{equation} 
+      \tau_2 = \mathbb{E}[Y_{i,2}(1)| D_{i,2} = 1] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0] + \underbrace{\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0] - \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1]}_{\text{viés de seleção}}.
+\end{equation} O último termo do lado direito representa o viés de
+seleção não quantificável. Fundamentalmente, isso implica que, se os
+resultados potenciais para as coortes tratadas e não tratadas forem
+idênticos, ou seja,
+\(\mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 0]\),
+então a coorte não tratada, doravante denominada grupo de controle, é
+postulada para adotar a posição contrafactual. Consequentemente, a
+diferença média entre os resultados observados é indicativa do efeito
+causal do tratamento sobre os tratados, denotado como \(\tau_2\). A
+proposta aqui é adotar a metodologia Diferenças-em-diferenças para
+calcular esse valor, desde que seus pressupostos sejam atendidos.
+
+\hypertarget{sec-did}{%
+\subsection{Diferenças-em-diferenças}\label{sec-did}}
+
+A metodologia de Diferenças-em-diferenças (DD) serve como um projeto
+quase-experimental para estimar o impacto causal médio do tratamento em
+um grupo tratado em relação a um grupo de controle. Esse projeto é
+aplicável quando o tratamento é administrado simultaneamente ou em
+intervalos de tempo variáveis
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024}, cap.
+9; \protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023}).
+Seu principal objetivo é verificar o efeito causal na ausência de um
+estudo controlado randomizado, especialmente quando a alocação do
+tratamento é não aleatória ou endógena, de acordo com a terminologia
+usada em Economia
+(\protect\hyperlink{ref-bladimir_carrillo_bermudez_o_2024}{Bermudez,
+Bladimir Carrillo and Branco, Danyelle Santos, 2024, p. 330}). Sem
+aleatorização, pode haver diferenças pré-existentes entre os grupos
+tratados e de controle que influenciam o resultado de interesse, que o
+modelo DD procura abordar.
+
+De forma concisa, essa abordagem envolve o cálculo das diferenças pré e
+pós-tratamento em cada grupo, seguido das diferenças intergrupos. Para
+atenuar o viés de variável omitida (OVB, na sigla em inglês) decorrente
+de fatores de confusão ou outras formas de viés de seleção, são
+empregadas técnicas de regressão múltipla, conforme descrito na
+Seção~\ref{sec-did-covariates}. Quando o OVB é efetivamente controlado
+por meio de um conjunto abrangente de covariáveis, o estimador DD se
+torna não viesado e consistente, facilitando assim a estimativa precisa
+do efeito causal.
+
+Pré-requisitos adicionais devem ser satisfeitos para a validade da
+abordagem de diferença-em-diferença, principalmente a suposição de
+``tendências paralelas''. Isso postula que, na ausência de qualquer
+intervenção, as trajetórias dos grupos tratados e não tratados teriam
+evoluído em conjunto (\protect\hyperlink{ref-roth_whats_2023}{Roth
+\emph{et al.}, 2023, p. 2221}). Essa premissa, no entanto, não é
+inerentemente verificável, uma vez que se refere a um cenário hipotético
+sobre os resultados potenciais do grupo tratado. Além disso, a
+observação de tendências paralelas antes da intervenção não as
+estabelece como condição necessária ou suficiente para o paralelismo
+pós-intervenção. Formalmente, a expressão em nível populacional da
+suposição de tendências paralelas é encapsulada na Equação
+\eqref{eq-parallel-trend}: \begin{equation}
+\label{eq-parallel-trend}
+   \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0].
+\end{equation}
+
+A presunção de tendências paralelas está implicitamente incorporada na
+estrutura da análise de regressão linear, especificamente no estimador
+de mínimos quadrados ordinários (MQO). Isso ocorre porque o estimador
+MQO adota intrinsecamente a trajetória do grupo de controle como um
+substituto para o cenário contrafactual do grupo tratado
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024}, cap.
+9.2.3). Se essa suposição se mostrar insustentável, as estimativas do
+modelo resultante serão consideradas imprecisas. Essencialmente, isso
+requer a presença de um grupo de controle que espelhe de perto a
+trajetória que o grupo tratado teria seguido na ausência de qualquer
+intervenção\footnote{Existe uma variante menos rigorosa dessa suposição
+  para tratamentos variáveis no tempo, denominada ``tendências comuns
+  ponderadas pela variância'', que permite a anulação de tendências
+  divergentes por meio da ponderação
+  (\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024},
+  cap. 9.6.4).}. No entanto, isso também não pode ser verificado
+empiricamente. Um método indireto para avaliar a plausibilidade dessa
+suposição envolve o exame das tendências pré-tratamento em ambas as
+coortes
+(\protect\hyperlink{ref-bladimir_carrillo_bermudez_o_2024}{Bermudez,
+Bladimir Carrillo and Branco, Danyelle Santos, 2024, p. 336}).
+
+Na metodologia convencional de diferenças-em-diferenças, as variáveis
+que poderiam introduzir um viés de seleção, mas que permanecem
+constantes ao longo do tempo, são naturalmente neutralizadas. Essa
+atenuação ocorre porque a metodologia controla inerentemente esses
+efeitos fixos calculando o diferencial da variável observada para a
+mesma unidade em dois períodos de tempo distintos. Consequentemente, a
+abordagem DD neutraliza de fato a influência de variáveis de confusão
+invariantes no tempo
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024}, cap.
+9.2.2). Por exemplo, no cenário de TZ, quaisquer fatores geográficos ou
+legislativos que permaneçam constantes ao longo do tempo e que possam
+afetar a adoção de uma política são efetivamente controlados no processo
+de estimativa, independentemente de sua medição direta.
+
+Entretanto, esse equilíbrio pode ser perturbado por certos elementos,
+conforme observado por Roth \emph{et al.}
+(\protect\hyperlink{ref-roth_whats_2023}{2023, p. 2229}).
+Especificamente, os fatores de confusão que flutuam ao longo do tempo
+representam um desafio significativo se estiverem correlacionados com as
+condições econômicas regionais que podem afetar a implementação de
+políticas de Tarifa Zero. Além disso, a forma funcional usada na
+aplicação do MQO pode alterar a estabilidade presumida das tendências.
+Por exemplo, o método de quantificação da receita tributária pode
+infringir essa premissa, enquanto a utilização do valor logarítmico da
+receita tributária pode não infringir, e o inverso também pode ser
+verdadeiro. A estratégia predominante para tratar dessa preocupação
+envolve o ajuste de um vetor de covariáveis, \(\boldsymbol{X_i}\), para
+simular a atribuição aleatória do tratamento
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2229}), que é detalhada na Seção~\ref{sec-did-covariates}.
+
+Dada a natureza fundamental da hipótese de tendência paralela, Roth
+\emph{et al.} (\protect\hyperlink{ref-roth_whats_2023}{2023, p. 2236})
+defendem uma análise de sensibilidade para avaliar o impacto de
+quaisquer desvios nos resultados primários. Eles empregam diagramas de
+``estudo de evento'' para verificar a integridade dessa suposição,
+aplicando valores defasados variados de tratamento para contornar as
+implicações adversas da modelagem de ``efeitos fixos bidirecionais''
+(TWFE, na sigla em inglês) (\protect\hyperlink{ref-roth_whats_2023}{Roth
+\emph{et al.}, 2023, p. 2235}). Isso é feito na
+Seção~\ref{sec-event-study}. Uma exceção ocorre quando a intervenção
+influencia as covariáveis sensíveis ao tempo, tornando-as controles
+``ruins'' (\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.},
+2023, p. 2232}). Consequentemente, uma análise de sensibilidade é
+imperativa para confirmar a resiliência da estrutura DD.
+
+Outro pressuposto é o pressuposto de valor de tratamento unitário
+estável (SUTVA). Esse requisito pressupõe que os resultados potenciais
+de uma determinada unidade não são afetados pelos tratamentos
+específicos aplicados a outras unidades. Isso implica uma ausência de
+interferência ou ``externalidades''
+(\protect\hyperlink{ref-cunningham_causal_2024}{Cunningham, 2024}, cap.
+4.1.5). Essa suposição é bifurcada em dois componentes: primeiro, a
+uniformidade dos tratamentos, que, no contexto de uma iniciativa de
+Tarifa Zero, se traduz em uma aplicação consistente da política em todos
+os habitantes do município; segundo, a independência dos efeitos da
+política, indicando que a adoção de uma política em um município não
+influencia diretamente os resultados potenciais, como o PIB de outros
+municípios. A hipótese do SUTVA é considerada factível no contexto da
+presente análise por dois motivos principais. No caso do primeiro
+componente, a viabilidade do programa de Tarifa Zero é considerada em
+cenários em que ela é aplicado universalmente em toda a população. No
+segundo componente, a plausibilidade da suposição é apoiada pelo arranjo
+relativamente disperso dos municípios que implementaram a TZ, juntamente
+com a interdependência econômica mínima observada entre eles.
+
+Além disso, a identificação de efeitos causais depende de um terceiro
+pressuposto denominado ``não antecipação''
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2222}). Isso pressupõe a ausência de modificações comportamentais antes
+da aplicação de um tratamento, formalmente expresso como
+\{\(Y_{i,1}(0) = Y_{i,1}(1)\)\} para todos os indivíduos \(i\) em que
+\(D_{i,2} = 1\). Analisando o cenário específico em questão, infere-se
+que os efeitos prospectivos sobre os resultados, como a receita
+tributária, não devem ser influenciados pela população antes da
+promulgação de uma política de isenção de tarifas. Consequentemente,
+isso parece não ser um problema no contexto da Tarifa Zero. Além disso,
+semelhante a vários modelos estatísticos, o processo de estimativa é
+baseado na amostragem de grupos independentes --- municípios --- de uma
+superpopulação maior (\protect\hyperlink{ref-roth_whats_2023}{Roth
+\emph{et al.}, 2023, p. 2219}).
+
+Dadas as condições estipuladas e na ausência de viés de variável
+omitida, o modelo DD é identificável, conforme delineado por Roth
+\emph{et al.} (\protect\hyperlink{ref-roth_whats_2023}{2023, p. 2222}).
+A estimativa procede da suposição fundamental de tendência paralela na
+Equação \eqref{eq-parallel-trend}, articulada da seguinte forma:
+\begin{equation}
+\label{eq-counterfactual-assumptions}
+\begin{split}
+    \mathbb{E}[Y_{i,2}(0) | D_{i,2} = 1] = & \quad \mathbb{E}[Y_{i,1}(0) | D_{i,2} = 1] + \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0] \\
+    \stackrel{\text{não-antecipação}}{=} & \quad \mathbb{E}[Y_{i,1}(1) | D_{i,2} = 1] + \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0] \\\
+    \stackrel{\text{não-confundimento}}{=} & \quad \mathbb{E}[Y_{i,1} | D_{i,2} = 1] + \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0].
+\end{split}
+\end{equation}\textbackslash end\{equation\} Essa equação é baseada na
+manifestação média do efeito de não antecipação, em que
+\(\mathbb{E}[Y_{i,1}(0) | D_{i,2} = 1] = \mathbb{E}[Y_{i,1}(1) | D_{i,2} = 1]\).
+De acordo com a suposição de ausência de variáveis confundidores, o
+estimador DD encapsula o diferencial da média observada --- veja a
+Equação \eqref{eq-outcome-variable} --- entre as coortes tratadas e de
+controle em ambas as fases temporais --- representados por
+\(\mathbb{E}[Y_{i,1}|D]\) e \(\mathbb{E}[Y_{i,2}|D]\). Consequentemente,
+a Equação \eqref{eq-counterfactual-assumptions} elucida a metodologia
+para estimar o contrafactual. Substituindo isso na Equação
+\eqref{eq-counterfactual}, obtém-se o estimador DD como:
+\begin{equation} \label{eq-did-estimator}
+\begin{split}
+    \tau_2 & = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1] \\
+     & = \mathbb{E}[Y_{i,2} - Y_{i,1}| D_{i,2} = 1] - \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0].
+\end{split}
+\end{equation} Isso representa o agregado das médias efetivas de
+diferenças-em-diferenças para a população
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023}).
+Entretanto, essa estrutura foi projetada para levar em conta dois
+períodos, o que pode não ser aplicável em cenários em que o tratamento é
+administrado em intervalos variáveis. Isso é abordado na Seção a seguir.
+
+\hypertarget{sec-did-time-varying}{%
+\subsubsection{Diferenças-em-diferenças e tratamento variável no
+tempo}\label{sec-did-time-varying}}
+
+A adoção de tratamentos que variam ao longo do tempo pode ser abordada
+por meio da análise de diferenças-em-diferenças. No campo das ciências
+sociais, os projetos experimentais são menos predominantes em comparação
+com outros campos, o que faz com que os tratamentos sejam implementados
+em momentos diferentes. Consequentemente, para uma unidade que recebe
+tratamento em um determinado momento, existem três grupos de controle em
+potencial: a) unidades que nunca foram tratadas; b) unidades que já
+foram tratadas; e c) unidades que ainda não foram tratadas. Esse cenário
+foi observado na implementação do transporte público gratuito nos
+municípios brasileiros, uma consequência de sua estrutura federalista.
+Portanto, a implementação da política em cada unidade depende de suas
+condições políticas e fiscais específicas.
+
+No entanto, o modelo canônico DD \(2 \times 2\) (dois períodos
+\(\times\) dois grupos), conforme apresentado na Seção~\ref{sec-did},
+não é adequado para modelos variáveis no tempo
+(\protect\hyperlink{ref-Goodman-Bacon-2021-DiD}{Goodman-Bacon, 2021, pp.
+254--5}) ao medir o efeito médio do tratamento sobre os tratados. O
+principal motivo é que ele considera todas as combinações possíveis de
+\(2 \times 2\), uma das quais envolve a comparação de unidades tratadas
+tardiamente com unidades tratadas precocemente atuando como grupo de
+controle, um cenário que não é plausível. Portanto, o modelo deve ser
+adaptado para acomodar tratamentos variáveis no tempo.
+
+O conceito de variação temporal é formalizado pela definição de períodos
+como \(t = 1, 2, \dots, T\), onde o tratamento pode ser implementado a
+qualquer momento \(t > 1\). O tempo de implementação é indexado por
+\(G_i = \min\{t: D_{i,t} = 1\}\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2223}). Se o tratamento nunca for implementado, então \(G_i = \infty\),
+que é denotado por uma variável binária, definida como uma função
+indicadora \(C_i = \mathds{1}\{G_i = \infty\} = 1\). Na estrutura de
+resultados potenciais, a variável de resultado é denotada por
+\(Y_{i, t}(\boldsymbol{0}_{g-1}, \mathds{1}_{T-g+1})\), ou simplesmente
+\(Y_{i, t}(g)\), quando o tratamento é implementado no tempo \(g\). Para
+uma unidade que nunca recebe tratamento, a variável de resultado é
+representada por \(Y_{i, t}(\boldsymbol{0}_{T})\), denotada por
+\(Y_{i, t}(\infty)\).
+
+A intervenção que está sendo examinada é dicotômica, e consideraremos
+apenas municípios que exibem uma natureza irreversível, ou seja, após
+sua implementação, a política permanece em vigor indefinidamente. Ele
+constrói fundamentalmente uma estrutura em torno do efeito médio do
+tratamento de grupo-tempo sobre o tratado, articulado como
+\(ATT(g, t) = \mathbb{E}[Y_{i,t}(g) - Y_{i,t}(\infty) | D_{i,t} = 1, G_i = g]\),
+em que \(G_i\) denota a coorte à qual a unidade \(i\) pertence, tendo
+sido administrado o tratamento começando no período \(g\). Esta
+metodologia foi conceituada em Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}). Para ilustrar,
+\(ATT(2014, 2016)\) significa o impacto da TZ em 2016, dependendo de sua
+adoção pelo município em 2014. Presumindo a suposição de tendência
+paralela\footnote{Consulte Seção~\ref{sec-did-covariates} para o cenário
+  em que tendências paralelas são válidas somente mediante
+  condicionamento em covariáveis.} e a ausência de comportamento
+antecipatório, o ATT é discernido por meio da disparidade entre os
+resultados do grupo tratado e do grupo de controle (aqueles aguardando
+tratamento ou nunca tratados) durante os períodos \(t\) e \(g-1\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023}):
+\begin{equation*}
+ATT(g, t) = \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g] - \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g'] \quad \text{para qualquer} \quad g' > t.
+\end{equation*} Isso pode ser estendido para abranger todos
+\(\mathbb{G}_{comp} = \{g: g' > t\}\) conforme delineado por
+\begin{equation} \label{eq-att}
+ATT(g, t) = \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i = g] - \mathbb{E}[Y_{i,t} - Y_{i,g-1} | G_i \in \mathbb{G}_{comp}].
+\end{equation} A estimativa empírica de ATT é derivada de sua
+contraparte de amostra (\protect\hyperlink{ref-roth_whats_2023}{Roth
+\emph{et al.}, 2023, p. 2226}):
+\begin{equation} \label{eq-att-estimator}
+\widehat{ATT}(g, t) = \frac{1}{N_g} \sum_{i:G_i=g} \left[ Y_{i,t} - Y_{i,g-1} \right] - \frac{1}{N_{\mathbb{G}_{comp}}} \sum_{i:G_i \in \mathbb{G}_{comp}} \left[ Y_{i,t} - Y_{i,g-1} \right],
+\end{equation} onde \(N\) representa a contagem de unidades dentro de
+cada amostra respectiva.
+
+Os efeitos heterogêneos da política da TZ são revelados por meio de
+parâmetros causais individuais. No entanto, as inúmeras interações entre
+\(g\) e \(t\) podem complicar a interpretação do efeito médio do
+tratamento sobre o tratado para cada permutação. Para simplificar, a
+metodologia calcula uma média ponderada desses ATTs, seguindo as
+diretrizes de Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}) e Roth \emph{et al.}
+(\protect\hyperlink{ref-roth_whats_2023}{2023}). Essa abordagem estima
+os efeitos médios para cada intervalo (\(l\)) após o início do
+tratamento, destacando os impactos variáveis \hspace{0pt}\hspace{0pt}da
+política ao longo do tempo e oferecendo uma visão sobre seus resultados.
+
+Provavelmente, o ambiente econômico e político em torno da implementação
+de políticas de tarifa gratuita necessita de um modelo de média para uma
+duração especificada pós-intervenção, articulado como: \begin{equation}
+\label{eq-att-estimator-avg}
+ATT_{l}^{w} = \sum_{g} w(g) \cdot ATT(g, g + l).
+\end{equation} Aqui, \(w(g)\) significa o peso atribuído ao ATT durante
+o intervalo \(g\), que é uniformemente definido entre coortes ou de
+acordo com a prevalência de cada intervalo de tempo \(l\)
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2227}). Alternativamente, o efeito da política pode ser calculado em
+média ao longo de um ano específico de implementação, revelando efeitos
+diversos entre diferentes coortes e fornecendo uma análise abrangente.
+Outras comparações menos comuns também são possíveis e podem ser
+aplicadas neste contexto. As agregações empregadas são apresentadas na
+Seção~\ref{sec-aggregating}. Na fase de inferência, técnicas de
+\textit{bootstrapping} são empregadas para construir intervalos de
+confiança para os ATTs, conforme descrito em Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 216}). Finalmente,
+este modelo fundamental é adaptável para a inclusão de covariáveis.
+
+\hypertarget{sec-did-covariates}{%
+\subsubsection{Diferenças-em-diferenças e tendências paralelas
+condicionada em covariáveis
+\hspace{0pt}\hspace{0pt}}\label{sec-did-covariates}}
+
+A variação pronunciada entre os municípios brasileiros em aspectos como
+área, produto interno bruto e demografia pode afetar a suposição de
+tendências paralelas. Essa variância tem o potencial de introduzir viés
+no modelo Diferenças-em-diferenças. Para mitigar esse risco, a extensão
+do modelo para abranger covariáveis \hspace{0pt}\hspace{0pt}aumenta sua
+robustez (\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.},
+2023, p. 2229}). Para resumir, presumimos que tendências paralelas são
+exibidas apenas por municípios que compartilham atributos semelhantes. A
+suposição de tendências paralelas, condicional a covariáveis, é
+encapsulada pela seguinte equação: \begin{equation}
+\label{eq-parallel-trend-cond}
+\mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 1, \boldsymbol{X_i}] = \mathbb{E}[Y_{i,2}(0) - Y_{i,1}(0) | D_{i,2} = 0, \boldsymbol{X_i}] \quad (\text{quase certamente}),
+\end{equation} onde \(\boldsymbol{X_i}\) representa um vetor de
+covariáveis \hspace{0pt}\hspace{0pt}antes do tratamento. Este paradigma
+é ainda mais extrapolado para acomodar modelos com tratamentos que
+variam no tempo, conforme exposto por Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}).
+
+Uma consideração crítica ao incorporar covariáveis
+\hspace{0pt}\hspace{0pt}é o pré-requisito de ter municípios tratados e
+não tratados dentro de um conjunto de covariáveis
+\hspace{0pt}\hspace{0pt}específico, ou seja,
+\(\boldsymbol{X_i} = x, \text{ para algum } i\) em ambas as coortes.
+Este requisito é encapsulado na ``suposição de forte sobreposição''. Em
+um sentido formal, isso postula que para um infinitesimal
+\(\varepsilon > 0\), a probabilidade
+\(\varepsilon < P(D_{i,t} = 1 | X_i) < 1 - \varepsilon\) deve ser válida
+para cada \(\boldsymbol{X}\) dentro da amostra
+(\protect\hyperlink{ref-roth_whats_2023}{Roth \emph{et al.}, 2023, p.
+2230}). Na Seção~\ref{sec-data}, uma análise parcial é mostrada. Além
+disso, a Equação \eqref{eq-did-estimator} passa por uma reformulação com
+a integração de covariáveis, delineadas como:
+\begin{equation} \label{eq-did-estimator-covariates}
+\begin{split}
+    \tau_2 & = \mathbb{E}[Y_{i,2}(1) - Y_{i,2}(0) | D_{i,2} = 1, \boldsymbol{X_i}] \\
+     & = \mathbb{E}[Y_{i,2} - Y_{i,1}| D_{i,2} = 1, \boldsymbol{X_i}] - \mathbb{E}[Y_{i,2} - Y_{i,1} | D_{i,2} = 0, \boldsymbol{X_i}].
+\end{split}
+\end{equation}
+
+Após delinear a estrutura teórica e suas premissas fundamentais, a fase
+subsequente envolve uma análise empírica para estimativa e inferência.
+Dentro do domínio empírico para um modelo não paramétrico, três
+metodologias se destacam, conforme destacado por Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, pp. 205--6}):
+estimadores de Regressão de Resultado (\textit{Outcome Regression} - OR,
+em inglês), Escore de Propensão Generalizado
+(\textit{Inverse Probability Weighting} - IPW, em inglês) e Duplamente
+Robusto (\textit{Doubly Robust} - DR, em inglês). O paradigma DR
+amalgama IPW e OR, começando com o cálculo do escore de propensão
+generalizado, sucedido por uma regressão de resultado. Um requisito
+fundamental é a especificação precisa da evolução do resultado ou do
+modelo de escore de propensão para as unidades nunca tratadas --- ou
+ainda não tratadas, ou ambas, dependendo das suposições ---
+(\protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna and Zhao, 2020a, p.
+105}).
+
+Portanto, o modelo duplamente robusto foi selecionado para o presente
+estudo devido à sua resiliência a erros na especificação do modelo
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 212}). O modelo para escores de propensão caracteriza a probabilidade
+de uma unidade receber tratamento dentro de um período de tempo
+específico, dadas as covariáveis. Ao designar as coortes nunca tratadas
+e ainda não tratadas como o grupo de controle\footnote{Em Callaway and
+  Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a}), cenários
+  onde unidades ainda a serem tratadas servem como grupo de controle
+  também são elaborados.}, o modelo é operacionalizado por meio de
+regressão logística (\protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna
+and Zhao, 2020a, pp. 108--9}), e a probabilidade de adoção do tratamento
+inicial é articulada como
+\(p_{g,T}(\boldsymbol{X}) = P(G_g=1 | \boldsymbol{X}, G_g + C = 1)\), ou
+em uma forma mais condensada, \(p_{g}(\boldsymbol{X})\)\footnote{A
+  partir de agora, assume-se que o índice \(i\) é implícito por uma
+  questão de brevidade.}.
+
+A abordagem teórica da metodologia de Diferenças-em-diferenças é
+essencial para o exame do impacto causal da política de TZ nas receitas
+fiscais municipais. Do ponto de vista empírico, a integração de
+covariáveis \hspace{0pt}\hspace{0pt}é consistente sob a metodologia de
+estimativa duplamente robusta, que é explicada em Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}). A estimativa de DR é
+articulada da seguinte forma: \begin{equation}
+\label{eq-dr-identification}
+ATT(g, t) = \mathbb{E} \left[ \left(\frac{G_g}{\mathbb{E}[G_g]} - \dfrac{ \dfrac{p_g(\boldsymbol{X}) C}{1 - p_g(\boldsymbol{X})} }{\mathbb{E} \left[\dfrac{p_g(\boldsymbol{X}) C}{1 - p_g(\boldsymbol{X})} \right]} \right) (Y_t - Y_{g-1} - m_{g,t}(\boldsymbol{X}) ) \right].
+\end{equation} O termo
+\(m_{g,t}(\boldsymbol{X}) = \mathbb{E}[Y_t - Y_{g-1}|\boldsymbol{X}, C = 1]\)
+denota a regressão do resultado esperado para a população que nunca foi
+ou ainda não foi tratada
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 205}; \protect\hyperlink{ref-SANTANNA2020101}{Sant'Anna and Zhao,
+2020a, p. 104}).
+
+Por todas essas razões, a estimativa do modelo DiD pode ser executada
+empregando um estimador robusto duplo de duas etapas --- mais uma vez,
+dependente da validade da suposição de tendências paralelas --- conforme
+proposto por Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a})\footnote{No modelo
+  original, o parâmetro \(\delta\) indica uma suposição de não
+  antecipação menos rigorosa. No entanto, não é considerado aqui. Para
+  uma discussão aprofundada, consulte Callaway and Sant'Anna
+  (\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 204}).}. A etapa
+inicial envolve a estimativa dos seguintes pesos para os grupos tratado
+e controle, respectivamente: \begin{equation*}
+\widehat{w}_g^{treat} = \frac{G_g}{\mathbb{E}_n[G_g]}, \quad
+\widehat{w}_g^{control} = \dfrac{ \dfrac{\widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g) C}{1 - \widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g)} }{\mathbb{E}_n \left[\dfrac{\widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g) C}{1 - \widehat{p}_g(\boldsymbol{X}; \widehat{\pi}_g)} \right]},
+\end{equation*} onde o operador
+\(\mathbb{E}_n[Z] = n^{-1} \sum_{i=1}^n Z_i\) denota a média empírica de
+uma variável \(Z\). Além disso, o termo
+\(\widehat{p}_g(\cdot; \widehat{\pi}_g)\) representa a pontuação de
+propensão estimada que é derivada usando um modelo de regressão
+logística (\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and
+Sant'Anna, 2021a, p. 212}). A segunda etapa do processo de estimativa é
+encapsulada por: \begin{equation}
+\label{eq-dr-estimation}
+\widehat{ATT}(g, t) = \mathbb{E}_n \left[ (\widehat{w}_g^{treat} - \widehat{w}_g^{control}) (Y_t - Y_{g-1} - \widehat{m}_{g,t}(\boldsymbol{X}; \widehat{\beta}_{g,t}) ) \right],
+\end{equation} onde
+\(\widehat{m}_{g,t}(\boldsymbol{X}; \widehat{\beta}_{g,t})\) expressa a
+regressão do resultado, que é obtida por meio de um modelo de regressão
+linear, conforme indicado por Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 212}). Essa é a
+versão empírica da Equação \eqref{eq-dr-identification}.
+
+Em conclusão, o processo de dedução do intervalo de confiança relevante
+para a inferência assintótica é efetivamente executado empregando uma
+abordagem de \textit{bootstrapping} de multiplicador direto. Essa
+técnica é explicada de forma abrangente em Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a, pp. 212--215}).
+Coletivamente, esses procedimentos facilitam o cálculo da influência
+causal da TZ nas receitas tributárias, permitindo assim a dedução
+subsequente sobre o impacto da política na dinâmica fiscal dos
+municípios brasileiros.
+
+\hypertarget{sec-aggregating}{%
+\subsubsection{Agregação dos efeitos médios de
+tratamento}\label{sec-aggregating}}
+
+Várias estruturas agregativas podem ser construídas com base na equação
+\eqref{eq-att-estimator-avg}. A síntese inicial dos efeitos médios diz
+respeito ao cálculo dos impactos do tratamento dentro de uma coorte
+específica ao longo do tempo. Essa síntese facilita a compreensão do
+efeito de heterogeneidade entre municípios que começaram a participação
+simultaneamente. O parâmetro delineado por Callaway and Sant'Anna
+(\protect\hyperlink{ref-CALLAWAY2021200}{2021a}) é articulado da
+seguinte forma: \begin{equation} \label{eq-group-aggte}
+\theta_{sel}(g) = \frac{1}{T - g + 1} \sum_{t=g}^{T} ATT(g, t).
+\end{equation} \(\theta_{sel}(g)\) representa o efeito médio ao longo de
+todos os períodos subsequentes pós-tratamento para o grupo \(g\). É
+imperativo reconhecer que cada instância temporal recebe significância
+equivalente. Além disso, um coeficiente singular que encapsula efeitos
+abrangentes pode ser deduzido como:
+\begin{equation} \label{eq-group-aggte-overall}
+\theta_{sel}^O = \sum_{g \; \in \; \mathbb{G}} \theta_{sel}(g) P(G = g|G \leq T).
+\end{equation} Este parâmetro cumulativo é de uso geral proposto por
+Callaway and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a,
+p. 211}) para aqueles que buscam uma figura de resumo singular. Ele
+equivale ao efeito médio do tratamento experimentado por todas as
+entidades submetidas ao tratamento em uma junção temporal única e é o
+parâmetro mais alinhado com a estimativa tradicional de DD dentro de uma
+estrutura \(2 \times 2\).
+
+O modelo DD fornece ainda uma interpretação dinâmica por meio de uma
+agregação baseada na duração da exposição ao tratamento. Inicialmente,
+denotamos por \(e = g - t\) o tempo decorrido desde o início do
+tratamento. Portanto, a agregação é:
+\begin{equation} \label{eq-dyn-time-aggte}
+\theta_{es}(e) = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{G + e \leq T\} P(G = g|G + e \leq T) ATT(g, g + e).
+\end{equation} A soma total é dada por:
+\begin{equation} \label{eq-dyn-overall}
+\theta_{es}^O = \frac{1}{T-1} \sum_{e = 0}^{T-2} \theta_{es}(e).
+\end{equation}
+
+A agregação em discussão incorpora complexidades, conforme delineado por
+Callaway and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a,
+pp. 208--10}). A variabilidade na duração da exposição ao tratamento
+entre as unidades --- particularmente, a exposição mais longa das
+unidades tratadas inicialmente --- complica a análise do efeito
+cumulativo. Os pesos dinâmicos na Equação \eqref{eq-dyn-time-aggte}, que
+dependem da duração do tratamento entre as unidades, necessitam de
+ajuste cuidadoso. As comparações entre durações de tratamento variáveis
+\hspace{0pt}\hspace{0pt}não refletem apenas diferenças nos efeitos do
+tratamento, mas também alterações na composição do grupo, potencialmente
+levando a conclusões errôneas se os pesos dinâmicos não forem calibrados
+corretamente.
+
+Consequentemente, os autores definem um evento temporal
+\(e' \text{ tal que } 0 \leq e \leq e' \leq T - 2\), e a estrutura de
+agregação balanceada para interpretação abrangente é delineada a partir
+daí: \begin{equation} \label{eq-bal-dyn-time-aggte}
+\theta_{es}^{bal}(e; e') = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{G + e' \leq T\} ATT(g, g + e) ​​P(G = g|G + e' \leq T).
+\end{equation} A equação especificada representa o impacto médio
+subsequente a \(e\) iterações, garantindo que cada entidade de
+grupo-tempo seja igual e tenha passado por tratamento por um mínimo de
+\(e'\) durações. Consequentemente, o efeito agregado pode ser deduzido
+da seguinte forma: \begin{equation} \label{eq-dyn-bal-overall}
+\theta_{es}^{O, bal}(e') = \frac{1}{e' + 1} \sum_{e = 0}^{e'} \theta_{es}^{bal}(e, e').
+\end{equation}
+
+Por fim, um método de agregação alternativo calcula o efeito médio do
+tratamento em um determinado tempo de calendário \(t\) em todas as
+entidades que receberam tratamento naquele momento, que é articulado
+como: \begin{equation} \label{eq-cal-time-aggte}
+\theta_{c}(t) = \sum_{g \; \in \; \mathbb{G}} \mathds{1}\{t > g\} ATT(g, t) P(G = g| G \leq T).
+\end{equation} Esta equação produz o efeito médio para todas as
+entidades tratadas até o tempo \(t\). A versão completa desta agregação
+é expressa por: \begin{equation} \label{eq-dyn-overall}
+\theta_{t}^O = \frac{1}{T-1} \sum_{t = 2}^{T} \theta_{c}(t).
+\end{equation}
+
+Cada técnica de agregação facilita uma interpretação do impacto
+conjunto, que deve ser abordada com prudência, particularmente em
+cenários caracterizados por heterogeneidade significativa nos efeitos do
+tratamento. O caso da TZ exemplifica tal cenário, como evidenciado em
+Seção~\ref{sec-iss-results}. Por outro lado, esses diversos métodos de
+agregação fornecem uma análise diferenciada dos efeitos, aprimorando
+assim a avaliação das implicações políticas.
+
+\newpage
+
+\hypertarget{sec-materials-methods}{%
+\section{Materiais e Métodos}\label{sec-materials-methods}}
+
+Esta seção delineia os recursos computacionais, conjuntos de dados e
+procedimentos estatísticos empregados na investigação empírica. O
+conjunto de dados é organizado em uma estrutura de painel longitudinal,
+compreendendo variáveis \hspace{0pt}\hspace{0pt}pertinentes aos
+municípios brasileiros abrangendo de 2003 a 2019. Este conjunto de dados
+serve como base para avaliar os efeitos causais da iniciativa de
+Transporte Público Gratuito sobre os resultados fiscais dos municípios,
+especificamente a geração de receita tributária. A estrutura
+metodológica adotada é a abordagem Diferenças-em-diferenças (DD), que
+foi aumentada para incorporar efeitos de tratamento dinâmicos e garantir
+que a suposição de tendências paralelas seja atendida, condicional às
+covariáveis \hspace{0pt}\hspace{0pt}observadas. A análise inferencial é
+facilitada pela implementação de uma técnica de estimativa duplamente
+robusta, culminando em uma avaliação agregada que elucida as implicações
+fiscais gerais da política de transporte.
+
+\hypertarget{sec-r-packages}{%
+\subsection{Pacotes R}\label{sec-r-packages}}
+
+Os principais pacotes usados \hspace{0pt}\hspace{0pt}na análise --- e
+suas descrições resumidas --- são os seguintes:
+
+1- \textit{\underline{Difference-in-Differences (did)}}
+(\protect\hyperlink{ref-did_r}{Callaway and Sant'Anna, 2021b}): O pacote
+R \textbf{did} contém ferramentas para calcular parâmetros de efeito de
+tratamento médio em uma configuração Diferenças-em-diferenças
+permitindo: a) Mais de dois períodos de tempo; b) Variação no tempo de
+tratamento (ou seja, unidades podem ser tratadas em diferentes pontos no
+tempo); c) Heterogeneidade do efeito do tratamento (ou seja, o efeito de
+participar do tratamento pode variar entre unidades e exibir dinâmicas
+potencialmente complexas, seleção para tratamento ou efeitos de tempo);
+d) A suposição de tendências paralelas se mantém somente após o
+condicionamento em covariáveis.
+
+2- \textit{\underline{Diferenças-em-diferenças duplamente robusta}}
+(\protect\hyperlink{ref-DRDID_r}{Sant'Anna and Zhao, 2020b}): O pacote R
+\textbf{DRDID} implementa diferentes estimadores para o efeito médio de
+tratamento sobre os tratados (ATT) em configurações de
+diferenças-em-diferenças onde a suposição de tendências paralelas se
+mantém após o condicionamento em um vetor de covariáveis
+\hspace{0pt}\hspace{0pt}de pré-tratamento. Ele é usado por meio do
+pacote DiD.
+
+\hypertarget{sec-data}{%
+\subsection{Dados}\label{sec-data}}
+
+Na presente análise, a política de Tarifa Zero é examinada como um
+desenho quase-experimental. Dada a natureza não aleatória da
+intervenção, é imperativo levar em conta potenciais variáveis
+\hspace{0pt}\hspace{0pt}de confusão para verificar o impacto causal da
+isenção de tarifa na receita tributária. Se todas as informações
+necessárias estiverem disponíveis, os resultados potenciais podem ser
+tratados como aleatórios, condicionais a covariáveis. Os dados para
+ajustar os modelos precisam estar no formato de ``dados em painel''
+(dados longitudinais, no jargão estatístico). Em resumo, os dados devem
+ter informações sobre as unidades (municípios) e tempo (anos) e nenhuma
+restrição na correlação de séries temporais é necessária, em princípio
+(\protect\hyperlink{ref-CALLAWAY2021200}{Callaway and Sant'Anna, 2021a,
+p. 203}).
+
+Portanto, dados pertencentes aos municípios brasileiros serão utilizados
+para este estudo. As potenciais variáveis \hspace{0pt}\hspace{0pt}de
+confusão servirão como covariáveis \hspace{0pt}\hspace{0pt}de controle
+(\(\boldsymbol{X_i}\)) dentro da estrutura analítica do modelo de
+Diferenças-em-diferenças. O conjunto de dados abrange registros
+municipais abrangendo de 2003 a 2019, apresentando assim um híbrido de
+dados transversais e de séries temporais. Detalhes sobre o ano de
+implementação da política de TZ podem ser encontrados em Santini
+(\protect\hyperlink{ref-Santini-FFPT-2024}{2024})\footnote{Acessado em
+  05/04/2024}, enquanto os dados de receita tributária foram obtidos de
+Instituto de Pesquisa Econômica Aplicada (IPEA)
+(\protect\hyperlink{ref-IPEA-iss-2020}{2020}). Do Instituto Brasileiro
+de Geografia e Estatística (IBGE), os conjuntos de dados são: Produto
+Interno Bruto (PIB) Municipal, projeções populacionais e área dos
+municípios.
+
+\hypertarget{sec-methods}{%
+\subsection{Métodos}\label{sec-methods}}
+
+A avaliação do impacto da política de Tarifa Zero na receita tributária
+necessita da aplicação da abordagem Diferenças-em-Diferenças, conforme
+delineado na Seção~\ref{sec-did}. Essa metodologia é necessária devido à
+impraticabilidade de um ensaio clínico aleatorizado. Dada a variação
+temporal na adoção da política, uma análise de tratamento de variação
+temporal foi conduzida, conforme explicado em
+Seção~\ref{sec-did-time-varying}. Os grupos de controle foram
+constituídos por municípios que nunca implementaram a política ou ainda
+não o fizeram, limitando a amostra a Estados com pelo menos um município
+que promulgou a política. O ano de início da TZ serviu como critério
+para classificação do grupo.
+
+A compilação de dados, conforme detalhado na Seção~\ref{sec-data}, foi
+executada utilizando sites institucionais oficiais. A
+Seção~\ref{sec-exploratory} elucida as características dos dados
+primários, fornecendo ideias sobre a TZ, arrecadação de impostos e
+variáveis \hspace{0pt}\hspace{0pt}de controle --- empregadas para
+mitigar o viés de seleção --- com discussões apresentadas na
+Seção~\ref{sec-did-covariates}. Variáveis
+\hspace{0pt}\hspace{0pt}econômicas e demográficas foram transformadas
+logaritmicamente (logaritmo natural) para minimizar discrepâncias no
+formato dos dados. Além disso, variáveis
+\hspace{0pt}\hspace{0pt}monetárias foram ajustadas para inflação usando
+o Índice de Preços ao Consumidor Amplo (IPCA) para refletir os valores
+de dezembro de 2020. Os pacotes R, conforme introduzidos em
+Seção~\ref{sec-r-packages}, sustentam a estrutura metodológica
+principal, com saídas de função adaptadas para se alinharem com as
+descobertas e discussões nos resultados em Seção~\ref{sec-results} e
+discussões em Seção~\ref{sec-disc-conclusions}.
+
+The primary model's estimation, pursuant to Equation
+\eqref{eq-att-estimator}, represents the initial phase in evaluating
+potential aggregations, as discussed in Seção~\ref{sec-aggregating}.
+This phase encompasses group, dynamic (whether balanced or not), and
+calendar time aggregations to ensure the robustness of the results,
+safeguarding against the possibility of spurious findings contingent
+upon the structural design of the model. These aggregations were
+facilitated by the functionalities provided within the referenced R
+packages, with all inferential statistics reported at a 95\% confidence
+interval. To further fortify against selection bias, diverse sets of
+covariates were employed, alongside an examination of the parallel
+trends assumption via an event-study analytical framework.
+
+A estimativa do modelo principal, de acordo com a Equação
+\eqref{eq-att-estimator}, representa a fase inicial na avaliação de
+agregações potenciais, conforme discutido em
+Seção~\ref{sec-aggregating}. Esta fase abrange agregações de grupo,
+dinâmicas (balanceadas ou não) e de tempo de calendário para garantir a
+robustez dos resultados, protegendo contra a possibilidade de
+descobertas espúrias dependentes do desenho estrutural do modelo. Essas
+agregações foram facilitadas pelas funcionalidades fornecidas nos
+pacotes R referenciados, com todas as estatísticas inferenciais
+relatadas em um intervalo de confiança de 95\%. Para testar contra o
+viés de seleção, diversos conjuntos de covariáveis
+\hspace{0pt}\hspace{0pt}foram empregados, juntamente com um exame da
+suposição de tendências paralelas por meio de uma estrutura analítica de
+estudo de eventos.
+
+\newpage
+
+\hypertarget{sec-results}{%
+\section{Resultados}\label{sec-results}}
+
+Os resultados são apresentados nas seções a seguir. A primeira seção
+detalha a análise exploratória de dados, que inclui a atribuição de
+tratamento escalonado da política de transporte público gratuito. As
+seções subsequentes delineiam a análise de inferência causal, abrangendo
+a estimativa do Efeito Médio do Tratamento sobre os Tratados e os
+efeitos agregados do tratamento. A seção final fornece uma análise
+abrangente das implicações fiscais da política sobre os municípios
+brasileiros.
+
+\hypertarget{sec-exploratory}{%
+\subsection{Exploratory Data Analysis}\label{sec-exploratory}}
+
+Portanto, as unidades sujeitas a tratamento ou atuando como controle
+estão em Figura~\ref{fig-plot-staggered}. A implementação de atribuições
+de tratamento escalonadas frequentemente caracteriza metodologias
+quase-experimentais. Essa abordagem é notável na adoção da política de
+Tarifa Zero. No período de 2003 a 2019, 27 municípios adotaram essa
+política. Dado que a promulgação de tal política está sujeita à
+aplicação discricionária, a estrutura metodológica proposta deve ser
+empregada dependendo da confiabilidade de suas suposições subjacentes.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-plot-staggered-1.pdf}
+
+}
+
+\caption{\label{fig-plot-staggered}Adoção Escalonada da política de
+Tarifa Zero.}
+
+\end{figure}
+
+Na avaliação de fatores causais que influenciam uma variável de
+resultado, prevê-se que uma variação na variável resposta, ascendente ou
+descendente, será observada. Essa expectativa é baseada na hipótese de
+que a causa sob avaliação exerce um efeito mensurável na variável de
+resultado em questão. A média em cada coorte do efeito do tratamento na
+receita do ISS é apresentada em Figura~\ref{fig-iss-cohort}. O termo
+``coorte'' se refere a um conjunto de municípios que implementaram
+simultaneamente o Fare-Free no mesmo ano civil.
+
+Observacionalmente, essas coortes demonstraram uma tendência de
+crescimento progressivo na receita do ISS nos anos que sucederam sua
+adoção da TZ, mantendo uma trajetória ascendente ou revertendo um
+declínio anterior. Esse padrão indica um período de ajuste e eventual
+estabilização em um patamar operacional elevado, refletindo a
+assimilação da nova maneira de organização do transporte público.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-iss-cohort-1.pdf}
+
+}
+
+\caption{\label{fig-iss-cohort}Receita Log(ISS) por coorte. O período de
+tratamento está em azul. Os eixos verticais variam de acordo com o
+subplot.}
+
+\end{figure}
+
+A sobreposição de conjuntos de informações variáveis
+\hspace{0pt}\hspace{0pt}constitui uma suposição adicional dentro da
+estrutura do modelo (veja Seção~\ref{sec-did-covariates}). Isso requer
+verificação por meio de uma abordagem analítica descritiva. O gráfico de
+densidade, conforme representado em Figura~\ref{fig-density}, ilustra
+que as distribuições das variáveis \hspace{0pt}\hspace{0pt}de resposta e
+covariáveis \hspace{0pt}\hspace{0pt}coincidem amplamente. Considerando
+as condições de tratamento que variam com o tempo, as estatísticas
+descritivas para o ano de referência de 2010 são apresentadas
+independentemente do ponto de partida real do tratamento. A
+representação gráfica revela que a transformação logarítmica da área
+territorial exibe uma distribuição altamente semelhante entre os grupos
+tratados e não tratados. As três variáveis
+\hspace{0pt}\hspace{0pt}restantes, também transformadas
+logaritmicamente, exibem pequenas discrepâncias distribucionais. No
+entanto, a extensão da sobreposição e a similaridade no desenho das
+curvas permanecem perceptíveis.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-density-1.pdf}
+
+}
+
+\caption{\label{fig-density}Gráfico de densidade da variável resposta e
+das covariáveis.}
+
+\end{figure}
+
+Além disso, os valores médios e medianos, referenciados em
+Tabela~\ref{tbl-descriptive-mean} e Tabela~\ref{tbl-descriptive-median}
+respectivamente, destacam as composições entre os grupos tratados e de
+controle. Enquanto as diferenças médias para os logaritmos da receita de
+ISS, população e PIB são estatisticamente significativas, as
+estatísticas de ordem retratam um padrão mais congruente.
+
+\hypertarget{tbl-descriptive-mean}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lcccc}
+\caption{\label{tbl-descriptive-mean}Estatísticas descritivas das médias da variável de respsota e das
+covariáveispor status de tratamento. }\tabularnewline
+
+\toprule
+\textbf{Variable (log)} & \textbf{Treated}, N = 27\textsuperscript{\textit{1}} & \textbf{Untreated}, N = 3,037\textsuperscript{\textit{1}} & \textbf{Difference}\textsuperscript{\textit{2}} & \textbf{95\% CI}\textsuperscript{\textit{2,3}} \\ 
+\midrule\addlinespace[2.5pt]
+ISS collection & 14.80 (1.33) & 13.60 (1.89) & 1.2 & 0.67, 1.7 \\ 
+Population & 9.87 (0.78) & 9.39 (1.23) & 0.48 & 0.17, 0.79 \\ 
+GDP & 13.50 (1.10) & 12.42 (1.49) & 1.1 & 0.64, 1.5 \\ 
+Territorial area & 5.79 (1.09) & 5.96 (1.04) & -0.17 & -0.60, 0.26 \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+\textsuperscript{\textit{1}}Mean (SD)\\
+\textsuperscript{\textit{2}}Welch Two Sample t-test\\
+\textsuperscript{\textit{3}}CI = Confidence Interval\\
+\end{minipage}
+\endgroup
+
+\hypertarget{tbl-descriptive-median}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lcc}
+\caption{\label{tbl-descriptive-median}Estatísticas descritivas das medianas da variável de respsota e das
+covariáveispor status de tratamento. }\tabularnewline
+
+\toprule
+\textbf{Variable (log)} & \textbf{Treated}, N = 27\textsuperscript{\textit{1}} & \textbf{Untreated}, N = 3,037\textsuperscript{\textit{1}} \\ 
+\midrule\addlinespace[2.5pt]
+ISS collection & 14.68 (13.74, 15.89) & 13.33 (12.25, 14.74) \\ 
+Population & 9.89 (9.25, 10.35) & 9.24 (8.47, 10.07) \\ 
+GDP & 13.26 (12.80, 14.19) & 12.11 (11.31, 13.21) \\ 
+Territorial area & 5.99 (5.21, 6.45) & 5.87 (5.25, 6.60) \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+\textsuperscript{\textit{1}}Median (IQR)\\
+\end{minipage}
+\endgroup
+
+Dado que essas variáveis \hspace{0pt}\hspace{0pt}exibem um certo nível
+de assimetria, mesmo em uma escala logarítmica, esses resumos ordenados
+fornecem informações adicionais sobre as condições sobrepostas.
+Consequentemente, o conjunto de dados atual parece satisfazer vários dos
+pressupostos do modelo de Diferenças-em-diferenças.
+
+\hypertarget{aplicauxe7uxe3o}{%
+\subsection{Aplicação}\label{aplicauxe7uxe3o}}
+
+Duas investigações essenciais na avaliação da validade de um modelo
+causal por meio de dados observacionais dizem respeito aos determinantes
+da alocação de tratamento e ao conhecimento das unidades tratadas sobre
+a variável de resposta. O viés de seleção introduz ruído na estimativa
+de efeitos causais, necessitando de um exame meticuloso. A dependência
+da adoção do tratamento em condições antecedentes da variável de
+resultado amplifica a necessidade de vigilância na afirmação das
+pressuposições do modelo.
+
+No caso presente, a proposição de uma política de transporte público
+gratuito é conduzida por uma articulação da prefeitura municipal sob o
+endosso da legislatura local, dependente de uma demonstração de
+viabilidade fiscal. Dado que as projeções orçamentárias são
+especulativas, a condição fiscal real do município não constitui um
+impedimento primário. Além disso, a coleta do Imposto sobre Serviços
+espelha a atividade econômica, tornando improvável um esforço artificial
+para inflá-lo para justificar a implementação do TZ.
+
+Além disso, o processo de tomada de decisão abrange todas as entidades
+políticas locais. Os debates em torno da TZ geralmente envolvem
+organizações civis, organizações não governamentais, usuários de
+transporte público e outros, indicando que a promulgação de políticas
+raramente é da alçada de um indivíduo solitário ou confinada a um grupo
+seleto de municípios. Na ausência de mandatos legislativos específicos
+para esse tipo de política de transporte público, a natureza coletiva da
+tomada de decisão impede a existência de uma causa independente dentro
+desse ambiente de pesquisa que tornaria todas as entidades tratadas
+únicas e, portanto, criaria dilemas de viés de seleção insolúveis.
+
+No contexto da relação recíproca entre variáveis
+\hspace{0pt}\hspace{0pt}de tratamento e resultado, a promulgação da
+política de FFTP não parece ser uma consequência direta das flutuações
+na receita do Imposto sobre Serviços. Além disso, como o impacto da TZ
+nas receitas fiscais permanece indeterminado, o aumento da receita
+tributária não é o principal ímpeto por trás da introdução da política.
+Dado que as despesas com transporte público geralmente representam uma
+parcela significativa dos orçamentos familiares, o capital político
+obtido pela autoridade implementadora pode justificar tais compromissos
+fiscais. Outras motivações descritas em Seção~\ref{sec-fftp-policy}
+também podem ser significativas.
+
+\hypertarget{sec-iss-results}{%
+\subsection{Receita de Imposto sobre Serviços
+(ISS)}\label{sec-iss-results}}
+
+O Imposto sobre Serviços (ISS) está intrinsecamente vinculado às
+atividades econômicas, tornando-o vulnerável a mudanças na alocação de
+fundos anteriormente destinados aos custos de transporte público. A
+literatura econômica sugere que a elasticidade de renda dos serviços é
+considerável (\protect\hyperlink{ref-fuchs_1965}{Fuchs, 1965}). Isso
+implica que o consumo de serviços e bens de uma família tende a aumentar
+à medida que sua renda disponível aumenta, exemplificado pela economia
+com despesas de transporte. Se os serviços apresentarem maior
+elasticidade de renda do que os bens, um aumento nos padrões de consumo
+de serviços e, consequentemente, na receita do imposto ISS é
+antecipado\footnote{Se os bens demonstrarem maior elasticidade do que os
+  serviços na liberação de renda, uma condição elevada de imposto sobre
+  bens seria observada.}.
+
+Se essa hipótese for validada, a implementação da política de Tarifa
+Zero pode levar a um aumento no consumo que excede o crescimento
+orgânico, aumentando assim as receitas fiscais além da tendência
+existente. Esse aumento potencial no consumo pode melhorar o bem-estar
+individual e fortalecer a estabilidade financeira dos governos
+municipais por meio do aumento da arrecadação de impostos. No entanto, a
+suficiência desse aumento para contrabalançar as despesas relacionadas
+justifica um exame empírico adicional.
+
+\hypertarget{efeito-muxe9dio-do-tratamento-nos-grupos}{%
+\subsubsection{Efeito Médio do Tratamento nos
+Grupos}\label{efeito-muxe9dio-do-tratamento-nos-grupos}}
+
+Agregar grupos com base no ano de adoção da Tarifa Zero envolve calcular
+o impacto causal médio na variável dependente para entidades que
+implementaram a política simultaneamente. Além disso, o efeito médio
+agregado de tratamento nos tratados é derivado como uma média ponderada
+em todos os valores do grupo. Essa métrica duplamente agregada se
+aproxima mais do estimador usado em modelos convencionais de regressão
+de efeitos fixos ``bidirecionais'', conforme referenciado por Callaway
+and Sant'Anna (\protect\hyperlink{ref-CALLAWAY2021200}{2021a, p. 211}).
+A base do modelo é dada em Seção~\ref{sec-did-covariates}, cujos
+resultados são agregados pelo processo delineado pela Equação
+\eqref{eq-group-aggte}, enquanto o resumo abrangente do ATT é computado
+seguindo a Equação \eqref{eq-group-aggte-overall}. As unidades ainda não
+tratadas também foram incluídas na análise, como parte das unidades de
+controle.
+
+Os resultados resumidos são exibidos em
+Figura~\ref{fig-pop_gdp_pop_group}, onde cinco grupos demonstraram
+efeitos positivos estatisticamente significativos e quatro exibiram
+efeitos negativos. Os resultados também são apresentados em
+Tabela~\ref{tbl-pop_gdp_pop_group}. O resumo geral é estatisticamente
+positivo e significativo, sugerindo que a adoção da TZ está associada a
+um aumento de 10.1\% {[}3.6\%, 16.6\%{]} na receita do ISS,
+potencialmente devido à atividade econômica aprimorada. Vale a pena
+avaliar esses resultados junto com o fato de que os primeiros a adotar
+apresentam mais anos de resultados para serem calculados.
+
+Notavelmente, os primeiros a adotar mostram efeitos maiores, mas os
+resultados divergentes entre os grupos sinalizam uma dependência
+potencial do ciclo de negócios e das condições locais. Além disso, a
+composição instável do grupo pode influenciar os resultados.
+Recomenda-se que pesquisas subsequentes abordem esses aspectos. Além
+disso, a precisão dessas estimativas provavelmente melhorará à medida
+que municípios adicionais adotarem a política.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-pop_gdp_pop_group-1.pdf}
+
+}
+
+\caption{\label{fig-pop_gdp_pop_group}DD para o efeito médio do
+tratamento por grupo (PIB, população e área, em logaritmos, como
+covariáveis).}
+
+\end{figure}
+
+\hypertarget{tbl-pop_gdp_pop_group}{}
+\begin{table}[!h]
+\caption{\label{tbl-pop_gdp_pop_group}DD para o efeito médio do tratamento por grupo (PIB, população e área,
+em logaritmos, como covariáveis). }\tabularnewline
+
+\centering\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}l}
+\toprule
+Event time & Estimate (ATT) & Std. Error & 95\% Lower Bound & 95\% Upper Bound & Number of units & \\
+\midrule
+2004 & 0.435 & 0.015 & 0.399 & 0.470 & 1 & *\\
+2007 & -0.293 & 0.057 & -0.431 & -0.156 & 1 & *\\
+2008 & 0.284 & 0.100 & 0.042 & 0.525 & 2 & *\\
+2009 & 0.591 & 0.249 & -0.012 & 1.195 & 1 & \\
+2010 & -0.142 & 0.009 & -0.163 & -0.121 & 1 & *\\
+\addlinespace
+2011 & 0.285 & 0.083 & 0.083 & 0.487 & 2 & *\\
+2012 & -0.137 & 0.014 & -0.172 & -0.103 & 1 & *\\
+2013 & -0.034 & 0.073 & -0.210 & 0.142 & 1 & \\
+2014 & 0.312 & 0.099 & 0.073 & 0.551 & 5 & *\\
+2015 & -0.491 & 0.089 & -0.706 & -0.276 & 1 & *\\
+\addlinespace
+2017 & 0.087 & 0.081 & -0.110 & 0.283 & 2 & \\
+2018 & 0.120 & 0.046 & 0.007 & 0.232 & 4 & *\\
+2019 & -0.112 & 0.077 & -0.298 & 0.074 & 5 & \\
+\bottomrule
+\multicolumn{7}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{7}{l}{\rule{0pt}{1em}Signif. codes: `*' confidence band does not cover 0.}\\
+\end{tabular}
+\end{table}
+
+\hypertarget{efeitos-dinuxe2micos-de-tratamento}{%
+\subsubsection{Efeitos Dinâmicos de
+Tratamento}\label{efeitos-dinuxe2micos-de-tratamento}}
+
+A variabilidade dos efeitos do tratamento pode ser contingente à
+estrutura causal subjacente. Por exemplo, uma política pode exibir
+efeitos defasados \hspace{0pt}\hspace{0pt}se seu mecanismo operacional
+necessitar de modificações comportamentais entre seus destinatários. Por
+outro lado, um tratamento pode gerar uma alteração imediata e singular
+na variável de resultado, desprovida de variações subsequentes. Assim,
+uma agregação sintonizada com a duração da exposição pré e
+pós-tratamento pode elucidar a acomodação de efeitos dinâmicos.
+
+A influência temporal da adoção da TZ calculada usando a Equação
+\eqref{eq-dyn-time-aggte} é ilustrada em Figura~\ref{fig-pop-gdp}. Nesta
+conjuntura, o marcador de tempo zero denota o efeito imediato da adoção,
+enquanto um comprimento de \(-1\) significa o intervalo imediatamente
+anterior à implementação da política. A análise preliminar sugere que as
+estimativas do efeito são predominantemente estáveis
+\hspace{0pt}\hspace{0pt}antes do tratamento e se tornam positivas após o
+tratamento. Um padrão discernível no gráfico indica que o impacto da TZ
+na arrecadação de receitas do ISS se intensifica progressivamente,
+culminando em um valor médio de pico em aproximadamente sete a dez anos
+após a adoção. Além disso, parece não haver desvio da suposição de
+tendência paralela antes da introdução do tratamento, como evidenciado
+pela ausência de disparidades significativas entre as coortes de
+tratamento e controle (conforme representado pelos pontos vermelhos).
+
+Uma avaliação somativa do efeito do tratamento calculada pela Equação
+\eqref{eq-dyn-overall} produz um resultado positivo (19.7\% {[}4.8\%,
+34.5\%{]}), significando uma influência positiva da TZ no acúmulo de
+imposto ISS. No entanto, essa agregação está sujeita a certas
+limitações. Dado que a duração da exposição depende do grupo e da
+progressão temporal correspondente, as estimativas apresentadas são
+inerentemente desequilibradas --- ou seja, os efeitos associados à
+duração da exposição são avaliados apenas dentro de entidades que
+atingiram tal marco temporal. Para corrigir esse desequilíbrio, uma
+abordagem equilibrada para agregação de efeitos dinâmicos pode ser
+empregada.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-pop-gdp-1.pdf}
+
+}
+
+\caption{\label{fig-pop-gdp}DD para o efeito médio do tratamento pela
+duração da exposição (PIB, população área em logaritmo como
+covariáveis).}
+
+\end{figure}
+
+\hypertarget{efeitos-dinuxe2micos-balanceados}{%
+\paragraph{Efeitos Dinâmicos
+Balanceados}\label{efeitos-dinuxe2micos-balanceados}}
+
+Os efeitos dinâmicos da política de Tarifa Zero sobre a receita do
+Imposto sobre Serviços são estimados de forma equilibrada, delineados
+pela Equação \eqref{eq-bal-dyn-time-aggte} e descritos em
+Figura~\ref{fig-pop-gdp-area-balanced}. Esta análise é limitada a
+municípios que implementaram a política por um mínimo de cinco anos. Tal
+abordagem é defendida em instâncias de heterogeneidade de grupo
+(\protect\hyperlink{ref-did_r}{Callaway and Sant'Anna, 2021b}), fazendo
+a média das mesmas unidades em todos os períodos anteriores e
+posteriores ao tratamento.
+
+Por outro lado, a dinâmica se assemelha muito àquela observada ao
+considerar todas as unidades tratadas. Antes da implementação da TZ, os
+municípios tratados exibiam variações negativas/nulas na arrecadação do
+ISS em relação aos grupos de controle. Após o tratamento, essa tendência
+se inverteu, resultando em diferenciais positivos. O resumo geral ---
+havia 15 unidades com informações completas --- indica um aumento na
+receita do Imposto sobre Serviços em 15.3\% {[}0.2\%, 30.4\%{]}, embora
+com significância estatística marginal.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-pop-gdp-area-balanced-1.pdf}
+
+}
+
+\caption{\label{fig-pop-gdp-area-balanced}DD para o efeito médio do
+tratamento pela duração da exposição com balanceamento equilibrado (PIB,
+população área em logaritmo como covariáveis).}
+
+\end{figure}
+
+\hypertarget{efeito-do-tratamento-por-tempo-de-calenduxe1rio}{%
+\subsubsection{Efeito do Tratamento por Tempo de
+Calendário}\label{efeito-do-tratamento-por-tempo-de-calenduxe1rio}}
+
+In conjunction with the aforementioned aggregations, examining the
+effect in each year of adoption could shed light on the variability of
+the treatment effect contingent on the year of analysis. The
+Difference-in-Differences framework neutralizes the influence of
+unit-specific variables that remain constant over time or affect all
+units uniformly. The ``calendar effect'' then measures the impact of
+year-specific economic conditions on the FFPT policy's influence on ISS
+collection. Notable distinct effects suggest that economic cycles may
+elucidate the variable effects. These calendar effects given by Equation
+\eqref{eq-cal-time-aggte} are illustrated in
+Figura~\ref{fig-gdp-pop-calendar}.
+
+Em conjunto com as agregações mencionadas acima, examinar o efeito em
+cada ano de adoção pode lançar luz sobre a variabilidade do efeito do
+tratamento contingente ao ano de análise. A estrutura de
+Diferença-em-diferenças neutraliza a influência de variáveis
+\hspace{0pt}\hspace{0pt}específicas da unidade que permanecem constantes
+ao longo do tempo ou afetam todas as unidades uniformemente. O ``efeito
+calendário'' mede então o impacto das condições econômicas específicas
+do ano na influência da política de TZ na arrecadação do ISS. Efeitos
+distintos notáveis \hspace{0pt}\hspace{0pt}sugerem que os ciclos
+econômicos podem elucidar os efeitos das variáveis. Esses efeitos de
+calendário dados pela Equação \eqref{eq-cal-time-aggte} são ilustrados
+em Figura~\ref{fig-gdp-pop-calendar}.
+
+Neste modelo específico, o efeito médio do tratamento é 21.3\% {[}5.2\%,
+37.4\%{]}, apesar da ausência de discrepâncias significativas nos
+efeitos do tratamento ao longo dos anos estudados (todos positivos).
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-gdp-pop-calendar-1.pdf}
+
+}
+
+\caption{\label{fig-gdp-pop-calendar}DD para o efeito médio do
+tratamento por tempo de calendário (PIB, população área em logaritmo
+como covariáveis).}
+
+\end{figure}
+
+A last caveat is that the calendar-time treatment effects depends on the
+size of the groups. The summary statistics are in
+Tabela~\ref{tbl-gdp-pop-calendar}.
+
+\hypertarget{tbl-gdp-pop-calendar}{}
+\begin{table}[!h]
+\caption{\label{tbl-gdp-pop-calendar}Resumo do DD para o efeito médio do tratamento por tempo de calendário
+(PIB, população área em logaritmo como covariáveis). }\tabularnewline
+
+\centering\centering
+\fontsize{9}{11}\selectfont
+\begin{tabular}[t]{>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}>{\raggedleft\arraybackslash}p{1.5cm}l}
+\toprule
+Event time & Estimate (ATT) & Std. Error & 95\% Lower Bound & 95\% Upper Bound & Number of units & \\
+\midrule
+2004 & 0.452 & 0.011 & 0.365 & 0.539 & 1 & *\\
+2005 & 0.556 & 0.014 & 0.451 & 0.662 & 1 & *\\
+2006 & 0.500 & 0.014 & 0.390 & 0.611 & 1 & *\\
+2007 & 0.256 & 0.320 & -2.248 & 2.760 & 2 & \\
+2008 & 0.077 & 0.234 & -1.751 & 1.906 & 4 & \\
+\addlinespace
+2009 & 0.180 & 0.215 & -1.505 & 1.865 & 5 & \\
+2010 & 0.053 & 0.140 & -1.042 & 1.148 & 6 & \\
+2011 & 0.007 & 0.097 & -0.748 & 0.762 & 8 & \\
+2012 & 0.100 & 0.123 & -0.865 & 1.064 & 9 & \\
+2013 & 0.027 & 0.127 & -0.964 & 1.018 & 10 & \\
+\addlinespace
+2014 & 0.165 & 0.112 & -0.714 & 1.045 & 15 & \\
+2015 & 0.273 & 0.096 & -0.477 & 1.023 & 16 & \\
+2016 & 0.254 & 0.147 & -0.893 & 1.402 & 16 & \\
+2017 & 0.228 & 0.122 & -0.722 & 1.179 & 18 & \\
+2018 & 0.147 & 0.087 & -0.530 & 0.824 & 22 & \\
+\addlinespace
+2019 & 0.134 & 0.076 & -0.458 & 0.726 & 27 & \\
+\bottomrule
+\multicolumn{7}{l}{\rule{0pt}{1em}\textit{Note: }}\\
+\multicolumn{7}{l}{\rule{0pt}{1em}Signif. codes: `*' confidence band does not cover 0.}\\
+\end{tabular}
+\end{table}
+
+\hypertarget{sec-sensitivity-analysis}{%
+\subsection{Análise de Sensitividade}\label{sec-sensitivity-analysis}}
+
+Nesta Seção, uma análise de sensibilidade foi conduzida para avaliar a
+robustez do modelo. No Seção~\ref{sec-covariates-sensitivity}, conjuntos
+distintos de covariáveis \hspace{0pt}\hspace{0pt}são testados. No
+Seção~\ref{sec-event-study}, a suposição de tendências paralelas está
+sob (embora limitada) análise.
+
+\hypertarget{sec-covariates-sensitivity}{%
+\subsubsection{Avaliação de Conjuntos Distintos de Covariáveis
+\hspace{0pt}\hspace{0pt}}\label{sec-covariates-sensitivity}}
+
+A estrutura das covariáveis \hspace{0pt}é usada para validar a suposição
+de tendências paralelas. Na ausência de tal estrutura, os efeitos
+estimados podem ser confundidos, levando a resultados tendenciosos.
+Configurações alternativas do modelo podem ser exploradas para
+determinar as implicações de alterações na estrutura da covariável.
+Essas descobertas são delineadas em Tabela~\ref{tbl-other-models}. A
+ausência de covariáveis \hspace{0pt}\hspace{0pt}resulta em efeitos de
+grupo e dinâmicos que são estatisticamente indistinguíveis de zero. Isso
+indica que variáveis \hspace{0pt}\hspace{0pt}como população e PIB são
+fatores influentes nos resultados da coleta do ISS ao contrastar grupos
+tratados e não tratados, dado que suas distribuições não coincidem
+totalmente (consulte Figura~\ref{fig-density}).
+
+\hypertarget{tbl-other-models}{}
+\begingroup
+\fontsize{9.0pt}{10.8pt}\selectfont
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lrrr}
+\caption{\label{tbl-other-models}Efeito médio estimado do tratamento por diferentes estruturas de
+covariáveis. }\tabularnewline
+
+\toprule
+Covariate(s) & Lower bound & Upper bound &   \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Group} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & -0.013 & 0.142 &  \\ 
+Population and Area & 0.000 & 0.151 & * \\ 
+GDP and Population & 0.033 & 0.162 & * \\ 
+GDP, Population and Area & 0.036 & 0.166 & * \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Dynamic} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & -0.008 & 0.224 &  \\ 
+Population and Area & 0.030 & 0.267 & * \\ 
+GDP and Population & 0.038 & 0.330 & * \\ 
+GDP, Population and Area & 0.048 & 0.345 & * \\ 
+\midrule\addlinespace[2.5pt]
+\multicolumn{4}{l}{Calendar-time} \\[2.5pt] 
+\midrule\addlinespace[2.5pt]
+Intercept only & 0.015 & 0.304 & * \\ 
+Population and Area & 0.039 & 0.337 & * \\ 
+GDP and Population & 0.040 & 0.367 & * \\ 
+GDP, Population and Area & 0.052 & 0.374 & * \\ 
+\bottomrule
+\end{longtable}
+\begin{minipage}{\linewidth}
+Significado do código: `*' banda de confianção não inclui 0.\\
+Todos os modelos incluem intercepto.\\
+\end{minipage}
+\endgroup
+
+Uma comparação entre os modelos com covariáveis
+\hspace{0pt}\hspace{0pt}completas e parciais revela uma convergência de
+valores, embora o modelo com o conjunto total de covariáveis
+\hspace{0pt}\hspace{0pt}registre valores marginalmente mais altos. Essa
+convergência reforça a confiabilidade das descobertas do modelo.
+Consequentemente, um conjunto abrangente de covariáveis, que se alinha
+com a estrutura teórica, garante a manutenção da suposição de tendência
+paralela e a exclusão de variáveis \hspace{0pt}\hspace{0pt}de confusão.
+
+\hypertarget{sec-event-study}{%
+\subsubsection{Tendências paralelas: um estudo de
+evento}\label{sec-event-study}}
+
+A suposição de tendências paralelas constitui uma premissa fundamental
+na avaliação de inferências causais, apesar de sua inerente
+inverificabilidade em contextos empíricos. Uma abordagem metodológica
+para aproximar a validação dessa suposição é a implementação de uma
+análise de estudo de evento, que examina a consistência de tendências
+paralelas antes da intervenção. Isso é exemplificado na
+Figura~\ref{fig-event-study}, em que os pontos de dados cinza demarcam a
+fase de pré-intervenção, revelando discrepâncias insignificantes
+antecedentes à adoção do tratamento. Por outro lado, estimativas
+pós-tratamento corroboram as descobertas delineadas em seções
+antecedentes.
+
+Estudos de eventos servem como uma metodologia essencial para estimar
+efeitos dinâmicos de tratamento utilizando dados de painel, em que o
+ponto zero demarca o ano inaugural da intervenção. Dentro dessa
+estrutura, combinações temporais antecedentes e subsequentes à adoção do
+tratamento são encapsuladas no modelo de regressão. Miller
+(\protect\hyperlink{ref-Miller-2023}{2023}) postula que uma ausência de
+tendência seja observada antes do tratamento. Desvios desse padrão
+esperado podem indicar a presença de variáveis
+\hspace{0pt}\hspace{0pt}de confusão, potencialmente tornando o modelo
+especioso. Essas anomalias também sugerem problemas potenciais com a
+suposição de tendências paralelas.
+
+\begin{figure}[H]
+
+{\centering \includegraphics{tcc-rafael-inferencia-causal_files/figure-pdf/fig-event-study-1.pdf}
+
+}
+
+\caption{\label{fig-event-study}Estudo de evento para o efeito médio de
+tratamento sobre a arrecadação de ISS (PIB, população área em logaritmo
+como covariáveis).}
+
+\end{figure}
+
+A suposição de tendência paralela serve para autenticar que os
+resultados observados não são atingíveis independentemente da
+implementação da política. Embora a suposição esteja intrinsecamente
+ligada à tendência paralela pós-tratamento --- tornando-a empiricamente
+não verificável --- a análise da fase de pré-tratamento pode fornecer
+algum suporte probatório. Na ausência de convergência pré-tratamento, a
+plausibilidade da sustentação das tendências paralelas pós-tratamento
+torna-se questionável.
+
+\newpage
+
+\hypertarget{sec-disc-conclusions}{%
+\section{Discussão e Conclusões}\label{sec-disc-conclusions}}
+
+A viabilidade de um design experimental envolvendo a implementação
+aleatória de uma política de Tarifa Zero (TZ) é comprometida devido à
+sua natureza inerentemente política, que depende da agenda da governança
+local. Consequentemente, a avaliação de relações causais necessita de um
+design de estudo observacional. A estrutura analítica de
+Diferença-em-diferenças (DD) fornece uma estrutura para extrair
+inferências causais, desde que as suposições subjacentes sejam
+atendidas. A validade da identificação do efeito causal depende da
+satisfação de tendências paralelas, da SUTVA e da ausência de efeitos de
+antecipação. A incorporação de covariáveis
+\hspace{0pt}\hspace{0pt}permite fazer afirmações causais, garantindo a
+robustez das suposições do modelo.
+
+Após a aplicação da estrutura analítica do DD, a evidência empírica
+sugere um impacto positivo estatisticamente significativo da política de
+Transporte Público Gratuito sobre a arrecadação do Imposto sobre
+Serviços (ISS). O efeito médio do tratamento sobre os tratados (ATT) em
+toda a coorte de municípios que instituíram simultaneamente a isenção de
+tarifa revela um aumento das receitas do ISS em uma estimativa de 10.1\%
+--- o intervalo de confiança de 95\% é {[}3.6\%, 16.6\%{]}. Este
+estimador se alinha estreitamente com o modelo DD convencional dois por
+dois. O conjunto de covariáveis \hspace{0pt}\hspace{0pt}é dado pelos
+logaritmos do PIB, população e área.
+
+Após o exame dos efeitos dinâmicos contingentes em relação à duração da
+adoção da política, o ATT avaliado foi 19.7\% {[}4.8\%, 34.5\%{]}. O
+intervalo de confiança positivo sugere que, apesar do tamanho limitado
+da amostra, as ramificações do efeito da TZ na arrecadação de impostos
+podem exibir variabilidade temporal. Métricas subsequentes corroboram
+essa tendência positiva, embora com magnitudes marginalmente variáveis.
+O aumento fiscal observado está ostensivamente ligado a uma realocação
+de gastos familiares de tarifas de transporte público para o consumo de
+serviços e bens. O redirecionamento de recursos financeiros do
+financiamento baseado em tarifas para mecanismos alternativos é
+imperativo para a implementação sustentada dessa política pública.
+
+No entanto, é imperativo reconhecer as limitações inerentes a essa
+abordagem metodológica, particularmente quando aplicada a um tamanho de
+amostra limitado, como é o caso em nosso estudo. Com apenas 27
+municípios adotando a TZ dentro do período estudado, os intervalos de
+confiança para análises temporais ou específicas de grupo frequentemente
+produzem resultados inconclusivos, apesar de dados agregados mais
+robustos. Consequentemente, pesquisas adicionais incorporando um tamanho
+de amostra maior são aconselháveis \hspace{0pt}\hspace{0pt}quando dados
+adicionais estiverem disponíveis. Por exemplo, em maio de 2024, o número
+de municípios que adotaram o TZ expandiu para 108. Espera-se que essa
+expansão forneça estimadores mais robustos para análises gerais e
+dinâmicas. Além disso, um exame exaustivo das modificações na legislação
+tributária poderia melhorar significativamente o estudo. Isso é
+particularmente pertinente se uma mudança legislativa permitir uma
+entrada em vigor escalonada. Tal análise forneceria uma compreensão
+abrangente das mudanças incrementais e seus impactos potenciais na
+aplicação da lei tributária.
+
+É necessária uma exploração mais aprofundada das motivações por trás da
+adoção do TZ. Os comportamentos observados exibidos pelos municípios com
+as métricas de desempenho mais altas e mais baixas fornecem uma base
+para entender as causas subjacentes da variabilidade pronunciada
+observada entre essas coortes. Essa análise comparativa é essencial para
+elucidar os fatores que contribuem para as disparidades nos resultados
+de desempenho municipal. Além disso, dado que o viés de seleção é uma
+suposição significativa no modelo de Diferença-em-diferenças, elucidar
+os determinantes da adoção de políticas pode fortalecer a validade dos
+efeitos causais estimados. Normalmente, os métodos de pesquisa
+qualitativa são mais adequados para explorar os processos de tomada de
+decisão, as informações disponíveis a formuladores(as) de políticas e as
+fontes de recurso que permitem a adoção da política. Os esforços de
+pesquisa futuros devem considerar a desagregação dos setores de serviços
+como um ponto focal de estudo. Essa abordagem é fundamental para
+elucidar os impactos diferenciados da TZ em diferentes setores de
+serviços.
+
+Por fim, aprimorar o acesso ao transporte público serve como uma
+estratégia fundamental para combater a exclusão social, diminuir as
+emissões de gases de efeito estufa de veículos pessoais e reforçar a
+mobilidade urbana. Além disso, a alocação de fundos públicos para esse
+serviço essencial reforça o conceito de direito à cidade. Portanto,
+pesquisas subsequentes podem fornecer insights valiosos sobre a
+viabilidade fiscal de tais iniciativas, garantindo sua sustentabilidade
+e eficácia a longo prazo.
+
+\newpage
+
+\hypertarget{referuxeancias}{%
+\section*{Referências}\label{referuxeancias}}
+\addcontentsline{toc}{section}{Referências}
+
+\hypertarget{refs}{}
+\begin{CSLReferences}{0}{0}
+\leavevmode\vadjust pre{\hypertarget{ref-mostly_harmless_econometrics}{}}%
+ANGRIST, J. D.; PISCHKE, J.-S.
+\textbf{\href{http://www.jstor.org/stable/j.ctvcm4j72}{Mostly harmless
+econometrics: An empiricist's companion}}. {[}s.l.{]} Princeton
+University Press, 2009.
+
+\leavevmode\vadjust pre{\hypertarget{ref-batista_domingos_2017}{}}%
+BATISTA, M.; DOMINGOS, A.
+\href{https://doi.org/10.17666/329414/2017}{MAIS QUE BOAS INTENÇÕES:
+Técnicas quantitativas e qualitativas na avaliação de impacto de
+políticas públicas}. \textbf{Revista Brasileira de Ciências Sociais}, v.
+32, n. 94, 2017.
+
+\leavevmode\vadjust pre{\hypertarget{ref-bladimir_carrillo_bermudez_o_2024}{}}%
+BERMUDEZ, BLADIMIR CARRILLO; BRANCO, DANYELLE SANTOS. O {Método}
+diferenças-em-diferenças ({CAPÍTULO} 12). \emph{In}: \textbf{Avaliação
+de impacto das políticas de saúde: Um guia para o {SUS}}. Brasília, DF:
+Ministério da Saúde, 2024.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Brown_2003}{}}%
+BROWN, J.; HESS, D. B.; SHOUP, D.
+\href{https://doi.org/10.1177/0739456X03255430}{Fare-free public transit
+at universities: An evaluation}. \textbf{Journal of Planning Education
+and Research}, v. 23, n. 1, p. 69--82, 2003.
+
+\leavevmode\vadjust pre{\hypertarget{ref-BULL-RCT-2021}{}}%
+BULL, O.; MUÑOZ, J. C.; SILVA, H. E.
+\href{https://doi.org/10.1016/j.regsciurbeco.2020.103616}{The impact of
+fare-free public transport on travel behavior: Evidence from a
+randomized controlled trial}. \textbf{Regional Science and Urban
+Economics}, v. 86, p. 103616, 2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-CALLAWAY2021200}{}}%
+CALLAWAY, B.; SANT'ANNA, P. H. C.
+\href{https://doi.org/10.1016/j.jeconom.2020.12.001}{Difference-in-differences
+with multiple time periods}. \textbf{Journal of Econometrics}, v. 225,
+n. 2, p. 200--230, a2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-did_r}{}}%
+\_\_\_. \textbf{Did: Difference in differences}, b2021. Disponível em:
+\textless{}\url{https://bcallaway11.github.io/did/}\textgreater{}
+
+\leavevmode\vadjust pre{\hypertarget{ref-cats_prospects_2017}{}}%
+CATS, O.; SUSILO, Y. O.; REIMAL, T.
+\href{https://doi.org/10.1007/s11116-016-9695-5}{The prospects of
+fare-free public transport: Evidence from {Tallinn}}.
+\textbf{Transportation}, v. 44, n. 5, p. 1083--1104, Sep. 2017.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Cinelli-2024}{}}%
+CINELLI, C.; FORNEY, A.; PEARL, J.
+\href{https://doi.org/10.1177/00491241221099552}{A crash course in good
+and bad controls}. \textbf{Sociological Methods \& Research}, v. 53, n.
+3, p. 1071--1104, 2024.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Costa_Gonuxe7alves_Santini_2023}{}}%
+COSTA GONÇALVES, C.; SANTINI, D.
+\href{https://doi.org/10.53613/josum.2023.v3.009}{Tarifa zero,
+segregação e desigualdade social: Um estudo de caso sobre a experiência
+de mariana (MG)}. \textbf{Journal of Sustainable Urban Mobility}, v. 3,
+n. 1, p. 111--121, a2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gonuxe7alves_Santini_2023}{}}%
+\_\_\_. \href{https://doi.org/10.53613/josum.2023.v3.009}{Tarifa zero,
+segregação e desigualdade social: Um estudo de caso sobre a experiência
+de mariana (MG)}. \textbf{Journal of Sustainable Urban Mobility}, v. 3,
+n. 1, p. 111--121, b2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-cunningham_causal_2024}{}}%
+CUNNINGHAM, S. \textbf{Causal {Inference}: {The} {Mixtape}}, 2024.
+Disponível em:
+\textless{}\url{https://mixtape.scunning.com/}\textgreater. Acesso em: 8
+apr. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-fuchs_1965}{}}%
+FUCHS, V. R.
+\href{https://www.nber.org/books-and-chapters/growing-importance-service-industries/growing-importance-service-industries}{The
+{Growing} {Importance} of the {Service} {Industries}}. \emph{In}:
+\textbf{The {Growing} {Importance} of the {Service} {Industries}}.
+{[}s.l.{]} NBER, 1965. p. 1--30.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Gabaldon_ffpt_2019}{}}%
+GABALDÓN-ESTEVAN, D. \emph{et al.}
+\href{https://doi.org/10.1080/19463138.2019.1596114}{Broader impacts of
+the fare-free public transportation system in tallinn}.
+\textbf{International Journal of Urban Sustainable Development}, v. 11,
+n. 3, p. 332--345, 2019.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Goodman-Bacon-2021-DiD}{}}%
+GOODMAN-BACON, A.
+\href{https://doi.org/10.1016/j.jeconom.2021.03.014}{Difference-in-differences
+with variation in treatment timing}. \textbf{Journal of Econometrics},
+v. 225, n. 2, p. 254--277, 2021.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Hernan2020}{}}%
+HERNAN, M. A.; ROBINS, J. M. \textbf{Causal inference: What if}. Boca
+Raton: Taylor \& Francis, 2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-IPEA-iss-2020}{}}%
+INSTITUTO DE PESQUISA ECONÔMICA APLICADA (IPEA). \textbf{Carta de
+{Conjuntura} número 48: {Estimativas} anuais da arrecadação tributária e
+das receitas totais dos municípios brasileiros entre 2003 e 2019}, 2020.
+Disponível em:
+\textless{}\url{https://www.ipea.gov.br/portal/images/stories/PDFs/conjuntura/200730_cc48_nt_municipios_final.pdf}\textgreater.
+Acesso em: 5 may. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-keblowski_why_2020}{}}%
+KĘBŁOWSKI, W. \href{https://doi.org/10.1007/s11116-019-09986-6}{Why
+(not) abolish fares? {Exploring} the global geography of fare-free
+public transport}. \textbf{Transportation}, v. 47, n. 6, p. 2807--2835,
+Dec. 2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Miller-2023}{}}%
+MILLER, D. L. \href{https://doi.org/10.1257/jep.37.2.203}{An
+introductory guide to event study models}. \textbf{Journal of Economic
+Perspectives}, v. 37, n. 2, p. 203--30, May 2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-pearl2018}{}}%
+PEARL, J. The seven tools of causal inference, with reflections on
+machine learning. \textbf{Communications of the ACM}, v. 62, n. 3, p.
+54--60, 2018.
+
+\leavevmode\vadjust pre{\hypertarget{ref-PearlMackenzie18}{}}%
+PEARL, J.; MACKENZIE, D. \textbf{The book of why: The new science of
+cause and effect}. New York: Basic Books, 2018.
+
+\leavevmode\vadjust pre{\hypertarget{ref-PHILLIPS2014}{}}%
+PHILLIPS, D. C.
+\href{https://doi.org/10.1016/j.labeco.2014.07.005}{Getting to work:
+Experimental evidence on job search and transportation costs}.
+\textbf{Labour Economics}, v. 29, p. 72--82, 2014.
+
+\leavevmode\vadjust pre{\hypertarget{ref-piazza_avaliacao_2017}{}}%
+PIAZZA, C. K. \textbf{Avaliação do impacto econômico da gratuidade no
+transporte coletivo (monografia de conclusão de curso)}Santa Catarina,
+BrazilUniversity of Santa Catarina, 2017. Disponível em:
+\textless{}\url{https://repositorio.ufsc.br/handle/123456789/178734}\textgreater.
+Acesso em: 1 may. 2024
+
+\leavevmode\vadjust pre{\hypertarget{ref-roth_whats_2023}{}}%
+ROTH, J. \emph{et al.}
+\href{https://doi.org/10.1016/j.jeconom.2023.03.008}{What's trending in
+difference-in-differences? {A} synthesis of the recent econometrics
+literature}. \textbf{Journal of Econometrics}, v. 235, n. 2, p.
+2218--2244, Aug. 2023.
+
+\leavevmode\vadjust pre{\hypertarget{ref-DRDID_r}{}}%
+SANT'ANNA, P. H. C.; ZHAO, J.
+\href{https://doi.org/10.1016/j.jeconom.2020.06.003}{Doubly robust
+difference-in-differences estimators}. \textbf{Journal of Econometrics},
+v. 219, p. 101--122, b2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-SANTANNA2020101}{}}%
+\_\_\_. \href{https://doi.org/10.1016/j.jeconom.2020.06.003}{Doubly
+robust difference-in-differences estimators}. \textbf{Journal of
+Econometrics}, v. 219, n. 1, p. 101--122, a2020.
+
+\leavevmode\vadjust pre{\hypertarget{ref-Santini-FFPT-2024}{}}%
+SANTINI, D. \textbf{{Brazilian municipalities with full Fare-Free Public
+Transport policies - updated March 2024}}Harvard Dataverse, 2024.
+Disponível em:
+\textless{}\url{https://doi.org/10.7910/DVN/Z927PD}\textgreater{}
+
+\leavevmode\vadjust pre{\hypertarget{ref-straub_2020}{}}%
+ŠTRAUB, D. \href{https://doi.org/10.3390/su12219111}{The effects of
+fare-free public transport: A lesson from frýdek-místek (czechia)}.
+\textbf{Sustainability}, v. 12, n. 21, 2020.
+
+\end{CSLReferences}
+
+
+%% CRONOGRAMA ----
+%%%
+
+
+\appendix
+
+
+
+
+%% REFERÊNCIAS ----
+
+%%\bibliography{}
+\end{document}

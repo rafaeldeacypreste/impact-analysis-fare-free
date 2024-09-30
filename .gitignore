@@ -1,0 +1,88 @@
+# History files
+.Rhistory
+.Rapp.history
+
+# Session Data files
+.RData
+.Rdata
+.RDataTmp
+
+# User-specific files
+.Ruserdata
+
+# Example code in package build process
+*-Ex.R
+
+
+*.zip
+
+# Output files from R CMD build
+/*.tar.gz
+
+# Output files from R CMD check
+/*.Rcheck/
+
+# RStudio files
+.Rproj.user/
+
+# produced vignettes
+vignettes/*.html
+vignettes/*.pdf
+
+# OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
+.httr-oauth
+
+# knitr and R markdown default cache directories
+*_cache/
+/cache/
+
+# Temporary files created by R markdown
+*.utf8.md
+*.knit.md
+
+# R Environment Variables
+.Renviron
+.vscode
+# pkgdown site
+docs/
+
+# translation temp files
+po/*~
+
+# RStudio Connect folder
+rsconnect/
+
+
+# Renv
+library/
+local/
+cellar/
+lock/
+python/
+sandbox/
+staging/
+
+
+# Latex files
+main-text/*.pdf
+main-text/*.tex
+main-text/*.spl
+bachelor-dissertation-rafael-causal-inference_files/*
+tcc-rafael-inferencia-causal_files/*
+README_files/*
+
+# Big files
+
+data/200730_base_receitas_municipais.xlsx
+data/pop_*
+data/gdp_*
+data/*
+
+!data/Frota_por_Municipio_e_Tipo-JUL_15.xls
+!data/pop-datasus-2000-21.csv
+
+/.quarto/
+
+
+data.Rdata
+
