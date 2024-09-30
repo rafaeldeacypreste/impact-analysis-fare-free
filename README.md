@@ -2,7 +2,7 @@
 
 <img align="right" src="img/plot_staggered.png" alt="logo" width="450"> 
 
-This is the repository of the Bachelor dissertation submitted to the Department of Statistics at the University of Brasília, as part of the requirements to obtain the Bachelor's Degree in Statistics, defended in September 2024. 
+This is the repository of my Bachelor's dissertation submitted to the Department of Statistics at the University of Brasília, as part of the requirements to obtain the Bachelor's Degree in Statistics, defended in September 2024. 
 
 # Research summary
 
@@ -21,9 +21,9 @@ Further research incorporating a larger time span --- consequently, amplified sa
 
 # Repository structure
 
-The report was originally written in English and translated into Portuguese. The quarto file is the main file (`bachelor-dissertation-rafael-causal-inference.qmd` for the English language version and `tcc-rafael-inferencia-causal.qmd` for the Portuguese one).
+The report was originally written in English and translated into Portuguese. The quarto file is the main file (`bachelor-dissertation-rafael-causal-inference.qmd` for the English language version and `tcc-rafael-inferencia-causal.qmd` for the Portuguese one). The homonymous files in the `.pdf` format are the report versions.
 
-The source codes are in the `src` folder. The needed `R` packages are listed in the `renv.lock` file, used through the `renv` package. The `data` folder contains the datasets used in the analysis. The `img` folder contains the images used in the report. 
+The source codes are in the `src` folder. The needed `R` packages are listed in the `renv.lock` file and are used through the `renv` package. The `data` folder contains the datasets used in the analysis. The `img` folder contains the images used in the report. 
 
 Comments and suggestions are welcome. Please, feel free to contact me at `rafaeldeacyprestemr@gmail.com`.
 
